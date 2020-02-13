@@ -1,6 +1,8 @@
 //Member class
 
 #include <string>
+#include <iostream>
+#include "tree.hh"
 using namespace std;
 
 class Member
@@ -19,5 +21,40 @@ class Member
 		string city;
 		string state;
 		int zip;
-		Service Used;
+		tree<Service> Used;
 };
+
+//should this print member info or supply info to interface developers?
+void Member::printMemberInfo()
+{
+	cout << ID_number << endl;
+	cout << Mem_status << endl;
+	cout << name << endl;
+	cout << address << endl;
+	cout << city << ", " << state << zip << endl;
+	//print service tree?
+}
+
+
+void Member::setMemberInfo()
+{
+	
+
+
+}
+
+
+void Member::getMemberInfo(Member)
+{
+
+
+
+}
+
+
+void Member::addService(Service)
+{
+
+
+
+}
