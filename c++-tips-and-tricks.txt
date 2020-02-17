@@ -1,0 +1,32 @@
+-Namespaces-
+Generally it's good practice to avoid "using namespace std;" as you can
+have name collisions with things in the standard library and the code you write,
+and its not much extra typing to add "std::" in front of things from the standard library.
+
+-C++ String class-
+C++'s string class is very easy to use, to make a string do something like this:
+"std::string myString = "My String";"
+
+To go through the string you can do the same thing you would do with a c-string (char array),
+using [] to index it like so:
+"myString[0] = 'm'; // changes myString to "my String""
+
+To loop through it you can get the length of the string with the length() method, for example:
+"for (int i = 0; i < myString.length(); i++)
+	 myString[i] = 'a'; // change all letters to a"
+
+You can also use the at() method to index through strings, which will throw an exception if you go outside the string bounds, for example:
+"char z = myString.at(100); // will throw an exception"
+
+You can learn more here: https://en.cppreference.com/w/cpp/string/basic_string with most of the important things being in the member functions section
+
+-STL Map/Binary Tree-
+C++ has a binary tree in the STL (standard template library) called map
+
+It is in the map header, so to include it do "#include <map>"
+
+It compares based on the < operator
+
+I'll add more to this later
+
+You can learn more here: https://en.cppreference.com/w/cpp/container/map
