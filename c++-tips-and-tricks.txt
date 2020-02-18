@@ -20,13 +20,58 @@ You can also use the at() method to index through strings, which will throw an e
 
 You can learn more here: https://en.cppreference.com/w/cpp/string/basic_string with most of the important things being in the member functions section
 
--STL Map/Binary Tree-
-C++ has a binary tree in the STL (standard template library) called map
+-STL Set/Binary Tree-
+C++ has a binary tree in the STL (standard template library) called set
 
-It is in the map header, so to include it do "#include <map>"
+It is in the map header, so to include it do "#include <set>"
 
-It compares based on the < operator
+Making a set looks like this:
+"std::set<typename> mySet"
+where "typename" is the type of thing you want to store in the set,
+for example a set of ints would be "std::set<int> myInts"
 
-I'll add more to this later
+To add to the set use the insert() method like so:
+"mySet.insert(something);"
 
-You can learn more here: https://en.cppreference.com/w/cpp/container/map
+To traverse the set you can use an iterator (basically a pointer),
+the begin() method gives you an iterator to the begininng of the set, and end() to the end.
+To loop through the set in order you could do this:
+"for (std::set<typename>::iterator it = mySet.begin(); it != mySet.end(); it++)
+	 doSomething(*it);"
+
+If you want to avoid typing out the whole type for iterators you can use the auto
+type added in C++11 which will determine the type for you so
+a loop to print a set might be like this:
+"for (auto it = mySet.begin(); it != mySet.end(); it++)
+	 std::cout << *it;"
+
+The set is sorted based on the < operator, so to store things of a class you make
+you need to overload the < operator, which I'll demonstrate using the following simple example class:
+
+"Class Example {
+ public:
+	Example(int start)
+	{
+		exampleInt = start;
+	}
+	friend bool operator<(const Example& lhs, const Example& rhs);
+ private:
+	int exampleInt;
+};"
+
+Notice the friend declaration of operator<, this is needed to let operator<
+access private data.
+
+Then the actual operator overload is put outside of the classes namespace
+"bool operator<(const Example& lhs, const Example& rhs)
+{
+	return lhs.exampleInt < rhs.exampleInt;
+}"
+
+This makes it so Example objects are compared based on who has a lower value
+in exampleInt
+
+Now Example objects can be stored in a set like so:
+"std::set<Example> myExamples"
+	   
+You can learn more here: https://en.cppreference.com/w/cpp/container/set
