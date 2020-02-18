@@ -1,6 +1,6 @@
 //Service class functions implementation
 
-#include "services.h"
+#include "defs.h"
 using namespace std;
 
 /******* not sure const, destr are needed for this *****
