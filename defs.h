@@ -15,8 +15,6 @@ const int MAX = 256; //for ignores
 //Def of service struct
 struct Service
 {
-    //Service();          //Constructor
-    //~Service();         //Destructor
     void setInfo();     //Set the service info
     uint ID;            //Service id code (max 6)
     std::string name;        //Service name (max 20)
