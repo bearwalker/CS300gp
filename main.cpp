@@ -56,6 +56,9 @@ void providerTerminal(provider * this_provider)
     //read in member tree
 
     char response;
+    int numres;
+    int VALID_ID = 22;
+    int SUSPENDED_ID = 38;
 
     do{
         cout << '\n' << "Enter A to check a member ID"
@@ -68,21 +71,38 @@ void providerTerminal(provider * this_provider)
         << '\n' << "Input: ";
         cin >> reponse;
         response = toupper(response);
-        if(response == 'A')
-            //check if member id is valid
-        if(response == 'B')
-            //add a new service to the providers service tree
-        if(response == 'C')
-            //check whether a service ID is valid
-            //if it is print its info
-        if(response == 'D')
-            //print the list of all provider services
-        if(response == 'E')
-            //inc service counter for provider and member being provided the service
-            //write out the session report
-        if(response == 'F')
-            //print the providers report
-
+        switch (response)
+        {
+            case 'A':
+                cout << "Enter Member ID: ";
+                cin >> numres;
+                if (numres == VALID_ID) cout << "Member ID is valid.\n";
+                else if (numres == SUSPENDED_ID) cout << "Membership has been suspended.\n";
+                else cout << "Member ID is not valid.\n";
+                break;
+            case 'B':
+                cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
+                break;
+            case 'C':
+                cout << "Enter Service ID: ";
+                cin >> numres;
+                if (numres == VALID_ID) cout << "Service ID is valid.\n";
+                else cout << "Service ID is not valid.\n";
+                break;
+            case 'D':
+                cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
+                break;
+            case 'E':
+                cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
+                break;
+            case 'F':
+                cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
+                break;
+            case 'Q':
+                return;
+                break;
+            default: cout << "Unknown command."
+        }
     }while(response != 'Q')
     return;
 }
