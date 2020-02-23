@@ -4,7 +4,7 @@
 #include <iostream>
 //#include "tree.hh"
 using namespace std;
-
+/*
 // Forward declarations
 struct node;
 
@@ -39,6 +39,7 @@ struct node{
 	Member member;
 };
 
+*/
 //TODO: should this print member info or supply info to interface developers?
 bool Member::printMemberInfo(int ID){
 	node * current = head;
