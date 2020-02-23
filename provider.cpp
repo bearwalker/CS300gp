@@ -1,7 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#include <cctype>
 #include "defs.h"
 #include "provider.h"
 
