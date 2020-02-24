@@ -60,6 +60,7 @@ bool Provider::loadInformation(std::string informationFile) {
 	}
 
 	// Check length constraints
+	if (numDigits()
 	
 	
 }
