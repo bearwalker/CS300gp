@@ -18,9 +18,20 @@ public:
 	void printServiceList();
 	void createSessionReport(Member member, Service service, std::chrono::time_point time);
 	void summaryReport();
+
+	// Print name, number of services provided in last week, fee total for last week
+	void printWeekReport();
+
+	// Returns true if this provider provided services this week
+	bool providedServices();
+
+	// Returns total fees for the week
+	float weekFeeTotal();
+	
 	// For sorting a std::set of Providers
 	friend bool operator<(const Provider& leftSide, const Provider& rightSide);
-	// For finding a Provider in a set based on its ID
+
+// For finding a Provider in a set based on its ID
 	friend bool operator<(const unsigned int& leftSide, const Provider& rightSide);
 	friend bool operator<(const Provider& leftSide, const unsigned int& rightSide);
 
@@ -31,5 +42,7 @@ private:
 	std::string city;
 	std::string state;
 	unsigned int zip;
+	float feeTotal;
+	unsigned int numServicesProvided;
 	std::set<Service> servicesProvided;
 };

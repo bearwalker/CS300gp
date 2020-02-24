@@ -61,6 +61,7 @@ bool Provider::loadInformation(std::string informationFile) {
 
 	// Check length constraints
 	
+	
 }
 
 
@@ -89,7 +90,21 @@ void summaryReport() {
 		std::cout << "Times Used: " << service->times_used << std::endl;
 	}
 
-	std::cout << "Total Fees: $" << total;
+	std::cout << "Total Fees: $" << total << std::endl;
+}
+
+void Provider::printWeekReport() {
+	std::cout << name << std::endl;
+	std::cout << "Provided " << numServicesProvided << " Services" << std::endl;
+	std::cout << "Fees total: " << feeTotal << std::endl;
+}
+
+bool Provider::providedServices() {
+	return numServicesProvided > 0;
+}
+
+float Provider::weekFeetotal() {
+	return feeTotal;
 }
 
 bool operator<(const Provider& leftSide, const Provider& rightSide) {
