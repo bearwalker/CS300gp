@@ -3,22 +3,9 @@
 #include "defs.h"
 using namespace std;
 
-/******* not sure const, destr are needed for this *****
-//Service Constructor
-Service::Service():ID(0),name(NULL),price(0),times_used(0) {}
-
-//Service Destructor
-Service::~Service()
-{
-}
-*/
-
 //Set service info
 void Service::setInfo()
 {
-    //uint to_ID;
-    //float to_Price;
-    char resp[INTMAX];
 
     cout << '\n' << "Enter Service ID: ";
     cin >> ID;

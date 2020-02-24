@@ -4,7 +4,7 @@
 using namespace std;
 
 //Manager terminal
-void managerTerminal(member * mem_head, provider * prov_head)
+void managerTerminal(std::set <member> mtree, std::set <provider> ptree)
 {
 
     char response;
@@ -22,27 +22,103 @@ void managerTerminal(member * mem_head, provider * prov_head)
         << '\n' << "Enter Q to exit the manager terminal"
         << '\n' << "Input: ";
         cin >> reponse;
+        cin.ignore(MAX,'\n');
         response = toupper(response);
-        if(response == 'A')
+        if(response == 'A'){
             //add member to the member tree
-        if(response == 'B')
-            //find and remove member from member tree
-        if(response == 'C')
+            member new_member;
+            new_member.setMemberInfo();
+            mtree.insert(new_member);
+        }
+        if(response == 'B'){
+            //find and remove a member from provider tree
+            int mem_ID_to_remove;
+            cout << '\n' << "Enter the ID of the member to remove: ";
+            cin >> mem_ID_to_remove;
+            cin.ignore(MAX,'\n');
+            member * to_remove = mtree.extract(find(mem_ID_to_remove));
+            if(to_remove == NULL)
+                cout <<'\n' << "Member was not found";
+            else
+                cout << '\n' << "Member #" << mem_ID_to_remove << " was removed";
+        }
+        if(response == 'C'){
             //add provider to provider tree
-        if(response == 'D')
+            provider new_provider;
+            new_provider.setInfo();
+            new_provider.setServices();
+            ptree.insert(new_provider);
+        }
+        if(response == 'D'){
             //find and remove provider from provider tree
-        if(response == 'E')
+            int prov_ID_to_remove;
+            cout << '\n' << "Enter the ID of the member to remove: ";
+            cin >> prov_ID_to_remove;
+            cin.ignore(MAX,'\n');
+            member * to_remove = mptree.extract(find(prov_ID_to_remove));
+            if(to_remove == NULL)
+                cout <<'\n' << "Provider was not found";
+            else
+                cout << '\n' << "Provider #" << prov_ID_to_remove << " was removed";
+        }
+        if(response == 'E'){
             //print reports for all members
-        if(response == 'F')
+            for(auto mem_ptr = mtree.begin(); mem_ptr != mtree.end(); mem_ptr++)
+            {
+            TODO:
+                //print members info
+                //print members service tree
+            }
+        }
+        if(response == 'F'){
             //get desired provider and print their report
-        if(response == 'G')
+            int prov_ID;
+            cout << '\n' << "Enter the ID of the provider to print: ";
+            cin >> prov_ID;
+            cin.ignore(MAX,'\n');
+            provider * prov_to_print = mptree.extract(find(prov_to_print));
+            prov_to_print.summaryReport();
+        }
+        if(response == 'G'){
             //print the manager report
+            float prov_service_total;
+            int total_providers;
+            for(auto prov_ptr = ptree.begin(); prov_ptr != mtree.end(); prov_ptr++)
+            {
+            TODO:
+             //total_providers += prov_ptr->didProvide()
+             //prov_service_total += prov_ptr->gettotal()
+             //prov_ptr->printManReport();
+            }
+            cout << '\n' << "Total Providers for week: " << total_providers;
+            cout << '\n' << "Overall Fee Total: " << prov_service_total;
+        }
         if(response == 'H')
+        {
             //find member and edit their info
-        if(response == 'G')
+            int mem_ID_to_edit;
+            cout << '\n' << "Enter the ID of the member to edit: ";
+            cin >> mem_ID_to_edit;
+            cin.ignore(MAX,'\n');
+            member * to_edit = mtree.extract(find(mem_ID_to_edit));
+            if(to_edit == NULL)
+                cout << '\n' << mem_ID_to_edit << " was not a valid ID";
+            else
+                to_edit->setMemberInfo();
+
+        }
+        if(response == 'G'){
             //find provider and edit their info
-
-
+            int prov_ID_to_edit;
+            cout << '\n' << "Enter the ID of the provider to edit: ";
+            cin >> prov_ID_to_edit;
+            cin.ignore(MAX,'\n');
+            provider * to_edit = mtree.extract(find(prov_ID_to_edit));
+            if(to_edit == NULL)
+                cout << '\n' << prov_ID_to_edit << " was not a valid ID";
+            else
+                to_edit->setInfo();
+        }
     }while(response != 'Q')
 
     //update the member and provider files
@@ -51,7 +127,7 @@ void managerTerminal(member * mem_head, provider * prov_head)
 }
 
 //Provider terminal
-void providerTerminal(provider * this_provider)
+void providerTerminal(provider *& this_provider)
 {
     //read in member tree
 
@@ -92,10 +168,10 @@ int main()
 {
     char response;
     int check_id;
+    std::set <provider> ptree;
+    std::set <member> mtree;
     //read in provider tree
     //read in member tree
-    //member * mem_head
-    //provider * prov_head
 
     cout << "Enter 'P' for provider or 'M' for manager : ";
     cin >> response;
@@ -105,7 +181,7 @@ int main()
         cout << '\n' << "Enter manager ID: ";
         cin.get(check_id,INTMAX);
         if(check_id == "123456")
-            managerTerminal(mem_head,prov_head);
+            managerTerminal(mtree,ptree);
     }
     if(response == 'P')
     {
