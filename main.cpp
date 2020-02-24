@@ -23,25 +23,41 @@ void managerTerminal(member * mem_head, provider * prov_head)
         << '\n' << "Input: ";
         cin >> reponse;
         response = toupper(response);
-        if(response == 'A')
+        switch (response)
+        {
+            case 'A':
             //add member to the member tree
-        if(response == 'B')
+                break;
+            case 'B':
             //find and remove member from member tree
-        if(response == 'C')
+                break;
+            case 'C':
             //add provider to provider tree
-        if(response == 'D')
+                break;
+            case 'D':
             //find and remove provider from provider tree
-        if(response == 'E')
+                break;
+            case 'E':
             //print reports for all members
-        if(response == 'F')
+                break;
+            case 'F':
             //get desired provider and print their report
-        if(response == 'G')
+                break;
+            case 'G':
             //print the manager report
-        if(response == 'H')
+                break;
+            case 'H':
             //find member and edit their info
-        if(response == 'G')
+                break;
+            case 'I':
             //find provider and edit their info
-
+                break;
+            case 'Q':
+                return;
+                break;
+            default: cout << "Unknown command.\n";
+                break;
+        }
 
     }while(response != 'Q')
 
