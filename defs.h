@@ -31,17 +31,13 @@ class Member
 {
 	public: 
 		Member(); //initializes members to 0
-		~Member(); //deallocates LLL
 		bool printMemberInfo(int); //Searches for member based on ID number.  Retruns false if member not found in list.
-		void printAllMembers();//Prints all members in list
 		void setMemberInfo(); //sets member info from user. Refactor to read in from file.
-		void createMember(); //TODO: creates a single member
-		void getMemberInfo(Member);
+		bool getMemStatus();
 		//void addService(Service);
 	private:
-		node * head;
 		int ID_number;
-		int Mem_status;
+		bool Mem_status;
 		string name;
 		string address;
 		string city;
@@ -49,12 +45,6 @@ class Member
 		int zip;
 };
 
-struct node
-{
-	node * next;
-	Member member;
-}
-	
 
 
 //Helper functions

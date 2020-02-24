@@ -4,73 +4,22 @@
 #include <iostream>
 //#include "tree.hh"
 using namespace std;
-/*
-// Forward declarations
-struct node;
 
-class Member
-{
-	public:
-		Member(); // initializes members to 0
-		~Member(); // deallocates LLL
-		bool printMemberInfo(int); // Searches for member based on ID number. Returns false if member not found in list. 
-		void printAllMembers(); // Prints all members in list
-		void setMemberInfo(); // sets member info from user. Refactor to read in from file.
-		void createMember(); // TODO: creates a single member
-		void getMemberInfo(Member);
-		//void addService(Service);
+//defs moved to header
 
-	private:
-		node * head;
-
-		int ID_number;
-		string Mem_status; // TODO: int type would work here too, easier. 
-		string name;
-		string address;
-		string city;
-		string state;
-		int zip;
-		//tree<Service> Used;
-};
-
-// LLL of ChocAn members
-struct node{
-	node * next;
-	Member member;
-};
-
-*/
 //TODO: should this print member info or supply info to interface developers?
 bool Member::printMemberInfo(int ID){
-	node * current = head;
-
-	while(current){
-		if(ID == current->member.ID_number){
-			cout << "ID: " << current->member.ID_number << endl;
-			// .... TODO: print rest of member data here
-
-			return true;
-		}
-		current = current->next;
+	if(ID == current->member.ID_number)
+	{
+		cout << "ID: " << ID_number << endl;
+		cout << "Member Status: " << Mem_status << endl;
+		cout << "Member Name: " << name << endl;
+		cout << "Address: " << address << endl;
+		cout << city << ", " << state << " " << zip << endl << endl;
+		return true;
 	}
-
 	return false;
 
-}
-void Member::printAllMembers()
-{
-	node * current = head;
-
-	while(current){
-		cout << current->member.ID_number << endl;
-		//cout << Mem_status << endl;
-		//cout << name << endl;
-		//cout << address << endl;
-		//cout << city << ", " << state << zip << endl;
-
-		current = current->next;
-	}
-	//print service tree?
 }
 
 // TODO: Transfer to constructor?
@@ -78,39 +27,50 @@ void Member::printAllMembers()
 // sets ChocAn member info. Stops when you enter 99 (arbitrary number for test purposes only)
 void Member::setMemberInfo()
 {
+	//TODO: first check if member exists
+	//TODO: use .resize to make inputs match the specifications in the requirements doc
+
 	int num;
-	node * current;
+	string a_string;
+
+	Mem_status = 1;
 
 	cout << "ID: ";
-	cin >> num;
+	cin >> ID_number;
+	cin.ignore(MAX, '\n');
+	
+	cout << "Name: ";
+	getline(cin, Name);
+	cin.ignore(MAX, '\n');
 
-	while(num != 99){ // TODO: change this condition to something more sensible.
-		if(!head){
-			head = new node;
-			head->next = NULL;
-			current = head;
-		}
-		else{
-			node * temp = new node;
-			temp->next = NULL;
-			current->next = temp;
-			current = temp;
-		}
-		current->member.ID_number = num;
-		// TODO: ... rest of data members here
-		
-		cout << "ID: ";
-		cin >> num;
-	}
+	cout << "Address: ";
+	getline(cin, address);
+	cin.ignore(MAX, '\n');
+
+	cout << "City: ";
+	getline(cin, city);
+	cin.ignore(MAX, '\n');
+	
+	cout << "State: ";
+	getline(cin, state);
+	cin.ignore(MAX, '\n');
+
+	cout << "Zip: ";
+	cin >> zip;
+	cin.ignore(MAX, '\n');
+
+	//TODO: initialize service tree
+
+	return;
+
 
 }
 
 
-void Member::getMemberInfo(Member)
+bool Member::getMemStatus()
 {
-
+	return Mem_status;
 }
-
 
 // Commented out so file is compileable (no "Service" type)
 /*
@@ -120,23 +80,12 @@ void Member::addService(Service)
 */
 
 // TODO: initialize all variables to their 0 equivalent.
-Member::Member(){
+Member::Member()
+{
 	ID_number = 0;
 	zip = 0;
-	head = NULL;
 }
 
-Member::~Member(){
-	if(!head){
-		return;
-	}
-	node * temp = head;
-	while(temp){
-		temp = temp->next;
-		delete head;
-		head = temp;
-	}
-}
 
 // test the functions here as the client in main()
 int main(){
