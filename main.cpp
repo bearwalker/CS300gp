@@ -23,25 +23,41 @@ void managerTerminal(member * mem_head, provider * prov_head)
         << '\n' << "Input: ";
         cin >> reponse;
         response = toupper(response);
-        if(response == 'A')
+        switch (response)
+        {
+            case 'A':
             //add member to the member tree
-        if(response == 'B')
+                break;
+            case 'B':
             //find and remove member from member tree
-        if(response == 'C')
+                break;
+            case 'C':
             //add provider to provider tree
-        if(response == 'D')
+                break;
+            case 'D':
             //find and remove provider from provider tree
-        if(response == 'E')
+                break;
+            case 'E':
             //print reports for all members
-        if(response == 'F')
+                break;
+            case 'F':
             //get desired provider and print their report
-        if(response == 'G')
+                break;
+            case 'G':
             //print the manager report
-        if(response == 'H')
+                break;
+            case 'H':
             //find member and edit their info
-        if(response == 'G')
+                break;
+            case 'I':
             //find provider and edit their info
-
+                break;
+            case 'Q':
+                return;
+                break;
+            default: cout << "Unknown command.\n";
+                break;
+        }
 
     }while(response != 'Q')
 
@@ -51,14 +67,12 @@ void managerTerminal(member * mem_head, provider * prov_head)
 }
 
 //Provider terminal
-void providerTerminal(provider * this_provider)
+void providerTerminal(provider * this_provider, std::set <member> mtree)
 {
     //read in member tree
 
     char response;
     int numres;
-    int VALID_ID = 22;
-    int SUSPENDED_ID = 38;
 
     do{
         cout << '\n' << "Enter A to check a member ID"
@@ -74,26 +88,40 @@ void providerTerminal(provider * this_provider)
         switch (response)
         {
             case 'A':
-                cout << "Enter Member ID: ";
+                cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
                 cin >> numres;
-                if (numres == VALID_ID) cout << "Member ID is valid.\n";
-                else if (numres == SUSPENDED_ID) cout << "Membership has been suspended.\n";
-                else cout << "Member ID is not valid.\n";
+                member * mvalid = mtree.extract(find(numres));
+                if (mvalid == NULL) cout << "Member ID is invalid.\n";
+                else if (mvalid->getMemStatus() == FALSE) cout << "Membership has been suspended.\n";
+                else cout << "Member ID is valid.\n";
                 break;
             case 'B':
                 cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
                 break;
             case 'C':
-                cout << "Enter Service ID: ";
+                cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
                 cin >> numres;
-                if (numres == VALID_ID) cout << "Service ID is valid.\n";
-                else cout << "Service ID is not valid.\n";
+                bool svalid = this_provider->checkServiceID(numres);
+                if (svalid == FALSE) cout << "Service ID is not valid.\n";
+                else cout << "Service ID is valid.\n";
                 break;
             case 'D':
-                cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
+                this_provider->printServiceList();
                 break;
             case 'E':
-                cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
+                cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
+                cin >> numres;
+                member * mvalid = mtree.extract(find(numres));
+                if (mvalid == NULL) cout << "Member ID is invalid.\n";
+                else if (mvalid->getMemStatus() == FALSE) cout << "Membership has been suspended.\n";
+                else
+                {
+                    cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
+                    cin >> numres;
+                    bool svalid = this_provider->checkServiceID(numres);
+                    if (svalid == FALSE) cout << "Service ID is not valid.\n";
+                    else cout << "ERROR: SERVICE PROVISION FUNCTIONALITY NOT IMPLEMENTED.\n";
+                }
                 break;
             case 'F':
                 cout << "ERROR: FUNCTIONALITY NOT IMPLEMENTED YET.\n";
@@ -127,7 +155,7 @@ int main()
         if(check_id == "123456")
             managerTerminal(mem_head,prov_head);
     }
-    if(response == 'P')
+    else if(response == 'P')
     {
         cout << '\n' << "Enter provider ID: ";
         cin.get(check_id,INTMAX);
@@ -135,6 +163,7 @@ int main()
             //find provider in provider tree
             providerTerminal(/*found provider*/);
     }
+    else cout << "Invalid command.\n";
 
     return 0;
 }
