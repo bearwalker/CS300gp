@@ -6,6 +6,8 @@
 using namespace std;
 
 //defs moved to header
+//using a tree as the data structure, this is managed in main. 
+//We don't have to worry about the member data structure.
 
 //TODO: should this print member info or supply info to interface developers?
 bool Member::printMemberInfo(int ID){
@@ -24,7 +26,6 @@ bool Member::printMemberInfo(int ID){
 
 // TODO: Transfer to constructor?
 // TODO: Read in data from file instead.
-// sets ChocAn member info. Stops when you enter 99 (arbitrary number for test purposes only)
 void Member::setMemberInfo()
 {
 	//TODO: first check if member exists
@@ -32,8 +33,6 @@ void Member::setMemberInfo()
 
 	int num;
 	string a_string;
-
-	Mem_status = 1;
 
 	cout << "ID: ";
 	cin >> ID_number;
@@ -72,20 +71,56 @@ bool Member::getMemStatus()
 	return Mem_status;
 }
 
-// Commented out so file is compileable (no "Service" type)
-/*
+
+void Member::memberInactive()
+{
+	Mem_status = 0;
+}
+
+//TODO: implement function, see other classes to see how to implement print a set
+void Member::printMemServices()
+{
+
+}
+
+
+//TODO: implement functon, see other class for example of how to add new item to set
 void Member::addService(Service)
 {
 }
-*/
 
-// TODO: initialize all variables to their 0 equivalent.
+
+bool operator<(const Member& left_side, const Member& right_side)
+{
+	return left_side.ID_number < right_side.ID_number;
+}
+
+
+bool operator<(const unsigned int& left_side, const Member& right_side)
+{
+	return left_side < right_side.ID_number;
+}
+
+
+bool operator<(const Member& left_side, const unsigned int& right_side)
+{
+	return left_side.ID_number < right_side;
+}
+
+
 Member::Member()
 {
 	ID_number = 0;
+	Mem_status = 1;
+	name = "";
+	address = "";
+	city = "";
+	state = "";
 	zip = 0;
 }
 
+
+//no dynamic memory, no destructor needed
 
 // test the functions here as the client in main()
 int main(){

@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 #include <iostream>
+#include <set>
 
 //constants for cin
 const int CHARMAX = 20; //max for any string readin?
@@ -34,7 +35,16 @@ class Member
 		bool printMemberInfo(int); //Searches for member based on ID number.  Retruns false if member not found in list.
 		void setMemberInfo(); //sets member info from user. Refactor to read in from file.
 		bool getMemStatus();
-		//void addService(Service);
+		void memberInactive();
+		void printMemServices();
+		void addService(Service);
+
+		//these operators need to overloaded in order to use set
+		//for sorting a set of Members
+		friend bool operator<(const Member& left_side, const Member& right_side);
+		//for finding a Member in a set based on its ID
+		friend bool operator<(const unsigned int& left_side, const Member& right_side);
+		friend bool operator<(const Member& left_side, const unsigned int& right_side); 
 	private:
 		int ID_number;
 		bool Mem_status;
