@@ -5,7 +5,13 @@
 #include <string>
 
 // Private data length constraints
-const unsigned int ID_DIGITS 
+const unsigned int ID_DIGITS = 9;
+const unsigned int NAME_CHARACTERS = 25;
+const unsigned int ADDRESS_CHARACTERS = 25;
+const unsigned int CITY_CHARACTERS = 25;
+const unsigned int STATE_CHARACTERS = 2;
+const unsigned int ZIP_DIGITS = 5;
+
 
 class Provider {
 public:
