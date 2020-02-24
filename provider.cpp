@@ -1,7 +1,7 @@
 #include <fstream>
 #include <string>
 
-#include "Provider.h"
+#include "provider.h"
 
 Provider::Provider() {
 	id = 0;
@@ -25,12 +25,46 @@ Provider::Provider(std::sring informationFile) {
 }
 
 bool Provider::loadInformation(std::string informationFile) {
-	// 
-	std::ifstream;
+	std::ifstream infoFile(informationFile);
+
+	// Check if the file could be opened
+	if (!infoFile.is_open())
+		return false;
+
+	// Read in comma seperated info, see data/provider-format.csv for format
+	std::string idBuffer;
+	std::string nameBuffer;
+	std::string addressBuffer;
+	std::string cityBuffer;
+	std::string stateBuffer;
+	std::string zipBuffer;
+
+	std::getline(infoFile, idBuffer, ',');
+	std::getline(infoFile, nameBuffer, ',');
+	std::getline(infoFile, addressBuffer, ',');
+	std::getline(infoFile, cityBuffer, ',');
+	std::getline(infoFile, stateBuffer, ',');
+	std::getline(infoFile, zipBuffer, ',');
+
+	// Convert ID and Zip to ints
+	unsigned int tempID;
+	unsigned int tempZip;
+
+	try {
+		// std::stoi throws an exception if it fails to convert
+		tempID = std::stoi(idBuffer);
+		tempZip = std::stoi(zipBuffer);
+	}
+	catch(...) {
+		return false;
+	}
+
+	// Check length constraints
+	
 }
 
 
-	
+
 
 bool Provider::checkServiceID(unsigned int serviceID) {
 	auto serviceIterator = servicesProvided.find(serviceID);
@@ -42,16 +76,31 @@ bool Provider::checkServiceID(unsigned int serviceID) {
 		return true;
 }
 
+void summaryReport() {
+	float total = 0;
 
-bool operator<(const Provider& left_side, const Provider& right_side) {
+	// Print each service and total up the running cost
+	for (auto service = servicesProvided.begin(); service != servicesProvided.end(); service++) {
+		total += service->price * service->times_used;
+		
+		std::cout << "Service ID: " << service->ID << std::endl;
+		std::cout << "Service Name: " << service->name << std::endl;
+		std::cout << "Service Price: $" << service->price << std::endl;
+		std::cout << "Times Used: " << service->times_used << std::endl;
+	}
+
+	std::cout << "Total Fees: $" << total;
+}
+
+bool operator<(const Provider& leftSide, const Provider& rightSide) {
 	return left_side.id < right_side.id;
 }
 
-bool operator<(const unsigned int& left_side, const Provider& right_side) {
+bool operator<(const unsigned int& leftSide, const Provider& rightSide) {
 	return left_side < right_side.id;
 }
 
-bool operator<(const Provider& left_side, const unsigned int& right_side) {
+bool operator<(const Provider& leftSide, const unsigned int& rightSide) {
 	return left_side.id < right_side;
 }
 
