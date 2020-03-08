@@ -1,236 +1,254 @@
-//Implementation of the login,provider, and man terminals
+//Implementation of the login,Provider, and man terminals
 
 #include "defs.h"  //combined definitions list
 using namespace std;
 
 //Manager terminal
-void managerTerminal(std::set <member> mtree, std::set <provider> ptree)
+void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree)
 {
 
     char response;
     do
     {
-        cout << '\n' << "Enter A to add new member"
-        << '\n' << "Enter B to remove a member"
-        << '\n' << "Enter C to add new provider"
-        << '\n' << "Enter D to remove a provider"
-        << '\n' << "Enter E to print member reports"
-        << '\n' << "Enter F to print provider report"
+        std::cout << '\n' << "Enter A to add new Member"
+        << '\n' << "Enter B to remove a Member"
+        << '\n' << "Enter C to add new Provider"
+        << '\n' << "Enter D to remove a Provider"
+        << '\n' << "Enter E to print Member reports"
+        << '\n' << "Enter F to print Provider report"
         << '\n' << "Enter G to print Manager report"
-        << '\n' << "Enter H to edit member info"
-        << '\n' << "Enter I to edit provider info"
+        << '\n' << "Enter H to edit Member info"
+        << '\n' << "Enter I to edit Provider info"
         << '\n' << "Enter Q to exit the manager terminal"
         << '\n' << "Input: ";
-        cin >> reponse;
-        cin.ignore(MAX,'\n');
+        std::cin >> response;
+        std::cin.ignore(MAX,'\n');
         response = toupper(response);
         switch (response)
         {
-            case 'A':
-                //add member to the member tree
-                member new_member;
-                new_member.setMemberInfo();
-                mtree.insert(new_member);
+            case 'A':{
+                //add Member to the Member tree
+                Member new_Member;
+                new_Member.setMemberInfo();
+                mtree.insert(new_Member);
                 break;
-            case 'B':
-                //find and remove a member from provider tree
+                }
+            case 'B':{
+                //find and remove a Member from Provider tree
                 int mem_ID_to_remove;
-                cout << '\n' << "Enter the ID of the member to remove: ";
-                cin >> mem_ID_to_remove;
-                cin.ignore(MAX,'\n');
-                member * to_remove = mtree.extract(find(mem_ID_to_remove));
+                std::cout << '\n' << "Enter the ID of the Member to remove: ";
+                std::cin >> mem_ID_to_remove;
+                std::cin.ignore(MAX,'\n');
+                Member * to_remove = mtree.extract(mtree.find(mem_ID_to_remove));
                 if(to_remove == NULL)
-                    cout <<'\n' << "Member was not found";
+                    std::cout <<'\n' << "Member was not found";
                 else
-                    cout << '\n' << "Member #" << mem_ID_to_remove << " was removed";
+                    std::cout << '\n' << "Member #" << mem_ID_to_remove << " was removed";
                 break;
-            case 'C':
-                //add provider to provider tree
-                provider new_provider;
-                new_provider.setInfo();
-                new_provider.setServices();
-                ptree.insert(new_provider);
+                }
+            case 'C':{
+                //add Provider to Provider tree
+                Provider new_Provider;
+                new_Provider.setInfo();
+                new_Provider.setServices();
+                ptree.insert(new_Provider);
                 break;
-            case 'D':
-                //find and remove provider from provider tree
+                }
+            case 'D':{
+                //find and remove Provider from Provider tree
                 int prov_ID_to_remove;
-                cout << '\n' << "Enter the ID of the member to remove: ";
-                cin >> prov_ID_to_remove;
-                cin.ignore(MAX,'\n');
-                member * to_remove = mptree.extract(find(prov_ID_to_remove));
+                std::cout << '\n' << "Enter the ID of the Member to remove: ";
+                std::cin >> prov_ID_to_remove;
+                std::cin.ignore(MAX,'\n');
+                Provider * to_remove = ptree.extract(ptree.find(prov_ID_to_remove));
                 if(to_remove == NULL)
-                    cout <<'\n' << "Provider was not found";
+                    std::cout <<'\n' << "Provider was not found";
                 else
-                    cout << '\n' << "Provider #" << prov_ID_to_remove << " was removed";
+                    std::cout << '\n' << "Provider #" << prov_ID_to_remove << " was removed";
                 break;
-            case 'E':
-                //print reports for all members
+                }
+            case 'E':{
+                //print reports for all Members
                 for(auto mem_ptr = mtree.begin(); mem_ptr != mtree.end(); mem_ptr++)
                 {
-            TODO:
-                //print members info
-                //print members service tree
+            //TODO:
+                //print Members info
+                //print Members service tree
                 }
                 break;
-            case 'F':
-                //get desired provider and print their report
+                }
+            case 'F':{
+                //get desired Provider and print their report
                 int prov_ID;
-                cout << '\n' << "Enter the ID of the provider to print: ";
-                cin >> prov_ID;
-                cin.ignore(MAX,'\n');
-                provider * prov_to_print = mptree.extract(find(prov_to_print));
-                prov_to_print.summaryReport();
+                std::cout << '\n' << "Enter the ID of the Provider to print: ";
+                std::cin >> prov_ID;
+                std::cin.ignore(MAX,'\n');
+                Provider * prov_to_print = ptree.extract(ptree.find(prov_to_print));
+                prov_to_print->summaryReport();
                 break;
-            case 'G':
+                }
+            case 'G':{
                 //print the manager report
                 float prov_service_total;
-                int total_providers;
-                for(auto prov_ptr = ptree.begin(); prov_ptr != mtree.end(); prov_ptr++)
+                int total_Providers;
+                for(auto prov_ptr = ptree.begin(); prov_ptr != ptree.end(); prov_ptr++)
                 {
-            TODO:
-             //total_providers += prov_ptr->didProvide()
+            //TODO:
+             //total_Providers += prov_ptr->didProvide()
              //prov_service_total += prov_ptr->gettotal()
              //prov_ptr->printManReport();
                 }
-                cout << '\n' << "Total Providers for week: " << total_providers;
-                cout << '\n' << "Overall Fee Total: " << prov_service_total;
+                std::cout << '\n' << "Total Providers for week: " << total_Providers;
+                std::cout << '\n' << "Overall Fee Total: " << prov_service_total;
                 break;
-            case 'H':
-                //find member and edit their info
+                }
+            case 'H':{
+                //find Member and edit their info
                 int mem_ID_to_edit;
-                cout << '\n' << "Enter the ID of the member to edit: ";
-                cin >> mem_ID_to_edit;
-                cin.ignore(MAX,'\n');
-                member * to_edit = mtree.extract(find(mem_ID_to_edit));
+                std::cout << '\n' << "Enter the ID of the Member to edit: ";
+                std::cin >> mem_ID_to_edit;
+                std::cin.ignore(MAX,'\n');
+                Member * to_edit = mtree.extract(mtree.find(mem_ID_to_edit));
                 if(to_edit == NULL)
-                    cout << '\n' << mem_ID_to_edit << " was not a valid ID";
+                    std::cout << '\n' << mem_ID_to_edit << " was not a valid ID";
                 else
                     to_edit->setMemberInfo();
                 break;
-            case 'I':
-                //find provider and edit their info
+                }
+            case 'I':{
+                //find Provider and edit their info
                 int prov_ID_to_edit;
-                cout << '\n' << "Enter the ID of the provider to edit: ";
-                cin >> prov_ID_to_edit;
-                cin.ignore(MAX,'\n');
-                provider * to_edit = mtree.extract(find(prov_ID_to_edit));
+                std::cout << '\n' << "Enter the ID of the Provider to edit: ";
+                std::cin >> prov_ID_to_edit;
+                std::cin.ignore(MAX,'\n');
+                Provider * to_edit = ptree.extract(ptree.find(prov_ID_to_edit));
                 if(to_edit == NULL)
-                    cout << '\n' << prov_ID_to_edit << " was not a valid ID";
+                    std::cout << '\n' << prov_ID_to_edit << " was not a valid ID";
                 else
                     to_edit->setInfo();
                 break;
+                }
             case 'Q':
                 break;
     }while(response != 'Q')
 
-    //update the member and provider files
+    //update the Member and Provider files
 
     return;
 }
 
 //Provider terminal
-void providerTerminal(provider * this_provider, std::set <member> mtree)
+void providerTerminal(Provider * this_Provider, std::set <Member> mtree)
 {
 
     char response;
     int numres;
+    bool svalid;
 
     do{
-        cout << '\n' << "Enter A to check member ID status"
+        std::cout << '\n' << "Enter A to check Member ID status"
         << '\n' << "Enter B to add a new service"
         << '\n' << "Enter C to check service ID"
         << '\n' << "Enter D to view services list"
         << '\n' << "Enter E to provide service"
-        << '\n' << "Enter F to print provider report"
+        << '\n' << "Enter F to print Provider report"
         << '\n' << "Enter Q to exit terminal"
         << '\n' << "Input: ";
-        cin >> reponse;
-        cin.ignore(MAX,'\n');
+        std::cin >> response;
+        std::cin.ignore(MAX,'\n');
         response = toupper(response);
         switch (response)
         {
-            case 'A':
-                cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
-                cin >> numres;
-                cin.ignore(MAX,'\n');
-                member * mvalid = mtree.extract(find(numres));
-                if (mvalid == NULL) cout << "Member ID is invalid.\n";
-                else if (mvalid->getMemStatus() == FALSE) cout << "Membership has been suspended.\n";
-                else cout << "Member ID is valid.\n";
+            case 'A':{
+                std::cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
+                std::cin >> numres;
+                std::cin.ignore(MAX,'\n');
+                Member * mvalid = mtree.extract(mtree.find(numres));
+                if (mvalid == NULL) std::cout << "Member ID is invalid.\n";
+                else if (mvalid->getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
+                else std::cout << "Member ID is valid.\n";
                 break;
-            case 'B':
-                this_provider.addService();
+                }
+            case 'B':{
+                this_Provider.addService();
                 break;
-            case 'C':
-                cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
-                cin >> numres;
-                cin.ignore(MAX,'\n');
-                bool svalid = this_provider->checkServiceID(numres);
-                if (svalid == FALSE) cout << "Service ID is not valid.\n";
-                else cout << "Service ID " << numres << " is valid.\n";
+                }
+            case 'C':{
+                std::cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
+                std::cin >> numres;
+                std::cin.ignore(MAX,'\n');
+                svalid = this_Provider->checkServiceID(numres);
+                if (svalid == -1) std::cout << "Service ID is not valid.\n";
+                else std::cout << "Service ID " << numres << " is valid.\n";
                 break;
-            case 'D':
-                this_provider->printServiceList();
+                }
+            case 'D':{
+                this_Provider->printServiceList();
                 break;
-            case 'E':
-                cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
-                cin >> numres;
-                cin.ignore(MAX,'\n');
-                member * mvalid = mtree.extract(find(numres));
-                if (mvalid == NULL) cout << "Member ID is invalid.\n";
-                else if (mvalid->getMemStatus() == FALSE) cout << "Membership has been suspended.\n";
+                }
+            case 'E':{
+                std::cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
+                std::cin >> numres;
+                std::cin.ignore(MAX,'\n');
+                Member * mvalid = mtree.extract(mtree.find(numres));
+                if (mvalid == NULL) std::cout << "Member ID is invalid.\n";
+                else if (mvalid->getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
                 else
                 {
-                    cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
-                    cin >> numres;
-                    cin.ignore(MAX,'\n');
-                    bool svalid = this_provider->checkServiceID(numres);
-                    if (svalid == FALSE) cout << "Service ID is not valid.\n";
-                    else cout << "ERROR: SERVICE PROVISION FUNCTIONALITY NOT IMPLEMENTED.\n";
+                    std::cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
+                    std::cin >> numres;
+                    std::cin.ignore(MAX,'\n');
+                    svalid = this_Provider->checkServiceID(numres);
+                    if (svalid == -1) std::cout << "Service ID is not valid.\n";
+                    else std::cout << "ERROR: SERVICE PROVISION FUNCTIONALITY NOT IMPLEMENTED.\n";
                 }
                 break;
-            case 'F':
-                this_provider.summaryReport();
+                }
+            case 'F':{
+                this_Provider.summaryReport();
                 break;
+                }
             case 'Q':
                 return;
                 break;
-            default: cout << "Unknown command."
+            default:
+                std::cout << "Unknown command.";
         }
-    }while(response != 'Q')
+    }while(response != 'Q');
     return;
 }
 
-//login terminal that branches to provider or manager
-int main()
+//login terminal that branches to Provider or manager
+int main(void)
 {
     char response;
     int check_id;
     int manID = 123456;
-    std::set <provider> ptree;
-    std::set <member> mtree;
-    //read in provider tree
-    //read in member tree
+    std::set <Provider> ptree;
+    std::set <Member> mtree;
+    //read in Provider tree
+    //read in Member tree
 
-    cout << "Enter 'P' for provider or 'M' for manager : ";
-    cin >> response;
+    std::cout << "Enter 'P' for Provider or 'M' for manager : ";
+    std::cin >> response;
     response = toupper(response);
     if(response == 'M')
     {
-        cout << '\n' << "Enter manager ID: ";
-        cin.get(check_id,INTMAX);
+        std::cout << '\n' << "Enter manager ID: ";
+        std::cin.get(check_id,INTMAX);
         if(check_id == manID)
             managerTerminal(mtree,ptree);
     }
     else if(response == 'P')
     {
-        cout << '\n' << "Enter provider ID: ";
-        cin.get(check_id,INTMAX);
-        if(check_id == "one of the provider ids")
-            //find provider in provider tree
-            providerTerminal(/*found provider*/);
+        std::cout << '\n' << "Enter Provider ID: ";
+        std::cin.get(check_id,INTMAX);
+        if(check_id == "one of the Provider ids")
+            //find Provider in Provider tree
+            ProviderTerminal(/*found Provider*/);
     }
-    else cout << "Invalid command.\n";
+    else
+        std::cout << "Invalid command.\n";
 
     return 0;
 }

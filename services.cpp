@@ -24,6 +24,18 @@ void Service::setInfo()
     return;
 }
 
+bool operator<(const Service& leftSide, const Service& rightSide) {
+	return left_side.id < right_side.id;
+}
+
+bool operator<(const unsigned int& leftSide, const Service& rightSide) {
+	return left_side < right_side.id;
+}
+
+bool operator<(const Service& leftSide, const unsigned int& rightSide) {
+	return left_side.id < right_side;
+}
+
 //test main to make sure function is working
 int main()
 {
