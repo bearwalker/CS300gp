@@ -38,7 +38,7 @@ class Member
 		bool getMemStatus();
 		void memberInactive();
 		void printMemServices();
-		void addService(Service);
+		void addService(int);
 
 		//these operators need to overloaded in order to use set
 		//for sorting a set of Members
