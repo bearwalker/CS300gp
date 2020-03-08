@@ -28,7 +28,7 @@ void managerTerminal(std::set <member> mtree, std::set <provider> ptree)
         {
             case 'A':
                 //add member to the member tree
-                member new_member;
+                Member new_member;
                 new_member.setMemberInfo();
                 mtree.insert(new_member);
                 break;
@@ -38,7 +38,7 @@ void managerTerminal(std::set <member> mtree, std::set <provider> ptree)
                 cout << '\n' << "Enter the ID of the member to remove: ";
                 cin >> mem_ID_to_remove;
                 cin.ignore(MAX,'\n');
-                member * to_remove = mtree.extract(find(mem_ID_to_remove));
+                Member * to_remove = mtree.extract(find(mem_ID_to_remove));
                 if(to_remove == NULL)
                     cout <<'\n' << "Member was not found";
                 else
@@ -57,7 +57,7 @@ void managerTerminal(std::set <member> mtree, std::set <provider> ptree)
                 cout << '\n' << "Enter the ID of the member to remove: ";
                 cin >> prov_ID_to_remove;
                 cin.ignore(MAX,'\n');
-                member * to_remove = mptree.extract(find(prov_ID_to_remove));
+                Member * to_remove = mptree.extract(find(prov_ID_to_remove));
                 if(to_remove == NULL)
                     cout <<'\n' << "Provider was not found";
                 else

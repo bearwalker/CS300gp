@@ -3,62 +3,55 @@
 #include <string>
 #include <iostream>
 //#include "tree.hh"
-using namespace std;
 
-//defs moved to header
-//using a tree as the data structure, this is managed in main. 
-//We don't have to worry about the member data structure.
 
-//TODO: should this print member info or supply info to interface developers?
+
 bool Member::printMemberInfo(int ID){
 	if(ID == current->member.ID_number)
 	{
-		cout << "ID: " << ID_number << endl;
-		cout << "Member Status: " << Mem_status << endl;
-		cout << "Member Name: " << name << endl;
-		cout << "Address: " << address << endl;
-		cout << city << ", " << state << " " << zip << endl << endl;
+		std::cout << "ID: " << ID_number << std::endl;
+		std::cout << "Member Status: " << Mem_status << std::endl;
+		std::cout << "Member Name: " << name << std::endl;
+		std::cout << "Address: " << address << std::endl;
+		std::cout << city << ", " << state << " " << zip << std::endl << std::endl;
 		return true;
 	}
 	return false;
 
 }
 
-// TODO: Transfer to constructor?
+
 // TODO: Read in data from file instead.
 void Member::setMemberInfo()
 {
-	//TODO: first check if member exists
 	//TODO: use .resize to make inputs match the specifications in the requirements doc
 
 	int num;
-	string a_string;
+	std::string a_string;
 
-	cout << "ID: ";
-	cin >> ID_number;
-	cin.ignore(MAX, '\n');
+	std::cout << "ID: ";
+	std::cin >> ID_number;
+	std::cin.ignore(MAX, '\n');
 	
-	cout << "Name: ";
-	getline(cin, Name);
-	cin.ignore(MAX, '\n');
+	std::cout << "Name: ";
+	std::getline(cin, Name);
+	std::cin.ignore(MAX, '\n');
 
-	cout << "Address: ";
-	getline(cin, address);
-	cin.ignore(MAX, '\n');
+	std::cout << "Address: ";
+	std::getline(cin, address);
+	std::cin.ignore(MAX, '\n');
 
-	cout << "City: ";
-	getline(cin, city);
-	cin.ignore(MAX, '\n');
+	std::cout << "City: ";
+	std::getline(cin, city);
+	std::cin.ignore(MAX, '\n');
 	
-	cout << "State: ";
-	getline(cin, state);
-	cin.ignore(MAX, '\n');
+	std::cout << "State: ";
+	std::getline(cin, state);
+	std::cin.ignore(MAX, '\n');
 
-	cout << "Zip: ";
-	cin >> zip;
-	cin.ignore(MAX, '\n');
-
-	//TODO: initialize service tree
+	std::cout << "Zip: ";
+	std::cin >> zip;
+	std::cin.ignore(MAX, '\n');
 
 	return;
 
@@ -77,9 +70,20 @@ void Member::memberInactive()
 	Mem_status = 0;
 }
 
-//TODO: implement function, see other classes to see how to implement print a set
 void Member::printMemServices()
 {
+	float total = 0;
+
+	for(auto service = servicesUsed.begin(); service != servicesUsed.end(); service++)
+	{
+		total += service->price * service->times_used;
+
+		std::cout << "Service ID: " << service->ID << std::endl;
+		std::cout << "Service Name: " << service->name << std::endl;
+		std::cout << "Service Price: " << service->price << std::endl;
+		std::cout << "Times Used: " <<  service->times_used << std::endl;
+	}
+	std::cout << "Total Fees: $" << total << std::endl;
 
 }
 
@@ -87,6 +91,13 @@ void Member::printMemServices()
 //TODO: implement functon, see other class for example of how to add new item to set
 void Member::addService(Service)
 {
+	auto serviceIterator = servicesUsed.find(serviceID);
+	
+	if(serviceIterator == servicesUsed.end())
+		servicesUsed.insert(Service);
+	else
+		++servicesUsed.times_used;
+
 }
 
 
@@ -131,11 +142,11 @@ int main(){
 
 
 	// tests printMemberInfo function
-	cout << "\nEnter in member's ID to search for in list: ";
+	std::cout << "\nEnter in member's ID to search for in list: ";
 	int num;
-	cin >> num;
+	std::cin >> num;
 	if(members.printMemberInfo(num) == false){
-		cout << "\nMember not Found" << endl;
+		cout << "\nMember not Found" << std::endl;
 	}
 
 	return 0;
