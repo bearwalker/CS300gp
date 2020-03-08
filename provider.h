@@ -42,7 +42,7 @@ public:
 	void printServiceList();
 
 	// Record a service provided to a member
-	void createSessionReport(Member member, Service service, std::chrono::time_point time);
+	void createSessionReport(Member member, Service service, std::chrono::system_clock::time_point time);
 
 	// Print a report on all services provided
 	void summaryReport();
