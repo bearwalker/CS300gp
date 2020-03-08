@@ -1,4 +1,6 @@
+#include <chrono>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 #include "provider.h"
@@ -60,7 +62,9 @@ bool Provider::loadInformation(std::string informationFile) {
 	}
 
 	// Check length constraints
-	if (numDigits()
+	//if (numDigits()
+
+	return true;
 	
 	
 }
@@ -74,8 +78,8 @@ bool Provider::checkServiceID(unsigned int serviceID) {
 	// Find returns an iterator to end() if it can't find it
 	if (serviceIterator == servicesProvided.end())
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 void summaryReport() {
@@ -104,19 +108,19 @@ bool Provider::providedServices() {
 	return numServicesProvided > 0;
 }
 
-float Provider::weekFeetotal() {
+float Provider::weekFeeTotal() {
 	return feeTotal;
 }
 
 bool operator<(const Provider& leftSide, const Provider& rightSide) {
-	return left_side.id < right_side.id;
+	return leftSide.id < rightSide.id;
 }
 
 bool operator<(const unsigned int& leftSide, const Provider& rightSide) {
-	return left_side < right_side.id;
+	return leftSide < rightSide.id;
 }
 
 bool operator<(const Provider& leftSide, const unsigned int& rightSide) {
-	return left_side.id < right_side;
+	return leftSide.id < rightSide;
 }
 
