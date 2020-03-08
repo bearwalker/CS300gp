@@ -17,7 +17,7 @@ const int MAX = 256; //for ignores
 struct Service
 {
     void setInfo();     //Set the service info
-    uint ID;            //Service id code (max 6)
+    int ID;            //Service id code (max 6)
     std::string name;   //Service name (max 20)
     float price;        //Service cost (max 5)
     int times_used;     //Times service used (max 3)
@@ -48,12 +48,12 @@ class Member
 	private:
 		int ID_number;
 		bool Mem_status;
-		string name;
-		string address;
-		string city;
-		string state;
+		std::string name;
+		std::string address;
+		std::string city;
+		std::string state;
 		int zip;
-		set<Service> servicesUsed;
+		std::set<Service> servicesUsed;
 };
 
 
