@@ -67,11 +67,11 @@ void Member::memberInactive()
 	Mem_status = 0;
 }
 
-void printMemServices()
+void Member::printMemServices()
 {
 	float total = 0;
 
-	for(auto service = servicesUsed.begin(); service != servicesUsed.end(); service++)
+	for(std::set<Service>::iterator service = servicesUsed.begin(); service != servicesUsed.end(); service++)
 	{
 		total += service->price * service->times_used;
 
@@ -88,7 +88,7 @@ void printMemServices()
 //TODO: implement functon, see other class for example of how to add new item to set
 void Member::addService(Service)
 {
-	auto serviceIterator = servicesUsed.find(serviceID);
+	std::set<Service>::iterator serviceIterator = servicesUsed.find(Service);
 	
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(Service);
@@ -143,7 +143,7 @@ int main(){
 	int num;
 	std::cin >> num;
 	if(members.printMemberInfo(num) == false){
-		cout << "\nMember not Found" << std::endl;
+		std::cout << "\nMember not Found" << std::endl;
 	}
 
 	return 0;
