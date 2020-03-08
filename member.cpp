@@ -92,8 +92,8 @@ void Member::addService(Service)
 	
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(Service);
-	else
-		++serviceIterator.times_used;
+//	else
+//		++serviceIterator.times_used;
 
 }
 
