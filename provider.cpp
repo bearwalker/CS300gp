@@ -14,7 +14,7 @@ Provider::Provider() {
 	zip = 0;
 }
 
-Provider::Provider(std::sring informationFile) {
+Provider::Provider(std::string informationFile) {
 	// If the information file can't be read use null defaults
 	if (!loadInformation(informationFile)) {
 			id = 0;

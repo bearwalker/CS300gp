@@ -53,6 +53,7 @@ class Member
 		string city;
 		string state;
 		int zip;
+		set<Service> servicesUsed;
 };
 
 
