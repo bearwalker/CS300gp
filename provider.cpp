@@ -70,10 +70,8 @@ bool Provider::loadInformation(std::string informationFile) {
 }
 
 
-
-
 bool Provider::checkServiceID(unsigned int serviceID) {
-	auto serviceIterator = servicesProvided.find(serviceID);
+	auto serviceIterator = servicesProvided.find<unsigned int>(serviceID);
 
 	// Find returns an iterator to end() if it can't find it
 	if (serviceIterator == servicesProvided.end())

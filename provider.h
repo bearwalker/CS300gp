@@ -4,6 +4,8 @@
 #include <set>
 #include <string>
 
+#include "defs.h"
+
 // Private data length constraints
 const unsigned int ID_DIGITS = 9;
 const unsigned int NAME_CHARACTERS = 25;
@@ -70,5 +72,5 @@ private:
 	unsigned int zip;
 	float feeTotal;
 	unsigned int numServicesProvided;
-	std::set<Service> servicesProvided;
+	std::set<Service, std::less<>> servicesProvided;
 };
