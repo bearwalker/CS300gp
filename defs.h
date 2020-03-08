@@ -61,5 +61,5 @@ class Member
 //Helper functions
 
 //Main.cpp
-void managerTerminal(std::set <member> mtree, std::set <provider> ptree)
-void providerTerminal(provider *);
+//void managerTerminal(std::set <Member> mtree, std::set <provider> ptree)
+//void providerTerminal(provider *);

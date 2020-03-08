@@ -6,17 +6,14 @@
 
 
 
-bool Member::printMemberInfo(int ID){
-	if(ID == current->member.ID_number)
-	{
-		std::cout << "ID: " << ID_number << std::endl;
-		std::cout << "Member Status: " << Mem_status << std::endl;
-		std::cout << "Member Name: " << name << std::endl;
-		std::cout << "Address: " << address << std::endl;
-		std::cout << city << ", " << state << " " << zip << std::endl << std::endl;
-		return true;
-	}
-	return false;
+bool Member::printMemberInfo(int ID)
+{
+	std::cout << "ID: " << ID_number << std::endl;
+	std::cout << "Member Status: " << Mem_status << std::endl;
+	std::cout << "Member Name: " << name << std::endl;
+	std::cout << "Address: " << address << std::endl;
+	std::cout << city << ", " << state << " " << zip << std::endl << std::endl;
+	return true;
 
 }
 
@@ -34,19 +31,19 @@ void Member::setMemberInfo()
 	std::cin.ignore(MAX, '\n');
 	
 	std::cout << "Name: ";
-	std::getline(cin, Name);
+	std::getline(std::cin, name);
 	std::cin.ignore(MAX, '\n');
 
 	std::cout << "Address: ";
-	std::getline(cin, address);
+	std::getline(std::cin, address);
 	std::cin.ignore(MAX, '\n');
 
 	std::cout << "City: ";
-	std::getline(cin, city);
+	std::getline(std::cin, city);
 	std::cin.ignore(MAX, '\n');
 	
 	std::cout << "State: ";
-	std::getline(cin, state);
+	std::getline(std::cin, state);
 	std::cin.ignore(MAX, '\n');
 
 	std::cout << "Zip: ";
@@ -70,7 +67,7 @@ void Member::memberInactive()
 	Mem_status = 0;
 }
 
-void Member::printMemServices()
+void printMemServices()
 {
 	float total = 0;
 
