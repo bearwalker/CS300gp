@@ -60,6 +60,9 @@ class Member
 
 
 //Helper functions
+bool operator<(const Service& leftSide, const Service& rightSide);
+bool operator<(const unsigned int& leftSide, const Service& rightSide);
+bool operator<(const Service& leftSide, const unsigned int& rightSide);
 
 //Main.cpp
 void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree);

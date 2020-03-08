@@ -130,7 +130,7 @@ void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree)
                 }
             case 'Q':
                 break;
-    }while(response != 'Q')
+    }while(response != 'Q');
 
     //update the Member and Provider files
 
@@ -224,8 +224,8 @@ int main(void)
     char response;
     int check_id;
     int manID = 123456;
-    std::set <Provider> ptree;
-    std::set <Member> mtree;
+    std::set <Provider, std::less<>> ptree;
+    std::set <Member, std::less<>> mtree;
     //read in Provider tree
     //read in Member tree
 
