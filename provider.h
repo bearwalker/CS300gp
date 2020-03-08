@@ -14,6 +14,8 @@ const unsigned int CITY_CHARACTERS = 25;
 const unsigned int STATE_CHARACTERS = 2;
 const unsigned int ZIP_DIGITS = 5;
 
+class Member;
+class Service;
 
 class Provider {
 public:
@@ -34,7 +36,7 @@ public:
 
 	// Add services to the provider interactively
 	void setServices();
-	
+
 	// Set up a new provider interactively
 	void setInfo();
 
@@ -55,7 +57,7 @@ public:
 
 	// Returns total fees for the week
 	float weekFeeTotal();
-	
+
 	// For sorting a std::set of Providers
 	friend bool operator<(const Provider& leftSide, const Provider& rightSide);
 
