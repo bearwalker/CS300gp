@@ -86,14 +86,14 @@ void Member::printMemServices()
 
 
 //TODO: implement functon, see other class for example of how to add new item to set
-void Member::addService(Service)
+void Member::addService(Service used)
 {
-	std::set<Service>::iterator serviceIterator = servicesUsed.find(Service);
+	std::set<Service>::iterator serviceIterator = servicesUsed.find(used);
 	
 	if(serviceIterator == servicesUsed.end())
-		servicesUsed.insert(Service);
+		servicesUsed.insert(used);
 	else
-		++serviceIterator.times_used;
+		++(serviceIterator->times_used);
 
 }
 
