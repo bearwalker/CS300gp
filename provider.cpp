@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "provider.h"
+#include "defs.h"
 
 Provider::Provider() {
 	id = 0;

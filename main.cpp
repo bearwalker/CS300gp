@@ -1,7 +1,6 @@
 //Implementation of the login,Provider, and man terminals
 
 #include "defs.h"  //combined definitions list
-using namespace std;
 
 //Manager terminal
 void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree)
