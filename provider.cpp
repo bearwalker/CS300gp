@@ -80,7 +80,7 @@ bool Provider::checkServiceID(unsigned int serviceID) {
 	return true;
 }
 
-void summaryReport() {
+void Provider::summaryReport() {
 	float total = 0;
 
 	// Print each service and total up the running cost
