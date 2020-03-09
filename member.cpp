@@ -6,7 +6,7 @@
 
 
 
-bool Member::printMemberInfo(int ID)
+bool Member::printMemberInfo(unsigned int ID)
 {
 	std::cout << "ID: " << ID_number << std::endl;
 	std::cout << "Member Status: " << Mem_status << std::endl;
@@ -85,16 +85,18 @@ void Member::printMemServices()
 }
 
 
-//TODO: implement functon, see other class for example of how to add new item to set
 void Member::addService(Service used)
 {
-	std::set<Service>::iterator serviceIterator = servicesUsed.find(used);
+	std::set<Service>::iterator serviceIterator = servicesUsed.find<unsigned int>(used.ID);
 	
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(used);
-	else
-		++(serviceIterator->times_used);
-
+/*	else
+	{	Service repeated = servicesUsed.extract(serviceIterator);
+		++(repeated.times_used);
+		servicesUsed.insert(repeated);
+	}
+*/
 }
 
 
