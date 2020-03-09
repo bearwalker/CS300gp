@@ -1,7 +1,6 @@
 //Implementation of the login,Provider, and man terminals
 
 #include "defs.h"  //combined definitions list
-using namespace std;
 
 //Manager terminal
 void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std::less<>> ptree)
@@ -35,7 +34,7 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 }
             case 'B':{
                 //find and remove a Member from Provider tree
-                int mem_ID_to_remove;
+                unsigned int mem_ID_to_remove;
                 std::cout << '\n' << "Enter the ID of the Member to remove: ";
                 std::cin >> mem_ID_to_remove;
                 std::cin.ignore(MAX,'\n');

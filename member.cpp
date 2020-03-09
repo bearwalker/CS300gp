@@ -6,7 +6,7 @@
 
 
 
-bool Member::printMemberInfo(unsigned int ID)
+bool Member::printMemberInfo()
 {
 	std::cout << "ID: " << ID_number << std::endl;
 	std::cout << "Member Status: " << Mem_status << std::endl;
@@ -138,13 +138,16 @@ int main(){
 
 	// tests setMemberInfo function
 	members.setMemberInfo();
+	
+	std::cout << "Status: " << members.getMemStatus() << std::endl;
 
+	members.memberInactive();
+
+	std::cout << "Status: " <<members.getMemStatus() << std::endl;
 
 	// tests printMemberInfo function
-	std::cout << "\nEnter in member's ID to search for in list: ";
-	int num;
-	std::cin >> num;
-	if(members.printMemberInfo(num) == false){
+	std::cout << "\nMember Info: " << std::endl;
+	if(members.printMemberInfo() == false){
 		std::cout << "\nMember not Found" << std::endl;
 	}
 
