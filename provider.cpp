@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "provider.h"
+#include "defs.h"
 
 Provider::Provider() {
 	id = 0;
@@ -65,8 +65,8 @@ bool Provider::loadInformation(std::string informationFile) {
 	//if (numDigits()
 
 	return true;
-	
-	
+
+
 }
 
 
@@ -86,7 +86,7 @@ void Provider::summaryReport() {
 	// Print each service and total up the running cost
 	for (auto service = servicesProvided.begin(); service != servicesProvided.end(); service++) {
 		total += service->price * service->times_used;
-		
+
 		std::cout << "Service ID: " << service->ID << std::endl;
 		std::cout << "Service Name: " << service->name << std::endl;
 		std::cout << "Service Price: $" << service->price << std::endl;

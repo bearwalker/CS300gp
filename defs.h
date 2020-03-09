@@ -22,7 +22,6 @@ const unsigned int ZIP_DIGITS = 5;
 
 //Class definitions
 class Member;
-class Service;
 
 //Def of service struct
 struct Service
