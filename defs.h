@@ -47,7 +47,7 @@ class Member
 		friend bool operator<(const unsigned int& left_side, const Member& right_side);
 		friend bool operator<(const Member& left_side, const unsigned int& right_side);
 	private:
-		int ID_number;
+		unsigned int ID_number;
 		bool Mem_status;
 		std::string name;
 		std::string address;
