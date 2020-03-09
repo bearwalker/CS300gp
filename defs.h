@@ -101,7 +101,7 @@ class Member
 {
 	public:
 		Member(); //initializes members to 0
-		bool printMemberInfo(unsigned int); //Searches for member based on ID number.  Retruns false if member not found in list.
+		bool printMemberInfo(); //Searches for member based on ID number.  Retruns false if member not found in list.
 		void setMemberInfo(); //sets member info from user. Refactor to read in from file.
 		bool getMemStatus();
 		void memberInactive();
