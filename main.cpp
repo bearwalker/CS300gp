@@ -4,7 +4,7 @@
 using namespace std;
 
 //Manager terminal
-void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree)
+void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std::less<>> ptree)
 {
 
     char response;
@@ -138,7 +138,7 @@ void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree)
 }
 
 //Provider terminal
-void providerTerminal(Provider * this_Provider, std::set <Member> mtree)
+void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mtree)
 {
 
     char response;
@@ -224,8 +224,8 @@ int main(void)
     char response;
     int check_id;
     int manID = 123456;
-    std::set <Provider, std::less<>> ptree;
-    std::set <Member, std::less<>> mtree;
+    std::set<Provider, std::less<>> ptree;
+    std::set<Member, std::less<>> mtree;
     //read in Provider tree
     //read in Member tree
 
