@@ -6,7 +6,7 @@
 
 
 
-bool Member::printMemberInfo(int ID)
+bool Member::printMemberInfo(unsigned int ID)
 {
 	std::cout << "ID: " << ID_number << std::endl;
 	std::cout << "Member Status: " << Mem_status << std::endl;
@@ -87,7 +87,7 @@ void Member::printMemServices()
 
 void Member::addService(Service used)
 {
-	std::set<Service>::iterator serviceIterator = servicesUsed.find(used);
+	std::set<Service>::iterator serviceIterator = servicesUsed.find<unsigned int>(used.ID);
 	
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(used);
