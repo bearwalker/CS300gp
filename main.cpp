@@ -39,7 +39,7 @@ void managerTerminal(std::set <Member> mtree, std::set <Provider> ptree)
                 std::cout << '\n' << "Enter the ID of the Member to remove: ";
                 std::cin >> mem_ID_to_remove;
                 std::cin.ignore(MAX,'\n');
-                Member * to_remove = mtree.extract(mtree.find(mem_ID_to_remove));
+                Member * to_remove = mtree.extract(mtree.find<unsigned int>(mem_ID_to_remove));
                 if(to_remove == NULL)
                     std::cout <<'\n' << "Member was not found";
                 else
