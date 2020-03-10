@@ -31,7 +31,8 @@ class Member;
 struct Service
 {
     void setInfo();     //Set the service info
-    unsigned int ID;            //Service id code (max 6)
+    void displayInfo(); //Display service info
+    unsigned int ID;    //Service id code (max 6)
     std::string name;   //Service name (max 20)
     float price;        //Service cost (max 5)
     int times_used;     //Times service used (max 3)
