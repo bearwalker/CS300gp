@@ -1,7 +1,7 @@
-//#define CATCH_CONFIG_MAIN
+#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "csvParser.h"
+#include "../csvParser.h"
 
 TEST_CASE("Testing parsing a good file", "[csvParser]") {
 	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
@@ -29,15 +29,6 @@ TEST_CASE("Tests csvParser on a bad file", "[csvParser]") {
 	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
 
 	REQUIRE(result == false);
-}
-
-int main() {
-	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
-	std::string file = "good.csv";
-
-	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
-
-	return 0;
 }
 
 
