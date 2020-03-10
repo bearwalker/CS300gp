@@ -4,7 +4,7 @@
 #include <tuple>
 #include <vector>
 
-#include "defs.h"
+#include "csvParser.h"
 
 template <typename... Types>
 bool parseFile(std::vector<std::tuple<Types...>>& fileContents, std::string filePath, char seperator, char terminator, char comment) {
