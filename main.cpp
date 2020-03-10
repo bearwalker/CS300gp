@@ -87,7 +87,8 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 std::cin >> prov_ID;
                 std::cin.ignore(MAX,'\n');
                 auto prov_to_print = ptree.find(prov_ID);
-                (*prov_to_print).summaryReport();
+                Provider to_print = *prov_to_print;
+                to_print.summaryReport();
                 break;
             }
             case 'G':{
@@ -114,8 +115,10 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 auto to_edit = mtree.find(mem_ID_to_edit);
                 if(to_edit == mtree.end())
                     std::cout << '\n' << mem_ID_to_edit << " was not a valid ID";
-                else
-                    (*to_edit).setMemberInfo();
+                else{
+                    Member mem_to_edit = *to_edit;
+                    mem_to_edit.setMemberInfo();
+                }
                 break;
             }
             case 'I':{
@@ -127,12 +130,15 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 auto to_edit = ptree.find(prov_ID_to_edit);
                 if(to_edit == ptree.end())
                     std::cout << '\n' << prov_ID_to_edit << " was not a valid ID";
-                else
-                    (*to_edit).setInfo();
+                else{
+                    Provider prov_to_edit = *to_edit;
+                    prov_to_edit.setInfo();
+                }
                 break;
                 }
             case 'Q':
                 break;
+        }
     }while(response != 'Q');
 
     //update the Member and Provider files
@@ -168,12 +174,15 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 std::cin.ignore(MAX,'\n');
                 auto mvalid = mtree.find(numres);
                 if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
-                else if ((*mvalid).getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
-                else std::cout << "Member ID is valid.\n";
+                Member to_check = *mvalid;
+                if(to_check.getMemStatus() == -1)
+                    std::cout << "Membership has been suspended.\n";
+                else
+                    std::cout << "Member ID is valid.\n";
                 break;
                 }
             case 'B':{
-                this_Provider.addService();
+                this_Provider->addService();
                 break;
                 }
             case 'C':{
@@ -195,7 +204,9 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 std::cin.ignore(MAX,'\n');
                 auto mvalid = mtree.find(numres);
                 if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
-                else if ((*mvalid).getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
+                Member to_check = *mvalid;
+                if (to_check.getMemStatus() == -1)
+                    std::cout << "Membership has been suspended.\n";
                 else
                 {
                     std::cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
@@ -208,7 +219,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 break;
                 }
             case 'F':{
-                this_Provider.summaryReport();
+                this_Provider->summaryReport();
                 break;
                 }
             case 'Q':
@@ -227,6 +238,7 @@ int main(void)
     char response;
     int check_id;
     int manID = 123456;
+    int ID_MAX = 6;
     std::set<Provider, std::less<>> ptree;
     std::set<Member, std::less<>> mtree;
     //read in Provider tree
@@ -238,17 +250,22 @@ int main(void)
     if(response == 'M')
     {
         std::cout << '\n' << "Enter manager ID: ";
-        std::cin.get(check_id,INTMAX);
+        std::cin >> check_id;
+        std::cin.ignore(MAX,'\n');
         if(check_id == manID)
             managerTerminal(mtree,ptree);
     }
     else if(response == 'P')
     {
         std::cout << '\n' << "Enter Provider ID: ";
-        std::cin.get(check_id,INTMAX);
-        if(check_id == "one of the Provider ids")
+        std::cin >> check_id;
+        std::cin.ignore(MAX,'\n');
+        auto provider = ptree.find(check_id);
+        if(provider != ptree.end()){
             //find Provider in Provider tree
-            ProviderTerminal(/*found Provider*/);
+            Provider found = *provider;
+            providerTerminal(&found,mtree);
+        }
     }
     else
         std::cout << "Invalid command.\n";

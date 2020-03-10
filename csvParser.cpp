@@ -4,7 +4,7 @@
 #include <tuple>
 #include <vector>
 
-#include "defs.h"
+#include "csvParser.h"
 
 template <typename... Types>
 bool parseFile(std::vector<std::tuple<Types...>>& fileContents, std::string filePath, char seperator, char terminator, char comment) {
@@ -25,10 +25,10 @@ bool parseFile(std::vector<std::tuple<Types...>>& fileContents, std::string file
 	// If we didn't read anything return false
 	if (fileContents.size == 0)
 		return false;
-	
+
 	return true;
 }
-
+/*
 template<typename... Types>
 bool parseLine(std::tuple<Types...>& lineContents, std::ifstream& file, char seperator, char terminator, char comment) {
 	// File should be open and have contents
@@ -45,13 +45,13 @@ bool parseLine(std::tuple<Types...>& lineContents, std::ifstream& file, char sep
 
 	if (file.fail())
 		return false;
-	
+
 	// Grab elements in the line
 	bool returnValue = std::apply([](std::string& line, char seperator, char terminator, auto& ...element){return (getElement(line, element, seperator, terminator) && ...);}, lineContents);
 
 	return returnValue;
 }
-
+*/
 // string, uint, int, double, float
 bool getElement(std::string& element, std::string& line, char seperator, char terminator) {
 	std::string::size_type seperatorPosition = line.find(seperator);
@@ -60,7 +60,7 @@ bool getElement(std::string& element, std::string& line, char seperator, char te
 	// If we can't find the either seperator or the terminator there we can't ready data
 	if (seperatorPosition == std::string::npos && terminatorPosition == std::string::npos)
 		return false;
-	
+
 	// Grab contents until seperator or terminator, whichever comes first
 	if (seperatorPosition < terminatorPosition) {
 		// Substring and erase go from start to start+num characters

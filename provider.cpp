@@ -106,6 +106,88 @@ bool Provider::providedServices() {
 	return numServicesProvided > 0;
 }
 
+void Provider::setInfo()
+{
+    char response;
+
+    std::cout << '\n' << "Enter Name of provider: ";
+    std::getline(std::cin,name);
+    std::cin.ignore(MAX,'\n');
+    name.resize(CHARMAX);
+
+    std::cout << '\n' << "Enter " << name << " Provider ID: ";
+    std::cin >> id;
+    std::cin.ignore(MAX,'\n');
+
+    std::cout << '\n' << "Enter " << name << " Street Address: ";
+    std::getline(std::cin,address);
+    std::cin.ignore(MAX,'\n');
+    name.resize(CHARMAX);
+
+    std::cout << '\n' << "Enter " << name << " City: ";
+    std::getline(std::cin,city);
+    std::cin.ignore(MAX,'\n');
+    name.resize(CHARMAX);
+
+    std::cout << '\n' << "Enter " << name << " State(EG:OR): ";
+    std::getline(std::cin,state);
+    std::cin.ignore(MAX,'\n');
+    name.resize(CHARMAX);
+
+    std::cout << '\n' << "Enter " << name << " ZIP: ";
+    std::cin >> zip;
+    std::cin.ignore(MAX,'\n');
+
+    std::cout << '\n' << "Enter " << name << " Price: ";
+    std::cin >> feeTotal;
+    std::cin.ignore(MAX,'\n');
+
+    numServicesProvided = 0;
+
+    std::cout << '\n' << "Add Services? (Y/N)" << '\n';
+    std::cin >> response;
+    std::cin.ignore(MAX,'\n');
+    response = toupper(response);
+
+    if(response == 'Y')
+        setServices();
+    return;
+
+}
+
+void Provider::setServices()
+{
+    char response;
+    do{
+        addService();
+        std::cout << '\n' << "Add Another? (Y/N)" << '\n';
+        std::cin >> response;
+        std::cin.ignore('\n',MAX);
+        response = toupper(response);
+    }while(response != 'N');
+    return;
+
+}
+
+bool Provider::addService()
+{
+    Service new_serv;
+    new_serv.setInfo();
+    servicesProvided.insert(new_serv);
+    return true;
+}
+
+void Provider::printServiceList()
+{
+    for(auto serv_ptr = servicesProvided.begin(); serv_ptr != servicesProvided.end(); serv_ptr++){
+        Service current = *serv_ptr;
+        current.displayInfo();
+        std::cout << '\n' << '\n';
+    }
+    return;
+}
+
+
 float Provider::weekFeeTotal() {
 	return feeTotal;
 }
