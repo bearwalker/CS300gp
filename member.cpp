@@ -29,7 +29,7 @@ void Member::setMemberInfo()
 	std::cout << "ID: ";
 	std::cin >> ID_number;
 	std::cin.ignore(MAX, '\n');
-	
+
 	std::cout << "Name: ";
 	std::getline(std::cin, name);
 	std::cin.ignore(MAX, '\n');
@@ -41,7 +41,7 @@ void Member::setMemberInfo()
 	std::cout << "City: ";
 	std::getline(std::cin, city);
 	std::cin.ignore(MAX, '\n');
-	
+
 	std::cout << "State: ";
 	std::getline(std::cin, state);
 	std::cin.ignore(MAX, '\n');
@@ -88,7 +88,7 @@ void Member::printMemServices()
 void Member::addService(Service used)
 {
 	std::set<Service>::iterator serviceIterator = servicesUsed.find<unsigned int>(used.ID);
-	
+
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(used);
 /*	else
@@ -132,13 +132,13 @@ Member::Member()
 
 //no dynamic memory, no destructor needed
 
-// test the functions here as the client in main()
+/* test the functions here as the client in main()
 int main(){
 	Member members;
 
 	// tests setMemberInfo function
 	members.setMemberInfo();
-	
+
 	std::cout << "Status: " << members.getMemStatus() << std::endl;
 
 	members.memberInactive();
@@ -154,3 +154,4 @@ int main(){
 	return 0;
 
 }
+*/
