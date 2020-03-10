@@ -138,12 +138,6 @@ void Provider::setInfo()
     std::cin >> zip;
     std::cin.ignore(MAX,'\n');
 
-    std::cout << '\n' << "Enter " << name << " Price: ";
-    std::cin >> feeTotal;
-    std::cin.ignore(MAX,'\n');
-
-    numServicesProvided = 0;
-
     std::cout << '\n' << "Add Services? (Y/N)" << '\n';
     std::cin >> response;
     std::cin.ignore(MAX,'\n');

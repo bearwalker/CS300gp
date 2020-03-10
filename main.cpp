@@ -74,9 +74,11 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 //print reports for all Members
                 for(auto mem_ptr = mtree.begin(); mem_ptr != mtree.end(); mem_ptr++)
                 {
-            //TODO:
                 //print Members info
                 //print Members service tree
+                    Member to_print = *mem_ptr;
+                    to_print.printMemberInfo();
+                    to_print.printMemServices();
                 }
                 break;
             }
@@ -97,10 +99,18 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 int total_Providers;
                 for(auto prov_ptr = ptree.begin(); prov_ptr != ptree.end(); prov_ptr++)
                 {
-            //TODO:
              //total_Providers += prov_ptr->didProvide()
              //prov_service_total += prov_ptr->gettotal()
              //prov_ptr->printManReport();
+                    Provider to_print = *prov_ptr;
+                    /*TODO implement check for services provided
+                    if(to_print.numServicesProvided > 0){
+                        ++total_Providers;
+                        //get the fee total
+                        prov_service_total += to_print.feeTotal;
+                        to_print.printWeekReport();
+                    }
+                    */
                 }
                 std::cout << '\n' << "Total Providers for week: " << total_Providers;
                 std::cout << '\n' << "Overall Fee Total: " << prov_service_total;
@@ -215,6 +225,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                     svalid = this_Provider->checkServiceID(numres);
                     if (svalid == -1) std::cout << "Service ID is not valid.\n";
                     else std::cout << "ERROR: SERVICE PROVISION FUNCTIONALITY NOT IMPLEMENTED.\n";
+                    //TODO
                 }
                 break;
                 }

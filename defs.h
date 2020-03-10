@@ -141,7 +141,7 @@ bool operator<(const Service& leftSide, const unsigned int& rightSide);
 /*
 Parses the given csv or csv-like file.
 
-Example usage: 
+Example usage:
 std::vector<std::tuple<int, string, double>> data;
 parseFile<int, string, double>(data, "/folder/file.csv")
 
@@ -161,7 +161,7 @@ double mydouble = std::get<2>(data.at(0));
 @param terminator - the line termination character, default is ';'
 @param comment - if this character is seen at the start of a line it is ignored
 
-@return false on failure to read file, true on success, 
+@return false on failure to read file, true on success,
 data is returned via reference in fileContents
 */
 template <typename... Types>
@@ -189,7 +189,7 @@ fills this tuple
 @param file - an open filestream of the file to ready from
 @param seperator - the seperator character between elements, default is ','
 @param terminator - the line termination character, default is ';'
-@param comment - if this character is seen at the start of a line it is ignored, 
+@param comment - if this character is seen at the start of a line it is ignored,
 default is '#'
 
 @return false on failure to read line or if line is a comment,

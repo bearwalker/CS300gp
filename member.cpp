@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include "defs.h"
+#define CATCH_CONFIG_MAIN
+#include "tests/catch.hpp"
 
 
 
@@ -91,12 +93,9 @@ void Member::addService(Service used)
 
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(used);
-/*	else
-	{	Service repeated = servicesUsed.extract(serviceIterator);
-		++(repeated.times_used);
-		servicesUsed.insert(repeated);
-	}
-*/
+ 	else
+		++(used.times_used);
+
 }
 
 
@@ -158,3 +157,10 @@ int main(){
 
 //Member tests:
 
+
+TEST_CASE("Testing print member info")
+{
+	Member members;
+	
+	REQUIRE(members.printMemberInfo() == true);
+}
