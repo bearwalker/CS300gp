@@ -1,34 +1,43 @@
-#include <iostream>
+//#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
 
-#include "/usr/local/include/gtest/gtest.h"
+#include "csvParser.h"
 
-#include "../csvParser.h"
-
-TEST(CsvTests, GoodFile) {
+TEST_CASE("Testing parsing a good file", "[csvParser]") {
 	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
 	std::string file = "good.csv";
 
-	bool result = parseFile<int, unsigned int, float, double, std::string>(contents, file);
+	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
 
-	ASSERT_TRUE(result);
-	ASSERT_EQ(std::get<0>(contents.at(0)), -1);
-	ASSERT_EQ(std::get<1>(contents.at(0)), 1);
-	ASSERT_EQ(std::get<2>(contents.at(0)), 1.5);
-	ASSERT_EQ(std::get<3>(contents.at(0)), 2.5);
-	ASSERT_EQ(std::get<4>(contents.at(0)), "hello");
-	ASSERT_EQ(std::get<0>(contents.at(1)), -2);
-	ASSERT_EQ(std::get<1>(contents.at(1)), 2);
-	ASSERT_EQ(std::get<2>(contents.at(1)), 2.5);
-	ASSERT_EQ(std::get<3>(contents.at(1)), 3.5);
-	ASSERT_EQ(std::get<4>(contents.at(1)), "hi");
-
+	REQUIRE(result);
+	REQUIRE(std::get<0>(contents.at(0)) == -1);
+	REQUIRE(std::get<1>(contents.at(0)) == 1);
+	REQUIRE(std::get<2>(contents.at(0)) == 1.5);
+	REQUIRE(std::get<3>(contents.at(0)) == 2.5);
+	REQUIRE(std::get<4>(contents.at(0)) == "hello");
+	REQUIRE(std::get<0>(contents.at(1)) == -2);
+	REQUIRE(std::get<1>(contents.at(1)) == 2);
+	REQUIRE(std::get<2>(contents.at(1)) == 2.5);
+	REQUIRE(std::get<3>(contents.at(1)) == 3.5);
+	REQUIRE(std::get<4>(contents.at(1)) == "hi");
 }
 
-TEST(CsvTests, BadFile) {
+TEST_CASE("Tests csvParser on a bad file", "[csvParser]") {
 	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
 	std::string file = "bad.csv";
 
-	bool result = parseFile<int, unsigned int, float, double, std::string>(contents, file);
+	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
 
-	ASSERT_FALSE(result);
+	REQUIRE(result == false);
 }
+
+int main() {
+	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
+	std::string file = "good.csv";
+
+	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
+
+	return 0;
+}
+
+
