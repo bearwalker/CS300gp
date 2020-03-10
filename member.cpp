@@ -91,12 +91,9 @@ void Member::addService(Service used)
 
 	if(serviceIterator == servicesUsed.end())
 		servicesUsed.insert(used);
-/*	else
-	{	Service repeated = servicesUsed.extract(serviceIterator);
-		++(repeated.times_used);
-		servicesUsed.insert(repeated);
-	}
-*/
+ 	else
+		++(used.times_used);
+
 }
 
 
