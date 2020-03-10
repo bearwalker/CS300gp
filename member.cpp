@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include "defs.h"
+#define CATCH_CONFIG_MAIN
+#include "tests/catch.hpp"
 
 
 
@@ -158,3 +160,10 @@ int main(){
 
 //Member tests:
 
+
+TEST_CASE("Testing print member info")
+{
+	Member members;
+	
+	REQUIRE(members.printMemberInfo() == true);
+}

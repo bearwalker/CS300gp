@@ -3,12 +3,10 @@
 #include "../defs.h"
 
 
-Member a_member;
-
-Service a_service;
 
 TEST_CASE("Initialize Member")
 {
+	Member a_member;
 	REQUIRE(a_member.ID_number == 0);
 	REQUIRE(a_member.Mem_status == 1);
 	REQUIRE(a_member.name == "");
