@@ -1,0 +1,5 @@
+# intentionally bad csv file for testing
+# should be int, unsigned int, float, double, string
+# but is not that
+hello, hi, bap, zip;
+bap, zip, foo, bar;
