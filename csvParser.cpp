@@ -30,10 +30,10 @@ bool parseFile(std::string filePath, char seperator, char terminator, char comme
 	// If we didn't read anything return false
 	if (fileContents.size == 0)
 		return false;
-	
+
 	return true;
 }
-
+/*
 template<typename... Types>
 bool parseLine(std::istream& file, std::tuple<Types...>& lineContents) {
 	return parseLine(file, ',', ';', '#', lineContents);
@@ -55,13 +55,13 @@ bool parseLine(std::ifstream& file, char seperator, char terminator, char commen
 
 	if (file.fail())
 		return false;
-	
+
 	// Grab elements in the line
 	bool returnValue = std::apply([](std::string& line, char seperator, char terminator, auto& ...element){return (getElement(line, element, seperator, terminator) && ...);}, lineContents);
 
 	return returnValue;
 }
-
+*/
 // string, uint, int, double, float
 bool getElement(std::string& element, std::string& line, char seperator, char terminator) {
 	std::string::size_type seperatorPosition = line.find(seperator);
@@ -70,7 +70,7 @@ bool getElement(std::string& element, std::string& line, char seperator, char te
 	// If we can't find the either seperator or the terminator there we can't ready data
 	if (seperatorPosition == std::string::npos && terminatorPosition == std::string::npos)
 		return false;
-	
+
 	// Grab contents until seperator or terminator, whichever comes first
 	if (seperatorPosition < terminatorPosition) {
 		// Substring and erase go from start to start+num characters
