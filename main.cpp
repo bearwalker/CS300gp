@@ -38,11 +38,13 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 std::cout << '\n' << "Enter the ID of the Member to remove: ";
                 std::cin >> mem_ID_to_remove;
                 std::cin.ignore(MAX,'\n');
-                Member * to_remove = mtree.extract(mtree.find<unsigned int>(mem_ID_to_remove));
-                if(to_remove == NULL)
+                auto memberIterator = mtree.find<unsigned int>(mem_ID_to_remove);
+                if(memberIterator == mtree.end())
                     std::cout <<'\n' << "Member was not found";
-                else
+                else{
+                    mtree.erase(memberIterator);
                     std::cout << '\n' << "Member #" << mem_ID_to_remove << " was removed";
+                }
                 break;
                 }
             case 'C':{
@@ -59,11 +61,13 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 std::cout << '\n' << "Enter the ID of the Member to remove: ";
                 std::cin >> prov_ID_to_remove;
                 std::cin.ignore(MAX,'\n');
-                Provider * to_remove = ptree.extract(ptree.find(prov_ID_to_remove));
-                if(to_remove == NULL)
+                auto providerIterator = ptree.find(prov_ID_to_remove);
+                if(providerIterator == ptree.end())
                     std::cout <<'\n' << "Provider was not found";
-                else
+                else{
+                    ptree.erase(providerIterator);
                     std::cout << '\n' << "Provider #" << prov_ID_to_remove << " was removed";
+                }
                 break;
                 }
             case 'E':{
@@ -75,17 +79,17 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 //print Members service tree
                 }
                 break;
-                }
+            }
             case 'F':{
                 //get desired Provider and print their report
                 int prov_ID;
                 std::cout << '\n' << "Enter the ID of the Provider to print: ";
                 std::cin >> prov_ID;
                 std::cin.ignore(MAX,'\n');
-                Provider * prov_to_print = ptree.extract(ptree.find(prov_to_print));
-                prov_to_print->summaryReport();
+                auto prov_to_print = ptree.find(prov_ID);
+                (*prov_to_print).summaryReport();
                 break;
-                }
+            }
             case 'G':{
                 //print the manager report
                 float prov_service_total;
@@ -100,31 +104,31 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 std::cout << '\n' << "Total Providers for week: " << total_Providers;
                 std::cout << '\n' << "Overall Fee Total: " << prov_service_total;
                 break;
-                }
+            }
             case 'H':{
                 //find Member and edit their info
                 int mem_ID_to_edit;
                 std::cout << '\n' << "Enter the ID of the Member to edit: ";
                 std::cin >> mem_ID_to_edit;
                 std::cin.ignore(MAX,'\n');
-                Member * to_edit = mtree.extract(mtree.find(mem_ID_to_edit));
-                if(to_edit == NULL)
+                auto to_edit = mtree.find(mem_ID_to_edit);
+                if(to_edit == mtree.end())
                     std::cout << '\n' << mem_ID_to_edit << " was not a valid ID";
                 else
-                    to_edit->setMemberInfo();
+                    (*to_edit).setMemberInfo();
                 break;
-                }
+            }
             case 'I':{
                 //find Provider and edit their info
                 int prov_ID_to_edit;
                 std::cout << '\n' << "Enter the ID of the Provider to edit: ";
                 std::cin >> prov_ID_to_edit;
                 std::cin.ignore(MAX,'\n');
-                Provider * to_edit = ptree.extract(ptree.find(prov_ID_to_edit));
-                if(to_edit == NULL)
+                auto to_edit = ptree.find(prov_ID_to_edit);
+                if(to_edit == ptree.end())
                     std::cout << '\n' << prov_ID_to_edit << " was not a valid ID";
                 else
-                    to_edit->setInfo();
+                    (*to_edit).setInfo();
                 break;
                 }
             case 'Q':
@@ -162,9 +166,9 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 std::cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
                 std::cin >> numres;
                 std::cin.ignore(MAX,'\n');
-                Member * mvalid = mtree.extract(mtree.find(numres));
-                if (mvalid == NULL) std::cout << "Member ID is invalid.\n";
-                else if (mvalid->getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
+                auto mvalid = mtree.find(numres);
+                if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
+                else if ((*mvalid).getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
                 else std::cout << "Member ID is valid.\n";
                 break;
                 }
@@ -189,9 +193,9 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 std::cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
                 std::cin >> numres;
                 std::cin.ignore(MAX,'\n');
-                Member * mvalid = mtree.extract(mtree.find(numres));
-                if (mvalid == NULL) std::cout << "Member ID is invalid.\n";
-                else if (mvalid->getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
+                auto mvalid = mtree.find(numres);
+                if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
+                else if ((*mvalid).getMemStatus() == -1) std::cout << "Membership has been suspended.\n";
                 else
                 {
                     std::cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
