@@ -1,6 +1,17 @@
-CPP = "g++"
-CPPFLAGS = "-std=c++17"
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall
+# Add your test file here, replacing .cpp with .o
+OBJECTS = csvTests.o 
 
-csvtests: csvTests.cpp ../csvParser.h catch.hpp
-	$(CPP) $(CPPFLAGS) $< -o $@ 
+tests: testMain.o $(OBJECTS) 
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
+$(OBJECTS): catch.hpp ../defs.h
+testMain.o: catch.hpp
+
+.PHONY: run clean
+run:
+	./tests
+
+clean:
+	-rm testMain.o $(OBJECTS) tests
