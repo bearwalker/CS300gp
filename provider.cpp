@@ -27,46 +27,20 @@ Provider::Provider(std::string informationFile) {
 }
 
 bool Provider::loadInformation(std::string informationFile) {
-	std::ifstream infoFile(informationFile);
+	// File is in the format id,name,address,city,state,zip
+	std::vector<std::tuple<unsigned int, std::string, std::string, std::string, std::string, unsigned int>> information;
 
-	// Check if the file could be opened
-	if (!infoFile.is_open())
+	if (!parseFile<unsigned int, std::string, std::string, std::string, std::string, unsigned int>(informationFile, information))
 		return false;
 
-	// Read in comma seperated info, see data/provider-format.csv for format
-	std::string idBuffer;
-	std::string nameBuffer;
-	std::string addressBuffer;
-	std::string cityBuffer;
-	std::string stateBuffer;
-	std::string zipBuffer;
-
-	std::getline(infoFile, idBuffer, ',');
-	std::getline(infoFile, nameBuffer, ',');
-	std::getline(infoFile, addressBuffer, ',');
-	std::getline(infoFile, cityBuffer, ',');
-	std::getline(infoFile, stateBuffer, ',');
-	std::getline(infoFile, zipBuffer, ',');
-
-	// Convert ID and Zip to ints
-	unsigned int tempID;
-	unsigned int tempZip;
-
-	try {
-		// std::stoi throws an exception if it fails to convert
-		tempID = std::stoi(idBuffer);
-		tempZip = std::stoi(zipBuffer);
-	}
-	catch(...) {
-		return false;
-	}
-
-	// Check length constraints
-	//if (numDigits()
+	id = std::get<0>(information.at(0));
+	name = std::get<1>(information.at(0));
+	address = std::get<2>(information.at(0));
+	city = std::get<3>(information.at(0));
+	state = std::get<4>(information.at(0));
+	zip = std::get<5>(information.at(0));
 
 	return true;
-
-
 }
 
 
@@ -137,12 +111,6 @@ void Provider::setInfo()
     std::cout << '\n' << "Enter " << name << " ZIP: ";
     std::cin >> zip;
     std::cin.ignore(MAX,'\n');
-
-    std::cout << '\n' << "Enter " << name << " Price: ";
-    std::cin >> feeTotal;
-    std::cin.ignore(MAX,'\n');
-
-    numServicesProvided = 0;
 
     std::cout << '\n' << "Add Services? (Y/N)" << '\n';
     std::cin >> response;

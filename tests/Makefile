@@ -1,11 +1,20 @@
-CPP = "g++"
-CPPFLAGS = "-std=c++17"
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall
+# Add your test file here, replacing .cpp with .o
+OBJECTS = csvTests.o 
 
-GTEST_CFLAGS = `pkg-config --cflags gtest_main`
-GTEST_LIBS = `pkg-config --libs gtest_main`
+.PHONY: all run clean
 
-csvtests: csvtests.o
-	$(CPP) $(CPPFLAGS) $< -o $@ $(GTEST_LIBS)
+all: tests run
 
-csvtests.o: ../csvParser.h csvTests.cpp
-	$(CPP) $(CPPFLAGS) csvTests.cpp -o $@ $(GTEST_CFLAGS)
+tests: testMain.o $(OBJECTS) 
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(OBJECTS): catch.hpp ../defs.h
+testMain.o: catch.hpp
+
+run:
+	./tests
+
+clean:
+	-rm testMain.o $(OBJECTS) tests
