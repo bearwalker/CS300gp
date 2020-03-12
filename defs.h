@@ -109,7 +109,7 @@ class Member
 	public:
 		Member(); //initializes members to 0
 		bool printMemberInfo(); //Searches for member based on ID number.  Retruns false if member not found in list.
-		void setMemberInfo(); //sets member info from user. Refactor to read in from file.
+		bool setMemberInfo(); //sets member info from user. Refactor to read in from file.
 		bool getMemStatus();
 		void memberInactive();
 		void printMemServices();

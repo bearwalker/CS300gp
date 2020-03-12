@@ -21,7 +21,7 @@ bool Member::printMemberInfo()
 
 
 // TODO: Read in data from file instead.
-void Member::setMemberInfo()
+bool Member::setMemberInfo()
 {
 	//TODO: use .resize to make inputs match the specifications in the requirements doc
 
@@ -52,8 +52,7 @@ void Member::setMemberInfo()
 	std::cin >> zip;
 	std::cin.ignore(MAX, '\n');
 
-	return;
-
+	return true;
 
 }
 
@@ -129,8 +128,6 @@ Member::Member()
 }
 
 
-//no dynamic memory, no destructor needed
-
 /* test the functions here as the client in main()
 int main(){
 	Member members;
@@ -163,4 +160,19 @@ TEST_CASE("Testing print member info")
 	Member members;
 	
 	REQUIRE(members.printMemberInfo() == true);
+}
+
+TEST_CASE("Testing member inactive function"){
+    Member members;
+
+    members.memberInactive();
+    
+    REQUIRE(members.getMemStatus() == 0);
+}
+
+TEST_CASE("Testing print member info function"){
+    Member members;
+
+    REQUIRE(members.printMemberInfo() == true);
+
 }
