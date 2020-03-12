@@ -132,6 +132,47 @@ private:
 	std::set<Service, std::less<>> servicesProvided;
 };
 
+<<<<<<< HEAD
+
+//Def of member class
+
+class Member
+{
+	public:
+		Member(); //initializes members to 0
+		bool printMemberInfo(); //Searches for member based on ID number.  Retruns false if member not found in list.
+		void setMemberInfo(); //sets member info from user. Refactor to read in from file.
+		bool getMemStatus();
+		void memberInactive();
+		bool printMemServices();
+		int addService(Service);
+
+		//these operators need to overloaded in order to use set
+		//for sorting a set of Members
+		friend bool operator<(const Member& left_side, const Member& right_side);
+		//for finding a Member in a set based on its ID
+		friend bool operator<(const unsigned int& left_side, const Member& right_side);
+		friend bool operator<(const Member& left_side, const unsigned int& right_side);
+	private:
+		unsigned int ID_number;
+		bool Mem_status;
+		std::string name;
+		std::string address;
+		std::string city;
+		std::string state;
+		int zip;
+		std::set<Service, std::less<>> servicesUsed;
+};
+
+
+
+//Helper functions
+bool operator<(const Service& leftSide, const Service& rightSide);
+bool operator<(const unsigned int& leftSide, const Service& rightSide);
+bool operator<(const Service& leftSide, const unsigned int& rightSide);
+
+=======
+>>>>>>> ddc5984485aa8afbe34b8aa7f59bdbc48f475ee8
 //Main.cpp
 void managerTerminal(std::set<Member> mtree, std::set<Provider> ptree);
 void providerTerminal(Provider *, std::set<Member> mtree);

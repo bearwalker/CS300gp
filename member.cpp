@@ -68,7 +68,7 @@ void Member::memberInactive()
 	Mem_status = 0;
 }
 
-void Member::printMemServices()
+bool Member::printMemServices()
 {
 	float total = 0;
 
@@ -82,18 +82,25 @@ void Member::printMemServices()
 		std::cout << "Times Used: " <<  service->times_used << std::endl;
 	}
 	std::cout << "Total Fees: $" << total << std::endl;
+	return true;
 
 }
 
 
-void Member::addService(Service used)
+int Member::addService(Service used)
 {
 	std::set<Service>::iterator serviceIterator = servicesUsed.find<unsigned int>(used.ID);
 
 	if(serviceIterator == servicesUsed.end())
+	{
 		servicesUsed.insert(used);
+		return 1;
+	}
  	else
-		++(used.times_used);
+	{
+		++(used.times_used);	
+		return 2;
+	}
 
 }
 
@@ -128,7 +135,6 @@ Member::Member()
 }
 
 
-//no dynamic memory, no destructor needed
 
 /* test the functions here as the client in main()
 int main(){
@@ -154,6 +160,8 @@ int main(){
 }
 */
 
+<<<<<<< HEAD
+=======
 //Member tests:
 
 /*
@@ -164,3 +172,4 @@ TEST_CASE("Testing print member info")
 	REQUIRE(members.printMemberInfo() == true);
 }
 */
+>>>>>>> ddc5984485aa8afbe34b8aa7f59bdbc48f475ee8

@@ -1,4 +1,3 @@
-#define CONFIG_CATCH_MAIN
 #include "catch.hpp"
 #include "../defs.h"
 
@@ -16,3 +15,37 @@ TEST_CASE("Initialize Member")
 	REQUIRE(a_member.zip == "");
 }
 
+
+TEST_CASE("Testing print member info")
+{
+	Member members;
+	REQUIRE(members.printMemberInfo() == true);
+
+}
+
+TEST_CASE("Test Active")
+{
+	Member members;
+	REQUIRE(members.getMemStatus() == true);
+}
+
+TEST_CASE("Test Inactive")
+{
+	Member members;
+	members.memberInactive();
+	REQUIRE(members.getMemStatus() == false);
+}
+
+TEST_CASE("Add a Service")
+{
+	Member members;
+	Service used;
+	REQUIRE(members.addService(used) == 1 OR members.addService(used) == 2);
+
+}
+
+TEST_CASE("Test print service")
+{
+	Member members;
+	REQUIRE(members,printMemServices() == true);
+}
