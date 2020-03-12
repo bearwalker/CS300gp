@@ -112,8 +112,8 @@ class Member
 		void setMemberInfo(); //sets member info from user. Refactor to read in from file.
 		bool getMemStatus();
 		void memberInactive();
-		void printMemServices();
-		void addService(Service);
+		bool printMemServices();
+		int addService(Service);
 
 		//these operators need to overloaded in order to use set
 		//for sorting a set of Members
