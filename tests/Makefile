@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall
 # Add your test file here, replacing .cpp with .o
-OBJECTS = csvTests.o 
+OBJECTS = csvTests.o memberTests.o serviceTests.o
 
 .PHONY: all run clean
 
