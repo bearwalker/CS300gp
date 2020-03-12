@@ -95,8 +95,8 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
             }
             case 'G':{
                 //print the manager report
-                float prov_service_total;
-                int total_Providers;
+                float prov_service_total=0;
+                int total_Providers =0;
                 for(auto prov_ptr = ptree.begin(); prov_ptr != ptree.end(); prov_ptr++)
                 {
              //total_Providers += prov_ptr->didProvide()
@@ -185,7 +185,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 auto mvalid = mtree.find(numres);
                 if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
                 Member to_check = *mvalid;
-                if(to_check.getMemStatus() == -1)
+                if(to_check.getMemStatus() == false)
                     std::cout << "Membership has been suspended.\n";
                 else
                     std::cout << "Member ID is valid.\n";
@@ -200,7 +200,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 std::cin >> numres;
                 std::cin.ignore(MAX,'\n');
                 svalid = this_Provider->checkServiceID(numres);
-                if (svalid == -1) std::cout << "Service ID is not valid.\n";
+                if (svalid == false) std::cout << "Service ID is not valid.\n";
                 else std::cout << "Service ID " << numres << " is valid.\n";
                 break;
                 }
@@ -215,7 +215,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 auto mvalid = mtree.find(numres);
                 if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
                 Member to_check = *mvalid;
-                if (to_check.getMemStatus() == -1)
+                if (to_check.getMemStatus() == false)
                     std::cout << "Membership has been suspended.\n";
                 else
                 {
@@ -223,7 +223,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                     std::cin >> numres;
                     std::cin.ignore(MAX,'\n');
                     svalid = this_Provider->checkServiceID(numres);
-                    if (svalid == -1) std::cout << "Service ID is not valid.\n";
+                    if (svalid == false) std::cout << "Service ID is not valid.\n";
                     else std::cout << "ERROR: SERVICE PROVISION FUNCTIONALITY NOT IMPLEMENTED.\n";
                     //TODO
                 }
@@ -249,7 +249,6 @@ int main(void)
     char response;
     int check_id;
     int manID = 123456;
-    int ID_MAX = 6;
     std::set<Provider, std::less<>> ptree;
     std::set<Member, std::less<>> mtree;
     //read in Provider tree
