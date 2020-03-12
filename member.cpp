@@ -25,7 +25,6 @@ void Member::setMemberInfo()
 {
 	//TODO: use .resize to make inputs match the specifications in the requirements doc
 
-	int num;
 	std::string a_string;
 
 	std::cout << "ID: ";
@@ -161,3 +160,16 @@ int main(){
 }
 */
 
+<<<<<<< HEAD
+=======
+//Member tests:
+
+/*
+TEST_CASE("Testing print member info")
+{
+	Member members;
+
+	REQUIRE(members.printMemberInfo() == true);
+}
+*/
+>>>>>>> ddc5984485aa8afbe34b8aa7f59bdbc48f475ee8
