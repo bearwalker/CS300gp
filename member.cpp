@@ -166,32 +166,32 @@ void Member::setStatus(bool newStatus)
 	status = newStatus;
 }
 
-unsigned int getID() const
+unsigned int Member::getID() const
 {
 	return id;
 }
 
-std::string getName() const
+std::string Member::getName() const
 {
 	return name;
 }
 
-std::string getCity() const
+std::string Member::getCity() const
 {
 	return city;
 }
 
-std::string getState() const
+std::string Member::getState() const
 {
 	return state;
 }
 
-unsigned int getZip() const
+unsigned int Member::getZip() const
 {
 	return zip;
 }
 
-bool getStatus() const
+bool Member::getStatus() const
 {
 	return status;
 }
