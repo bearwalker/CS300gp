@@ -2,10 +2,8 @@
 
 #include <string>
 #include <iostream>
-#include "defs.h"
-#define CATCH_CONFIG_MAIN
-#include "tests/catch.hpp"
 
+#include "defs.h"
 
 
 bool Member::printMemberInfo()
@@ -133,43 +131,3 @@ Member::Member()
 	state = "";
 	zip = 0;
 }
-
-
-
-/* test the functions here as the client in main()
-int main(){
-	Member members;
-
-	// tests setMemberInfo function
-	members.setMemberInfo();
-
-	std::cout << "Status: " << members.getMemStatus() << std::endl;
-
-	members.memberInactive();
-
-	std::cout << "Status: " <<members.getMemStatus() << std::endl;
-
-	// tests printMemberInfo function
-	std::cout << "\nMember Info: " << std::endl;
-	if(members.printMemberInfo() == false){
-		std::cout << "\nMember not Found" << std::endl;
-	}
-
-	return 0;
-
-}
-*/
-
-<<<<<<< HEAD
-=======
-//Member tests:
-
-/*
-TEST_CASE("Testing print member info")
-{
-	Member members;
-
-	REQUIRE(members.printMemberInfo() == true);
-}
-*/
->>>>>>> ddc5984485aa8afbe34b8aa7f59bdbc48f475ee8

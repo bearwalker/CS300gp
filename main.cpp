@@ -205,7 +205,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 break;
                 }
             case 'D':{
-                this_Provider->printServiceList();
+                this_Provider->printServiceDirectory();
                 break;
                 }
             case 'E':{

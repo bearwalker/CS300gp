@@ -1,10 +1,10 @@
 #include "catch.hpp"
 
-#include "../defs.h"
+#include "../csvParser.h"
 
 TEST_CASE("Testing parsing a good file", "[csvParser]") {
 	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
-	std::string file = "testData/good.csv";
+	std::string file = "tests/testData/good.csv";
 
 	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
 
@@ -23,7 +23,7 @@ TEST_CASE("Testing parsing a good file", "[csvParser]") {
 
 TEST_CASE("Tests csvParser on a bad file", "[csvParser]") {
 	std::vector<std::tuple<int, unsigned int, float, double, std::string>> contents;
-	std::string file = "testData/bad.csv";
+	std::string file = "tests/testData/bad.csv";
 
 	bool result = parseFile<int, unsigned int, float, double, std::string>(file, contents);
 
