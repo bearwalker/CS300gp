@@ -112,12 +112,13 @@ void Provider::printServiceDirectory() const
 }
 
 
-void Provider::saveSessionReport(Member member, Service service, std::chrono::system_clock::time_point dateProvided, std::string comments)
+Session Provider::saveSessionReport(Member member, Service service, std::chrono::system_clock::time_point dateProvided, std::string comments)
 {
 	// Put data in a session struct
 	Session newSession;
 	newSession.setProvidedTo(member);
 	newSession.setServiceProvided(service);
+	newSession.setProviderName(name);
 	newSession.setDateProvided(dateProvided);
 	newSession.setComments(comments);
 	newSession.setTimeRecorded(std::chrono::system_clock::now());
@@ -135,6 +136,8 @@ void Provider::saveSessionReport(Member member, Service service, std::chrono::sy
 	// write eft to disk
 	std::string eftPath = EFT_DATA_DIR + "provider_" + std::to_string(id) + "_" + dateString.str() + "_" + member.getName() + ".csv";
 	saveEFT(eftPath, service.getPrice());
+
+	return newSession;
 }
 
 void Provider::printWeekReport()
