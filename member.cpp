@@ -215,19 +215,19 @@ void Member::printMemberInfo() const
 
 bool operator<(const Member& left_side, const Member& right_side)
 {
-	return left_side.ID_number < right_side.ID_number;
+	return left_side.id < right_side.id;
 }
 
 
 bool operator<(const unsigned int& left_side, const Member& right_side)
 {
-	return left_side < right_side.ID_number;
+	return left_side < right_side.id;
 }
 
 
 bool operator<(const Member& left_side, const unsigned int& right_side)
 {
-	return left_side.ID_number < right_side;
+	return left_side.id < right_side;
 }
 
 
