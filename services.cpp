@@ -1,25 +1,58 @@
 //Service class functions implementation
 
 #include "defs.h"
+#include "csvParser.h"
 
-//Set service info
-void Service::setInfo()
+Service::Service()
 {
+	id = 0;
+	name = "";
+	price = 0;
+}
 
-    std::cout << '\n' << "Enter Name of New Service: ";
-    std::getline(std::cin,name);
-    std::cin.ignore(MAX,'\n');
-    name.resize(CHARMAX);
+Service::Service(std::string informationFile)
+{
+	if (!loadInformation(informationFile)) {
+		id = 0;
+		name = "";
+		price = 0;
+	}
+}
 
-    std::cout << '\n' << "Enter " << name << " Service ID: ";
-    std::cin >> ID;
-    std::cin.ignore(MAX,'\n');
+bool Service::loadInformation(std::string informationFile)
+{
+	// File is in format id,name,price
+	std::vector<std::tuple<unsigned int, std::string, double>> information;
 
-    std::cout << '\n' << "Enter " << name << " Service Price: ";
-    std::cin >> price;
-    std::cin.ignore(MAX,'\n');
+	if(!parseFile<unsigned int, std::string, double>(informationFile, information))
+		return false;
 
-    return;
+	setID(std::get<0>(information.at(0)));
+	setName(std::get<1>(information.at(0)));
+	setPrice(std::get<2>(information.at(0)));
+
+	return true;
+}
+
+void setID(unsigned int newID)
+{
+	id = resizeNumber(newID, SERVICE_ID_DIGITS);
+}
+
+void setName(std::string newName)
+{
+	if (newName.size() > SERVICE_NAME_CHARACTERS)
+		newName.resize(SERVICE_NAME_CHARACTERS);
+
+	name = newName;
+}
+
+void setPrice(double newPrice)
+{
+	if (newPrice > SERVICE_PRICE_MAX)
+		price = SERVICE_PRICE_MAX;
+	else
+		price = newPrice;
 }
 
 //Display service info
@@ -28,9 +61,21 @@ void Service::displayInfo()
     std::cout << '\n' << "Service Name: " << name;
     std::cout << '\n' << "Service ID: " << ID;
     std::cout << '\n' << "Service Price: " << price;
-    std::cout << '\n' << "Times Service Used: " << times_used;
-    return;
+}
 
+unsigned int getID() const
+{
+	return id;
+}
+
+std::string getName() const
+{
+	return name;
+}
+
+double getPrice() const
+{
+	return price;
 }
 
 bool operator<(const Service& leftSide, const Service& rightSide) {

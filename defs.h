@@ -24,21 +24,104 @@ const unsigned int STATE_CHARACTERS = 2;
 const unsigned int ZIP_DIGITS = 5;
 const unsigned int COMMENT_CHARACTERS = 100;
 
-//Def of service struct
-struct Service
+// Services have different length constraints
+const unsigned int SERVICE_ID_DIGITS = 6;
+const unsigned int SERVICE_NAME_CHARACTERS = 20;
+const double SERVICE_PRICE_MAX = 999.99;
+
+// Data directoies
+const std::string EFT_DATA_DIR = "data/eft/";
+const std::string REPORT_DATA_DIR "data/reports/";
+const std::string PROVIDER_DATA_DIR = "data/providers/";
+const std::string MEMBER_DATA_DIR = "data/members/";
+const std::string SERVICE_DATA_DIR = "data/services/";
+// each PROVIDER_DATA_DIR will contain a SESSION_DATA_DIR
+const std::string SESSION_DATA_SUBDIR = "sessions/";
+
+
+//Def of service class
+class Service
 {
-    void setInfo();     //Set the service info
+public:
+	// Construct with empty values
+	Service();
+
+	/*
+	  Try to construct the class with information about a service from a csv file, otherwise use empty values
+	  The csv file format is:
+	  id,name,price;
+
+	  @param informationFile - path to a csv file containing Service info
+	*/
+	Service(std::string informationFile);
+
+	/*
+	  Load information about a service from a csv file in the format
+	  id,name,price;
+
+	  @param informationFile - the path to the file to load from
+
+	  @return true on success, false on failure
+	*/
+	bool loadInformation(std::string informationFile);
+
+	/*
+	  Setter for id
+
+	  @param newID - the number to set as id, will be resized to SERVICE_ID_DIGITS
+	*/
+	void setID(unsigned int newID);
+
+	/*
+	  Setter for name
+
+	  @param newName - the string to set as the name, will be resized to SERVICE_NAME_CHARACTERS as needed
+	*/
+	void setName(std::string newName);
+
+	/*
+	  Setter for price
+
+	  @param newPrice - the price to set as price, will be set to SERVICE_PRICE_MAX if too large
+	*/
+	void setPrice(double newPrice);
+
+	/*
+	  Getter for id
+
+	  @return the services id code
+	*/
+	unsigned int getID() const;
+
+	/*
+	  Getter for name
+
+	  @return the services name
+	*/
+	std::string getName() const;
+
+	/*
+	  Getter for price
+
+	  @return the services price
+	*/
+	double getPrice() const;
+
+	// Functions for comparing services and unsigned itns based on ids value
+	friend bool operator<(const Service& leftSide, const Service& rightSide);
+	friend bool operator<(const unsigned int& leftSide, const Service& rightSide);
+	friend bool operator<(const Service& leftSide, const unsigned int& rightSide);
+
     void displayInfo(); //Display service info
-    unsigned int ID;    //Service id code (max 6)
-    std::string name;   //Service name (max 20)
-    float price;        //Service cost (max 5)
-    int times_used;     //Times service used (max 3)
+
+private:
+    unsigned int id;
+    std::string name;
+    double price;
 };
 
 //Helper functions
-bool operator<(const Service& leftSide, const Service& rightSide);
-bool operator<(const unsigned int& leftSide, const Service& rightSide);
-bool operator<(const Service& leftSide, const unsigned int& rightSide);
+
 
 
 
@@ -95,6 +178,13 @@ public:
 	  @return true on success, false on failure
 	*/
 	bool loadInformation(std::string informationFile);
+
+	/*
+	  Saves information about the session in the same format as loaded from
+
+	  @param filePath - the path of the file to save to
+	*/
+	bool saveRecord(std::string filePath);
 
 	/*
 	  Setter for providedTo
@@ -199,6 +289,14 @@ public:
 	bool loadInformation(std::string informationFile);
 
 	/*
+	  Saves eft data data for recording fees
+
+	  @param filePath - the path to save the data in
+	  @param fee - the amount of the fee
+	*/
+	bool saveEFT(std::string filePath, double fee);
+
+	/*
 	  Finds a service in the providers service directory.
 
 	  @param serviceID - the service ID to search by
@@ -236,20 +334,7 @@ public:
 	void saveSessionReport(Member member, Service& service, std::chrono::system_clock::time_point dateProvided, std::string comments);
 
 	/*
-	  Interactively create a record of a service provided to a member, running through these steps:
-	  1. Enter member number
-	  2. Enter date service was provided in format MM-DD-YYYY
-	  3. Use service directory look up 6 digit code for the service provided (call printServiceDirectory())
-	  4. Display name of entered service or error
-	  5. Let provider verify service
-	  6. Enter comments about service
-	  7. Display service fee
-	  8. Save service (using saveSessionReport())
-	*/
-	void createSessionReport();
-
-	/*
-	  Prints the a report containing the following information for the last 7 days:
+	  Outputs a report containing the following information for the last 7 days to the given stream:
 	  - Provider name 25 characters
 	  - Provider number 9 digits
 	  - Provider street address 25 characters
@@ -265,8 +350,24 @@ public:
 		- Fee to be paid up to $999.99
 	  - Total number of consultations in past 7 days 3 digits
 	  - Total fee for the past 7 days up to $99,999.99
+
+	  @param out - the ostream to output the report to
 	 */
+	void weekReport();
+
+	/*
+	  Prints weekReport to std::cout
+	*/
 	void printWeekReport();
+
+	/*
+	  Prints weekReport to the given file
+
+	  @param filePath - path to the file to save the report in
+
+	  @return true if file was opened, false if it couldn't be
+	*/
+	bool saveWeekReport(std::string filePath);
 
 	/*
 	  Checks if any services were provided by the provided during the last 7 days
