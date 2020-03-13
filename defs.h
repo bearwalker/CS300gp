@@ -22,6 +22,7 @@ const unsigned int ADDRESS_CHARACTERS = 25;
 const unsigned int CITY_CHARACTERS = 14;
 const unsigned int STATE_CHARACTERS = 2;
 const unsigned int ZIP_DIGITS = 5;
+const unsigned int COMMENT_CHARACTERS = 100;
 
 //Def of service struct
 struct Service
@@ -70,9 +71,102 @@ class Member
 		std::set<Service, std::less<>> servicesUsed;
 };
 
-// Def of Session struct
-struct Session
+// Def of Session class
+class Session
 {
+public:
+	// Construct with empty values
+	Session();
+
+	/*
+	  Try to construct the class with data from a csv file, otherwise use empty values.
+	  A provider csv file should be formatted as id of member provided to,id of service provided,date provided MM-DD-YYYY,time recorded MM-DD-YYYY HH:MM:SS,comments;
+	  
+	  @param informationFile - path to a csv file containing provider info
+	*/
+	Session(std::string informationFile);
+
+	/*
+	  Load information about a session from a csv file in the format
+	  id of member provided to,id of service provided,date provided MM-DD-YYYY,time recorded MM-DD-YYYY HH:MM:SS,comments;
+
+	  @param informationFile - the path to the file to load from
+
+	  @return true on success, false on failure
+	*/
+	bool loadInformation(std::string informationFile);
+
+	/*
+	  Setter for providedTo
+
+	  @param member - the member the session was provided to
+	*/
+	void setProvidedTo(Member member);
+
+	/*
+	  Setter for serviceProvided
+
+	  @param service - the service that was provided
+	*/
+	void setServiceProvided(Service service);
+
+	/*
+	  Setter for dateProvided
+
+	  @param date - the date the service was provided
+	*/
+	void setDateProvided(std::chrono::system_clock::time_point date);
+
+	/*
+	  Setter for timeRecorded
+
+	  @param time - the time the service was recorded
+	*/
+	void setTimeRecorded(std::chrono::system_clock::time_point time);
+
+	/*
+	  Setter for the comments, cuts comments down to first 100 characters
+
+	  @param newComments - the comments about the service provided
+	*/
+	void setComments(std::string newComments);
+	
+	/*
+	  Getter for providedTo
+
+	  @return a member object of the member the service was provided to
+	*/
+	Member getProvidedTo() const;
+
+	/*
+	  Getter for serviceProvided
+
+	  @return a service struct of the service provided
+	*/
+	Service getServiceProvided() const;
+
+	/*
+	  Getter for dateProvided
+
+	  @return a time_point of the date provided
+	*/
+	std::chrono::system_clock::time_point getDateProvided() const;
+
+	/*
+	  Getter for timeRecorded
+
+	  @return a time_poinnt of the time the session was recorded
+	*/
+	std::chrono::system_clock::time_point getTimeRecorded() const;
+
+	/*
+	  Getter foor comments
+
+	  @return a string containing the comments on the session
+	*/
+	std::string getComments() const;
+
+private:
 	Member providedTo;
 	Service serviceProvided;
 	std::chrono::system_clock::time_point dateProvided;
