@@ -148,7 +148,8 @@ bool parseFile(std::string filePath, char seperator, char terminator, char comme
 	// If we didn't read anything return false
 	if (fileContents.size() == 0)
 		return false;
-	
+
+	file.close();
 	return true;
 }
 

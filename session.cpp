@@ -91,6 +91,28 @@ bool Session::loadInformation(std::string informationFile)
 	return true;
 }
 
+bool Session::saveRecord(std::string filePath)
+{
+	std::ofstream file(filePath);
+
+	if (!file.is_open())
+		return false;
+
+	file << id << ',' << serviceProvided.getID() << ',';
+
+	// Convert times to appropriate strings
+	std::time_t dateProvidedTimeT = std::chrono::system_clock::to_time_t(dateProvided);
+	file << std::put_time(std::localtime(&dateProvidedTimeT), "%m-%d-%Y") << ',';
+	std::time_t timeRecordedTimeT = std::chrono::system_clock::to_time_t(timeRecorded);
+	file << std::put_time(std::localtime(&timeRecordedTimeT), "%m-%d-%Y %H:%M:%S") << ',';
+
+	file << comments << ';' << std::endl;
+
+	file.close();
+
+	return true;
+}
+
 void Session::setProvidedTo(Member member)
 {
 	providedTo = member;

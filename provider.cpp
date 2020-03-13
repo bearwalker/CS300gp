@@ -1,5 +1,6 @@
 #include <chrono>
 #include <ctime>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <iomanip>
@@ -47,6 +48,32 @@ bool Provider::loadInformation(std::string informationFile)
 	setState(std::get<4>(information.at(0)));
 	setZip(std::get<5>(information.at(0)));
 
+	// Load the services
+	for (auto file: std::filesystem::directory_iterator("SERVICE_DATA_DIR")) {
+		Service newService;
+		if (newService.loadInformation(file.path()))
+			serviceDirectory.insert(newService);
+	}
+
+	// Load session records
+	for (auto file: std::filesystem::directory_iterator("PROVIDER_DATA_DIR" + std::to_string(id) + SESSION_DATA_SUBDIR)) {
+		Session newSession;
+		if (newSession.loadInformation(file.path()))
+			sessionRecords.push_back(newSession);
+	}
+
+	return true;
+}
+
+void Provider::saveEFT(std::string filePath, double fee)
+{
+	std::ofstream file(filePath);
+
+	if (!file.is_open())
+		return false;
+
+	file << name << ',' << id << ',' << fee << ';' << std::endl;
+	file.close();
 
 	return true;
 }
@@ -85,7 +112,7 @@ void Provider::printServiceDirectory() const
 }
 
 
-void Provider::saveSessionReport(Member member, Service& service, std::chrono::system_clock::time_point dateProvided, std::string comments)
+void Provider::saveSessionReport(Member member, Service service, std::chrono::system_clock::time_point dateProvided, std::string comments)
 {
 	// Put data in a session struct
 	Session newSession;
@@ -98,24 +125,44 @@ void Provider::saveSessionReport(Member member, Service& service, std::chrono::s
 	// Save session in sessionRecords
 	sessionRecords.push_back(newSession);
 	
-	// TODO write session record to disk
-}
+	// write session record to disk
+	std::time_t dateTimeT = std::chrono::system_clock::to_time_t(dateProvided);
+	std::stringstream dateString;
+	dateString << std::put_time(std::localtime(&dateTimeT), "%Y-%m-%d");
+	std::string sessionPath = PROVIDER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR + dateString.str() + "_" + member.getName() + ".csv";
+	newSession.saveRecord(sessionPath);
 
-void createSessionReport()
-{
-	// TODO create this funcion
+	// write eft to disk
+	std::string eftPath = EFT_DATA_DIR + "provider_" + std::to_string(id) + "_" + dateString.str() + "_" + member.getName() + ".csv";
+	saveEFT(eftPath, service.getPrice());
 }
 
 void Provider::printWeekReport()
 {
-	std::cout << "Weekly Provider Report" << std::endl;
-	std::cout << "Provider name: " << name << std::endl;
-	std::cout << "Provider number: " << id << std::endl;
-	std::cout << "Provider street address: " << address << std::endl;
-	std::cout << "Provider city: " << city << std::endl;
-	std::cout << "Provider zip code: " << zip << std::endl;
+	weekReport(std::cout);
+}
 
-	std::cout << std::endl << "Services provided in the last 7 days" << std::endl;
+bool Provider::saveWeekReport(std::string filePath)
+{
+	std::ofstream file(filePath);
+
+	if (!file.is_open())
+		return false;
+
+	weekReport(file);
+	return true;
+}
+
+void Provider::weekReport(std::ostream& out)
+{
+	out << "Weekly Provider Report" << std::endl;
+	out << "Provider name: " << name << std::endl;
+	out << "Provider number: " << id << std::endl;
+	out << "Provider street address: " << address << std::endl;
+	out << "Provider city: " << city << std::endl;
+	out << "Provider zip code: " << zip << std::endl;
+
+	out << std::endl << "Services provided in the last 7 days" << std::endl;
 
 	// Find services provided in the last 7 days
 	// This gets the date 7 days ago using std::chrono dark magic (a day is 86400 seconds)
@@ -131,21 +178,21 @@ void Provider::printWeekReport()
 			std::time_t dateProvided = std::chrono::system_clock::to_time_t((*session).getDateProvided());
 			std::time_t timeRecorded = std::chrono::system_clock::to_time_t((*session).getTimeRecorded());
 			
-			std::cout << "Date of service: " << std::put_time(std::localtime(&dateProvided), "$m-%d-%Y") << std::endl;
-			std::cout << "Date and time service was saved to system: "
+			out << "Date of service: " << std::put_time(std::localtime(&dateProvided), "$m-%d-%Y") << std::endl;
+			out << "Date and time service was saved to system: "
 					  << std::put_time(std::localtime(&timeRecorded), "%m-%d-%Y %H:%M:%S") << std::endl;
-			std::cout << "Recieving member's name: " << (*session).getProvidedTo().getName() << std::endl;
-			std::cout << "Recieving member's number: " << (*session).getProvidedTo().getID() << std::endl;
-			std::cout << "Service code: " << (*session).getServiceProvided().ID << std::endl;
-			std::cout << "Fee to be paid: $" << (*session).getServiceProvided().price << std::endl;
+			out << "Recieving member's name: " << (*session).getProvidedTo().getName() << std::endl;
+			out << "Recieving member's number: " << (*session).getProvidedTo().getID() << std::endl;
+			out << "Service code: " << (*session).getServiceProvided().ID << std::endl;
+			out << "Fee to be paid: $" << (*session).getServiceProvided().price << std::endl;
 
 			numConsultations++;
 			totalFee += (*session).getServiceProvided().price;
 		}
 	}
 
-	std::cout << "Total number of consultations: " << numConsultations << std::endl;
-	std::cout << "Total fee for the week: $" << totalFee << std::endl;
+	out << "Total number of consultations: " << numConsultations << std::endl;
+	out << "Total fee for the week: $" << totalFee << std::endl;
 }
 
 bool Provider::providedServices() const
