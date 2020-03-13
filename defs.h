@@ -287,10 +287,21 @@ public:
 
 	  @return the members status, false indicates suspended, true indicates not suspended/valid
 	*/
-	bool getStatus() const;
+	void getStatus() const;
 	
 
-	bool printMemberInfo(); //Searches for member based on ID number.  Retruns false if member not found in list.
+	/*
+	  Prints information about the member in the following format
+	  - member id
+	  - member name
+	  - member address
+	  - member city
+	  - member state
+	  - member zip
+	  - member status
+	*/
+	void printMemberInfo() const;
+	
 	//these operators need to overloaded in order to use set
 	//for sorting a set of Members
 	friend bool operator<(const Member& left_side, const Member& right_side);

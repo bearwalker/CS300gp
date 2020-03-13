@@ -123,6 +123,14 @@ void Session::setServiceProvided(Service service)
 	serviceProvided = service;
 }
 
+void setProviderName(std::string name)
+{
+	if (name.size() > NAME_CHARACTERS)
+		name.resize(NAME_CHARACTERS);
+
+	providerName = name;
+}
+
 void Session::setDateProvided(std::chrono::system_clock::time_point date)
 {
 	dateProvided = date;
@@ -149,6 +157,11 @@ Member Session::getProvidedTo() const
 Service Session::getServiceProvided() const
 {
 	return serviceProvided;
+}
+
+std::string getProviderName() const
+{
+	return providerName;
 }
 
 std::chrono::system_clock::time_point Session::getDateProvided() const

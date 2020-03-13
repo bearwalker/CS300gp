@@ -153,6 +153,7 @@ bool Provider::saveWeekReport(std::string filePath)
 		return false;
 
 	weekReport(file);
+	file.close();
 	return true;
 }
 
@@ -169,6 +170,7 @@ void Provider::weekReport(std::ostream& out)
 
 	// Find services provided in the last 7 days
 	// This gets the date 7 days ago using std::chrono dark magic (a day is 86400 seconds)
+	// Basically this takes the current time minus 7 days then rounds it down with floor to the nearest day
 	std::chrono::system_clock::time_point dateAWeekAgo(std::chrono::floor<std::chrono::duration<int, std::ratio<86400>>>(std::chrono::system_clock::now() - (std::chrono::hours(24) * 7)));
 
 	// Iterate through sessionRecords printing ones that are within 7 days ago
@@ -186,11 +188,11 @@ void Provider::weekReport(std::ostream& out)
 					  << std::put_time(std::localtime(&timeRecorded), "%m-%d-%Y %H:%M:%S") << std::endl;
 			out << "Recieving member's name: " << (*session).getProvidedTo().getName() << std::endl;
 			out << "Recieving member's number: " << (*session).getProvidedTo().getID() << std::endl;
-			out << "Service code: " << (*session).getServiceProvided().ID << std::endl;
-			out << "Fee to be paid: $" << (*session).getServiceProvided().price << std::endl;
+			out << "Service code: " << (*session).getServiceProvided().getID() << std::endl;
+			out << "Fee to be paid: $" << (*session).getServiceProvided().getPrice() << std::endl << std::endl;
 
 			numConsultations++;
-			totalFee += (*session).getServiceProvided().price;
+			totalFee += (*session).getServiceProvided().getPrice();
 		}
 	}
 
