@@ -23,7 +23,6 @@ const unsigned int CITY_CHARACTERS = 14;
 const unsigned int STATE_CHARACTERS = 2;
 const unsigned int ZIP_DIGITS = 5;
 
-
 //Def of service struct
 struct Service
 {
@@ -40,15 +39,7 @@ bool operator<(const Service& leftSide, const Service& rightSide);
 bool operator<(const unsigned int& leftSide, const Service& rightSide);
 bool operator<(const Service& leftSide, const unsigned int& rightSide);
 
-// Def of Session struct
-struct Session
-{
-	Member providedTo;
-	Service& serviceProvided;
-	std::chrono::year_month_day dateProvided;
-	std::chrono::system_clock::time_point timeRecorded;
-	std::string comments;
-};
+
 
 //Def of member class
 class Member
@@ -77,6 +68,16 @@ class Member
 		std::string state;
 		int zip;
 		std::set<Service, std::less<>> servicesUsed;
+};
+
+// Def of Session struct
+struct Session
+{
+	Member providedTo;
+	Service serviceProvided;
+	std::chrono::system_clock::time_point dateProvided;
+	std::chrono::system_clock::time_point timeRecorded;
+	std::string comments;
 };
 
 //Def of provider class
@@ -138,7 +139,7 @@ public:
 	  @param dateProvided - the date the service was provided on
 	  @param comments - any comments the provider wants to make on the session
 	*/
-	void saveSessionReport(Member member, Service service, std::chrono::year_month_day dateProvided, std::string comments);
+	void saveSessionReport(Member member, Service& service, std::chrono::system_clock::time_point dateProvided, std::string comments);
 
 	/*
 	  Interactively create a record of a service provided to a member, running through these steps:
@@ -171,7 +172,7 @@ public:
 	  - Total number of consultations in past 7 days 3 digits
 	  - Total fee for the past 7 days up to $99,999.99
 	 */
-	void printWeekReport() const;
+	void printWeekReport();
 
 	/*
 	  Checks if any services were provided by the provided during the last 7 days
