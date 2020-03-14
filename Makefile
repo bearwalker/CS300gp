@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall
 # Add your implementation files here, replacing .cpp with .o
-OBJECTS = member.o provider.o services.o digits.o
+OBJECTS = member.o provider.o services.o digits.o session.o
 # Add you test files here, replacing .cpp with .o
 TESTOBJECTS = csvTests.o digitsTests.o
 # Don't modify this line, it adds the directory to the test objects

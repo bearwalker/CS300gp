@@ -123,12 +123,14 @@ bool getElement(double& element, std::string& line, char seperator, char termina
 
 // ----Function implementations----
 template <typename... Types>
-bool parseFile(std::string filePath, std::vector<std::tuple<Types...>>& fileContents) {
+bool parseFile(std::string filePath, std::vector<std::tuple<Types...>>& fileContents)
+{
 	return parseFile<Types...>(filePath, ',', ';', '#', fileContents);
 }
 
 template <typename... Types>
-bool parseFile(std::string filePath, char seperator, char terminator, char comment, std::vector<std::tuple<Types...>>& fileContents) {
+bool parseFile(std::string filePath, char seperator, char terminator, char comment, std::vector<std::tuple<Types...>>& fileContents)
+{
 	// Try and open the file
 	std::ifstream file(filePath);
 
@@ -148,17 +150,20 @@ bool parseFile(std::string filePath, char seperator, char terminator, char comme
 	// If we didn't read anything return false
 	if (fileContents.size() == 0)
 		return false;
-	
+
+	file.close();
 	return true;
 }
 
 template<typename... Types>
-bool parseLine(std::istream& file, std::tuple<Types...>& lineContents) {
+bool parseLine(std::istream& file, std::tuple<Types...>& lineContents)
+{
 	return parseLine<Types...>(file, ',', ';', '#', lineContents);
 }
 
 template<typename... Types>
-bool parseLine(std::ifstream& file, char seperator, char terminator, char comment, std::tuple<Types...>& lineContents) {
+bool parseLine(std::ifstream& file, char seperator, char terminator, char comment, std::tuple<Types...>& lineContents)
+{
 	// File should be open and have contents
 	if (!file.is_open() || file.eof() || std::isspace(static_cast<unsigned char>(file.peek())))
 		return false;
@@ -185,7 +190,8 @@ bool parseLine(std::ifstream& file, char seperator, char terminator, char commen
 	return returnValue;
 }
 
-bool getElement(std::string& element, std::string& line, char seperator, char terminator) {
+bool getElement(std::string& element, std::string& line, char seperator, char terminator)
+{
 	std::string::size_type seperatorPosition = line.find(seperator);
 	std::string::size_type terminatorPosition = line.find(terminator);
 
@@ -206,7 +212,8 @@ bool getElement(std::string& element, std::string& line, char seperator, char te
 	return true;
 }
 
-bool getElement(int& element, std::string& line, char seperator, char terminator) {
+bool getElement(int& element, std::string& line, char seperator, char terminator)
+{
 	std::string buffer;
 
 	// Read raw data as string
@@ -223,7 +230,8 @@ bool getElement(int& element, std::string& line, char seperator, char terminator
 	return true;
 }
 
-bool getElement(unsigned int& element, std::string& line, char seperator, char terminator) {
+bool getElement(unsigned int& element, std::string& line, char seperator, char terminator)
+{
 	std::string buffer;
 
 	// Read raw data as string
@@ -240,10 +248,11 @@ bool getElement(unsigned int& element, std::string& line, char seperator, char t
 	return true;
 }
 
-bool getElement(float& element, std::string& line, char seperator, char terminator) {
+bool getElement(float& element, std::string& line, char seperator, char terminator)
+{
 	std::string buffer;
 
-	// Ready raw data as string
+	// Read raw data as string
 	if (!getElement(buffer,line,seperator, terminator))
 		return false;
 
@@ -257,10 +266,11 @@ bool getElement(float& element, std::string& line, char seperator, char terminat
 	return true;
 }
 
-bool getElement(double& element, std::string& line, char seperator, char terminator) {
+bool getElement(double& element, std::string& line, char seperator, char terminator)
+{
 	std::string buffer;
 
-	// Ready raw data as string
+	// Read raw data as string
 	if (!getElement(buffer, line, seperator, terminator))
 		return false;
 
@@ -272,4 +282,28 @@ bool getElement(double& element, std::string& line, char seperator, char termina
 	}
 
 	return true;
+}
+
+bool getElement(bool& element, std::string& line, char seperator, char terminator)
+{
+	std::string buffer;
+
+	// Read raw data as string
+	if (!getElement(buffer, line seperator, terminator))
+		return false;
+
+	// Convert string to uppercase
+	std::transform(buffer.begin(), buffer.end(), buffer.begin(),
+				   [](unsigned char character) -> unsigned char{ return std::toupper(character); });
+
+	// Only TRUE and FALSE are valid bools
+	if (buffer == "TRUE") {
+		element = true;
+		return true;
+	} else if (buffer == "FALSE") {
+		element = false;
+		return true;
+	}
+
+	return false;
 }
