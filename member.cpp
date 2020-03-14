@@ -188,6 +188,11 @@ std::string Member::getName() const
 	return name;
 }
 
+std::string Member::getAddress() const
+{
+	return address;
+}
+
 std::string Member::getCity() const
 {
 	return city;
