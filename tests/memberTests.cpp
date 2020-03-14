@@ -13,7 +13,7 @@ TEST_CASE("Initialize Member")
 	REQUIRE(a_member.getAddress() == "");
 	REQUIRE(a_member.getCity() == "");
 	REQUIRE(a_member.getState() == "");
-	REQUIRE(a_member.getZip() == "");
+	REQUIRE(a_member.getZip() == 0);
 }
 
 
