@@ -41,11 +41,11 @@ void managerTerminal(std::set<Member, std::less<>> members, std::set<Provider, s
 				std::time_t currentDate = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 				std::ostringstream dateString;
 				dateString << std::put_time(std::localtime(&currentDate), "%m-%d-%Y");
-				
+
                 //print and save reports for all Members
                 for(auto member = members.begin(); member != members.end(); member++)
                 {
-					
+
 					(*member).printWeekReport();
 
 					std::string reportPath = REPORT_DATA_DIR + (*member).getName() + "_" + dateString.str() + "_report.csv";
@@ -57,11 +57,11 @@ void managerTerminal(std::set<Member, std::less<>> members, std::set<Provider, s
                 //print the manager report
                 double totalFee = 0;
                 unsigned int totalProvided = 0;
-				
+
                 for(auto provider = providers.begin(); provider != providers.end(); provider++)
                 {
                     unsigned int servicesProvided = (*provider).providedServices();
-					
+
                     if(servicesProvided > 0){
 
                         std::cout << '\n' << "Provider: " << (*provider).getName() << " provided " << servicesProvided << " this week" << '\n';
@@ -102,11 +102,11 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
             case 'A': {
 				// check member status
 				unsigned int memberID;
-				
+
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberID;
                 std::cin.ignore(MAX,'\n');
-				
+
                 auto member = members.find(memberID);
                 if (member == members.end())
 					std::cout << "Member ID is invalid.\n";
@@ -119,11 +119,11 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
             case 'C': {
 				// check if service id is valid
 				unsigned int serviceID;
-				
+
                 std::cout << "Enter Service ID: ";
                 std::cin >> serviceID;
                 std::cin.ignore(MAX,'\n');
-				
+
                 bool serviceCheck = currentProvider->checkServiceID(serviceID);
                 if (serviceCheck)
 					std::cout << "Service ID " << serviceID << " is valid.\n";
@@ -139,7 +139,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
             case 'E': {
 				// record a service provided to a member
 				unsigned int memberID;
-				
+
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberID;
                 std::cin.ignore(MAX,'\n');
@@ -167,7 +167,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				std::string yearString;
 				std::string monthString;
 				std::string dayString;
-				
+
 				std::getline(dateStream, monthString, '-');
 				std::getline(dateStream, dayString, '-');
 				std::getline(dateStream, yearString);
@@ -191,7 +191,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 
 				// ask for service id
 				unsigned int serviceID;
-				std::cout << "Enter Service ID: ";  
+				std::cout << "Enter Service ID: ";
 				std::cin >> serviceID;
 				std::cin.ignore(MAX,'\n');
 
@@ -217,7 +217,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				std::cout << "Would you like to add additional comments? Y/N: ";
 				std::cin >> commentChoice;
 				std::cin.ignore(MAX,'\n');
-				
+
 
 				if (toupper(commentChoice) == 'Y') {
 					std::cout << "Comments (100 characters max): ";
@@ -243,7 +243,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				std::time_t currentDate = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 				std::ostringstream dateString;
 				dateString << std::put_time(std::localtime(&currentDate), "%m-%d-%Y");
-				
+
 				std::string reportPath = REPORT_DATA_DIR + currentProvider->getName() + "_" + dateString.str() + "_report.csv";
 				currentProvider->saveWeekReport(reportPath);
 				break;
@@ -286,7 +286,7 @@ int main(void)
 	// Ask which terminal they want
 	char response;
 	unsigned int id;
-	
+
     std::cout << "Enter 'P' for Provider or 'M' for manager : ";
     std::cin >> response;
 	std::cin.ignore(MAX,'\n');
@@ -297,14 +297,14 @@ int main(void)
         std::cout << '\n' << "Enter manager ID (Default for testing is " << MANAGER_LOGIN << ") : ";
         std::cin >> id;
         std::cin.ignore(MAX,'\n');
-		
+
         if(id == MANAGER_LOGIN)
             managerTerminal(members, providers);
     } else if(response == 'P') {
-        std::cout << '\n' << "Enter Provider ID: ";
+        std::cout << '\n' << "Enter Provider ID (Default for testing is 100000000): ";
         std::cin >> id;
         std::cin.ignore(MAX,'\n');
-		
+
         auto provider = providers.find<unsigned int>(id);
         if(provider != providers.end()){
             // found provider in providers
