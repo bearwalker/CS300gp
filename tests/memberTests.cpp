@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../defs.h"
+#include "../member.h"
 
 
 
@@ -40,7 +40,7 @@ TEST_CASE("Add a Service")
 {
 	Member members;
 	Service used;
-	REQUIRE(members.addService(used) == 1 OR members.addService(used) == 2);
+	REQUIRE(members.addService(used) == 1 || members.addService(used) == 2);
 
 }
 
