@@ -1,5 +1,6 @@
 #include <ctime>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -38,58 +39,17 @@ bool Session::loadInformation(std::string informationFile)
 	setServiceProvided(service);
 
 	// Create time_point from date string
-	std::tm date;
+	std::tm date = {};
 	std::istringstream dateStream(std::get<3>(information.at(0)));
-
-	std::string yearString;
-	std::string monthString;
-	std::string dayString;
-	std::getline(dateStream, yearString, '-');
-	std::getline(dateStream, monthString, '-');
-	std::getline(dateStream, dayString);
-
-	try {
-		// tm stores years since 1900
-		date.tm_year = std::stoi(yearString) - 1900;
-		// months since january
-		date.tm_mon = std::stoi(monthString) - 1;
-		date.tm_mday = std::stoi(dayString);
-	} catch (...) {
-		return false;
-	}
+	dateStream >> std::get_time(&date, "%m-%d-%Y");
 
 	setDateProvided(std::chrono::system_clock::from_time_t(std::mktime(&date)));
 	
 
 	// Create time_point from time string
-	std::tm time;
+	std::tm time = {};
 	std::istringstream timeStream(std::get<4>(information.at(0)));
-
-	yearString.clear();
-	monthString.clear();
-	dayString.clear();
-	std::string hourString;
-	std::string minuteString;
-	std::string secondString;
-	std::getline(timeStream, yearString, '-');
-	std::getline(timeStream, monthString, '-');
-	std::getline(timeStream, dayString, ' ');
-	std::getline(timeStream, hourString, ':');
-	std::getline(timeStream, minuteString, ':');
-	std::getline(timeStream, secondString);
-
-	try {
-		// tm stores years since 1900
-		date.tm_year = std::stoi(yearString) - 1900;
-		// months since january
-		date.tm_mon = std::stoi(monthString) - 1;
-		date.tm_mday = std::stoi(dayString);
-		date.tm_hour = std::stoi(hourString);
-		date.tm_min = std::stoi(minuteString);
-		date.tm_sec = std::stoi(secondString);
-	} catch (...) {
-		return false;
-	}
+	timeStream >> std::get_time(&time, "%m-%d-%Y %H:%M:%S");
 
 	setTimeRecorded(std::chrono::system_clock::from_time_t(std::mktime(&time)));
 
@@ -111,11 +71,16 @@ bool Session::saveRecord(std::string filePath)
 
 	// Convert times to appropriate strings
 	std::time_t dateProvidedTimeT = std::chrono::system_clock::to_time_t(dateProvided);
-	file << std::put_time(std::localtime(&dateProvidedTimeT), "%m-%d-%Y") << ',';
+	std::tm dateTm = *std::localtime(&dateProvidedTimeT);
+	file << std::put_time(&dateTm, "%m-%d-%Y") << ',';
 	std::time_t timeRecordedTimeT = std::chrono::system_clock::to_time_t(timeRecorded);
-	file << std::put_time(std::localtime(&timeRecordedTimeT), "%m-%d-%Y %H:%M:%S") << ',';
+	std::tm timeTm = *std::localtime(&timeRecordedTimeT);
+	file << std::put_time(&timeTm, "%m-%d-%Y %H:%M:%S") << ',';
 
-	file << comments << ';' << std::endl;
+	if (comments == "")
+		file << ' ' << ';' << std::endl;
+	else
+		file << comments << ';' << std::endl;
 
 	file.close();
 

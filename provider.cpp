@@ -1,6 +1,7 @@
 #include <chrono>
 #include <ctime>
 #include <fstream>
+#include <ios>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -68,7 +69,7 @@ bool Provider::loadInformation(std::string informationFile)
 	// Load session records
 	for (auto file: fs::directory_iterator(PROVIDER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR)) {
 		Session newSession;
-		if (newSession.loadInformation(file.path()))
+		if (file.path() != "dummyFile" && newSession.loadInformation(file.path()))
 			sessionRecords.push_back(newSession);
 	}
 
@@ -114,10 +115,10 @@ bool Provider::checkServiceID(unsigned int serviceID) const
 void Provider::printServiceDirectory() const
 {
 	std::cout << "Service Directory" << std::endl;
-	std::cout << std::setw(SERVICE_ID_DIGITS + 1) << "ID" << std::setw(SERVICE_NAME_CHARACTERS + 1) << "Name" << std::setw(SERVICE_PRICE_WIDTH) << "Fee" << std::endl;
+	std::cout << std::left << std::setw(SERVICE_ID_DIGITS + 1) << "ID" << std::setw(SERVICE_NAME_CHARACTERS + 1) << "Name" << std::setw(SERVICE_PRICE_WIDTH) << "Fee" << std::endl;
 
 	for (auto service = serviceDirectory.begin(); service != serviceDirectory.end(); service++)
-		std::cout << std::setw(SERVICE_ID_DIGITS + 1) << (*service).getID()
+		std::cout << std::left << std::setw(SERVICE_ID_DIGITS + 1) << (*service).getID()
 				  << std::setw(SERVICE_NAME_CHARACTERS + 1) << (*service).getName()
 				  << std::setw(SERVICE_PRICE_WIDTH) << "$" << std::setprecision(SERVICE_PRICE_WIDTH - 1) << (*service).getPrice() << std::endl;
 }
@@ -140,8 +141,10 @@ Session Provider::saveSessionReport(Member member, Service service, std::chrono:
 
 	// write session record to disk
 	std::time_t dateTimeT = std::chrono::system_clock::to_time_t(dateProvided);
-	std::stringstream dateString;
-	dateString << std::put_time(std::localtime(&dateTimeT), "%Y-%m-%d");
+	std::tm dateTm = *std::localtime(&dateTimeT);
+	std::ostringstream dateString;
+	dateString << std::put_time(&dateTm, "%m-%d-%Y");
+
 	std::string sessionPath = PROVIDER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR + dateString.str() + "_" + member.getName() + ".csv";
 	newSession.saveRecord(sessionPath);
 
@@ -192,12 +195,14 @@ void Provider::weekReport(std::ostream& out)
 		// print entries whos date is equal to or greater than (occured after) the date 7 days ago
 		if ((*session).getDateProvided() == dateAWeekAgo || (*session).getDateProvided() > dateAWeekAgo) {
 			// Convert time_points to time_t for printing
-			std::time_t dateProvided = std::chrono::system_clock::to_time_t((*session).getDateProvided());
-			std::time_t timeRecorded = std::chrono::system_clock::to_time_t((*session).getTimeRecorded());
+			std::time_t dateT = std::chrono::system_clock::to_time_t(((*session).getDateProvided()));
+			std::time_t timeT = std::chrono::system_clock::to_time_t(((*session).getTimeRecorded()));
+			std::tm dateTm = *std::localtime(&dateT);
+			std::tm timeTm = *std::localtime(&timeT);
 
-			out << "Date of service: " << std::put_time(std::localtime(&dateProvided), "$m-%d-%Y") << std::endl;
+			out << "Date of service: " << std::put_time(&dateTm, "%m-%d-%Y") << std::endl;
 			out << "Date and time service was saved to system: "
-					  << std::put_time(std::localtime(&timeRecorded), "%m-%d-%Y %H:%M:%S") << std::endl;
+					  << std::put_time(&timeTm, "%m-%d-%Y %H:%M:%S") << std::endl;
 			out << "Recieving member's name: " << (*session).getMemberName() << std::endl;
 			out << "Recieving member's number: " << (*session).getMemberID() << std::endl;
 			out << "Service code: " << (*session).getServiceProvided().getID() << std::endl;

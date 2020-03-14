@@ -66,7 +66,7 @@ bool Member::loadInformation(std::string informationFile)
 	// Load session records
 	for (auto file: fs::directory_iterator(MEMBER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR)) {
 		Session newSession;
-		if (newSession.loadInformation(file.path()))
+		if (file.path() != "dummyFile" && newSession.loadInformation(file.path()))
 			sessions.push_back(newSession);
 	}
 
@@ -79,8 +79,9 @@ void Member::saveSession(Session session)
 
 	// write session to disk
 	std::time_t dateTimeT = std::chrono::system_clock::to_time_t(session.getDateProvided());
-	std::stringstream dateString;
-	dateString << std::put_time(std::localtime(&dateTimeT), "%Y-%m-%d");
+	std::tm dateTm = *std::localtime(&dateTimeT);
+	std::ostringstream dateString;
+	dateString << std::put_time(&dateTm, "%m-%d-%Y");
 	std::string sessionPath = MEMBER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR + dateString.str() + "_" + name + ".csv";
 	session.saveRecord(sessionPath);
 }

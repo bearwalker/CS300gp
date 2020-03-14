@@ -162,26 +162,9 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				std::cin.ignore(MAX,'\n');
 
 				// convert to time_point
-				std::tm dateTm;
+				std::tm dateTm = {};
 				std::istringstream dateStream(dateString);
-				std::string yearString;
-				std::string monthString;
-				std::string dayString;
-				
-				std::getline(dateStream, monthString, '-');
-				std::getline(dateStream, dayString, '-');
-				std::getline(dateStream, yearString);
-
-				try {
-					// tm stores years since 1900
-					dateTm.tm_year = std::stoi(yearString) - 1900;
-					// months since january
-					dateTm.tm_mon = std::stoi(monthString) - 1;
-					dateTm.tm_mday = std::stoi(dayString);
-				} catch (...) {
-					std::cout << "Invalid date" << std::endl;
-					break;
-				}
+				dateStream >> std::get_time(&dateTm, "%m-%d-%Y");
 
 				std::chrono::system_clock::time_point date = std::chrono::system_clock::from_time_t(std::mktime(&dateTm));
 
