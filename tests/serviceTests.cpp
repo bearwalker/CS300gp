@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../defs.h"
+#include "../service.h"
 
 
 TEST_CASE("Services set ID Success") {

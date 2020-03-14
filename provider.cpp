@@ -6,8 +6,13 @@
 #include <iomanip>
 #include <string>
 
+#include "provider.h"
 #include "defs.h"
+#include "digits.h"
 #include "csvParser.h"
+#include "member.h"
+#include "service.h"
+#include "session.h"
 
 Provider::Provider()
 {
@@ -65,7 +70,7 @@ bool Provider::loadInformation(std::string informationFile)
 	return true;
 }
 
-void Provider::saveEFT(std::string filePath, double fee)
+bool Provider::saveEFT(std::string filePath, double fee)
 {
 	std::ofstream file(filePath);
 
@@ -108,7 +113,7 @@ void Provider::printServiceDirectory() const
 	std::cout << "ID    " << "Name                " << "Fee    " << std::endl;
 	
 	for (auto service = serviceDirectory.begin(); service != serviceDirectory.end(); service++)
-		std::cout << (*service).ID << (*service).name << (*service).price << std::endl;
+		std::cout << (*service).getID() << (*service).getName() << (*service).getPrice() << std::endl;
 }
 
 
@@ -116,8 +121,9 @@ Session Provider::saveSessionReport(Member member, Service service, std::chrono:
 {
 	// Put data in a session struct
 	Session newSession;
-	newSession.setProvidedTo(member);
 	newSession.setServiceProvided(service);
+	newSession.setMemberName(member.getName());
+	newSession.setMemberID(member.getID());
 	newSession.setProviderName(name);
 	newSession.setDateProvided(dateProvided);
 	newSession.setComments(comments);
@@ -186,8 +192,8 @@ void Provider::weekReport(std::ostream& out)
 			out << "Date of service: " << std::put_time(std::localtime(&dateProvided), "$m-%d-%Y") << std::endl;
 			out << "Date and time service was saved to system: "
 					  << std::put_time(std::localtime(&timeRecorded), "%m-%d-%Y %H:%M:%S") << std::endl;
-			out << "Recieving member's name: " << (*session).getProvidedTo().getName() << std::endl;
-			out << "Recieving member's number: " << (*session).getProvidedTo().getID() << std::endl;
+			out << "Recieving member's name: " << (*session).getMemberName() << std::endl;
+			out << "Recieving member's number: " << (*session).getMemberID() << std::endl;
 			out << "Service code: " << (*session).getServiceProvided().getID() << std::endl;
 			out << "Fee to be paid: $" << (*session).getServiceProvided().getPrice() << std::endl << std::endl;
 
@@ -235,72 +241,6 @@ double Provider::weekFeeTotal() const
 
 	return feeTotal;
 }
-
-void Provider::setInfo()
-{
-    char response;
-
-    std::cout << '\n' << "Enter Name of provider: ";
-    std::getline(std::cin,name);
-    std::cin.ignore(MAX,'\n');
-    name.resize(CHARMAX);
-
-    std::cout << '\n' << "Enter " << name << " Provider ID: ";
-    std::cin >> id;
-    std::cin.ignore(MAX,'\n');
-
-    std::cout << '\n' << "Enter " << name << " Street Address: ";
-    std::getline(std::cin,address);
-    std::cin.ignore(MAX,'\n');
-    name.resize(CHARMAX);
-
-    std::cout << '\n' << "Enter " << name << " City: ";
-    std::getline(std::cin,city);
-    std::cin.ignore(MAX,'\n');
-    name.resize(CHARMAX);
-
-    std::cout << '\n' << "Enter " << name << " State(EG:OR): ";
-    std::getline(std::cin,state);
-    std::cin.ignore(MAX,'\n');
-    name.resize(CHARMAX);
-
-    std::cout << '\n' << "Enter " << name << " ZIP: ";
-    std::cin >> zip;
-    std::cin.ignore(MAX,'\n');
-
-    std::cout << '\n' << "Add Services? (Y/N)" << '\n';
-    std::cin >> response;
-    std::cin.ignore(MAX,'\n');
-    response = toupper(response);
-
-    if(response == 'Y')
-        setServices();
-    return;
-
-}
-
-void Provider::setServices()
-{
-    char response;
-    do{
-        addService();
-        std::cout << '\n' << "Add Another? (Y/N)" << '\n';
-        std::cin >> response;
-        std::cin.ignore('\n',MAX);
-        response = toupper(response);
-    }while(response != 'N');
-    return;
-
-}
-
-bool Provider::addService()
-{
-    Service new_serv;
-    new_serv.setInfo();
-    serviceDirectory.insert(new_serv);
-    return true;
-}
-
 
 void Provider::setID(unsigned int newID)
 {

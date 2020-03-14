@@ -9,6 +9,7 @@ which is why this file contains the implementation.
 */
 #pragma once
 
+#include <algorithm>
 #include <cctype>
 #include <fstream>
 #include <string>
@@ -120,6 +121,7 @@ bool getElement(int& element, std::string& line, char seperator, char terminator
 bool getElement(unsigned int& element, std::string& line, char seperator, char terminator);
 bool getElement(float& element, std::string& line, char seperator, char terminator);
 bool getElement(double& element, std::string& line, char seperator, char terminator);
+bool getElement(bool& element, std::string& line, char seperator, char terminator);
 
 // ----Function implementations----
 template <typename... Types>
@@ -289,7 +291,7 @@ bool getElement(bool& element, std::string& line, char seperator, char terminato
 	std::string buffer;
 
 	// Read raw data as string
-	if (!getElement(buffer, line seperator, terminator))
+	if (!getElement(buffer, line, seperator, terminator))
 		return false;
 
 	// Convert string to uppercase

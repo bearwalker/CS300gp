@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "../defs.h"
+#include "../digits.h"
 
 TEST_CASE("Testing that numDigits returns correct values for unsigned ints", "[digits]")
 {
