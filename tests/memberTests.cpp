@@ -9,7 +9,6 @@ TEST_CASE("Initialize Member")
 {
 	Member a_member;
 	REQUIRE(a_member.getID() == 0);
-	REQUIRE(a_member.getStatus() == 1);
 	REQUIRE(a_member.getName() == "");
 	REQUIRE(a_member.getAddress() == "");
 	REQUIRE(a_member.getCity() == "");
@@ -17,11 +16,6 @@ TEST_CASE("Initialize Member")
 	REQUIRE(a_member.getZip() == 0);
 }
 
-TEST_CASE("Test Active")
-{
-	Member members;
-	REQUIRE(members.getStatus() == true);
-}
 
 TEST_CASE("Test Suspended")
 {
@@ -79,7 +73,7 @@ TEST_CASE("Get Member Address Success") {
 }
 
 TEST_CASE("Set Member ID Success") {
-    unsigned int ID = 123456;
+    unsigned int ID = 123456000;
     Member test;
     test.setID(ID);
     REQUIRE(ID == test.getID());
@@ -93,7 +87,7 @@ TEST_CASE("Set Member ID Bounds Enforcing Success") {
 }
 
 TEST_CASE("Get Member ID Success") {
-    unsigned int ID = 123456;
+    unsigned int ID = 123456000;
     Member test;
     test.setID(ID);
     unsigned int rn = test.getID();
@@ -112,7 +106,7 @@ TEST_CASE("Set Member City Bounds Enforcing Success") {
     Member test;
     test.setCity(city);
     std::string rn = test.getCity();
-    REQUIRE(CITY_CHARACTERS == rn.size());
+    REQUIRE(CITY_CHARACTERS >= rn.size());
 }
 
 TEST_CASE("Get Member City Success") {

@@ -16,7 +16,7 @@ TEST_CASE("Set Service Name Bounds Enforcing Success") {
     Service test;
     test.setName(name);
     std::string rn = test.getName();
-    REQUIRE(NAME_CHARACTERS == rn.size());
+    REQUIRE(NAME_CHARACTERS >= rn.size());
 }
 
 TEST_CASE("Get Service Name Success") {
@@ -57,7 +57,7 @@ TEST_CASE("Set Service ID Success") {
 }
 
 TEST_CASE("Set Service ID Bounds Enforcing Success") {
-    unsigned int ID = 1000000000;
+    unsigned int ID = 1000000;
     Service test;
     test.setID(ID);
     REQUIRE(sizeof(ID_DIGITS) == sizeof(test.getID()));

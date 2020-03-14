@@ -51,7 +51,7 @@ TEST_CASE("Get Provider Address Success") {
 }
 
 TEST_CASE("Set Provider ID Success") {
-    unsigned int ID = 123456;
+    unsigned int ID = 123456000;
     Provider test;
     test.setID(ID);
     REQUIRE(ID == test.getID());
@@ -65,7 +65,7 @@ TEST_CASE("Set Provider ID Bounds Enforcing Success") {
 }
 
 TEST_CASE("Get Provider ID Success") {
-    unsigned int ID = 123456;
+    unsigned int ID = 123456000;
     Provider test;
     test.setID(ID);
     unsigned int rn = test.getID();
@@ -84,7 +84,7 @@ TEST_CASE("Set Provider City Bounds Enforcing Success") {
     Provider test;
     test.setCity(city);
     std::string rn = test.getCity();
-    REQUIRE(CITY_CHARACTERS == rn.size());
+    REQUIRE(CITY_CHARACTERS >= rn.size());
 }
 
 TEST_CASE("Get Provider City Success") {
