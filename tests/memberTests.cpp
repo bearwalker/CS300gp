@@ -1,6 +1,7 @@
 #include "catch.hpp"
 #include "../member.h"
 #include "../defs.h"
+#include <string>
 
 
 
@@ -8,7 +9,6 @@ TEST_CASE("Initialize Member")
 {
 	Member a_member;
 	REQUIRE(a_member.getID() == 0);
-	REQUIRE(a_member.getStatus() == 1);
 	REQUIRE(a_member.getName() == "");
 	REQUIRE(a_member.getAddress() == "");
 	REQUIRE(a_member.getCity() == "");
@@ -17,134 +17,125 @@ TEST_CASE("Initialize Member")
 }
 
 
-TEST_CASE("Testing print member info")
-{
-	Member members;
-	REQUIRE(members.printMemberInfo() == true);
-
-}
-
-TEST_CASE("Test Active")
-{
-	Member members;
-	REQUIRE(members.getMemStatus() == true);
-}
-
 TEST_CASE("Test Suspended")
 {
 	Member members;
-	REQUIRE(members.setStatus(false) == false);
+    members.setStatus(false);
+	REQUIRE(members.getStatus() == false);
 }
 
 
 
 TEST_CASE("Set Member Name Success") {
-    String name = "Valid Name Length";
+    std::string name = "Valid Name Length";
     Member test;
     test.setName(name);
     REQUIRE(name == test.getName());
 }
 
 TEST_CASE("Set Member Name Bounds Enforcing Success") {
-    String name = "Invalid Name Length because it is too long";
+    std::string name = "Invalid Name Length because it is too long";
     Member test;
     test.setName(name);
-    REQUIRE(NAME_CHARACTERS == (test.getName()).size());
+    std::string rn = test.getName();
+    REQUIRE(NAME_CHARACTERS == rn.size());
 }
 
 TEST_CASE("Get Member Name Success") {
-    String name = "Valid Name";
+    std::string name = "Valid Name";
     Member test;
     test.setName(name);
-    String rn = test.getName();
+    std::string rn = test.getName();
     REQUIRE(rn == name);
 }
 
 TEST_CASE("Set Member Address Success") {
-    String addr = "Valid addr Length";
+    std::string addr = "Valid addr Length";
     Member test;
     test.setAddress(addr);
     REQUIRE(addr == test.getAddress());
 }
 
 TEST_CASE("Set Member Address Bounds Enforcing Success") {
-    String addr = "Invalid addr Length because it is too long";
+    std::string addr = "Invalid addr Length because it is too long";
     Member test;
     test.setAddress(addr);
-    REQUIRE(ADDRESS_CHARACTERS == (test.getAddress()).size());
+    std::string rn = test.getAddress();
+    REQUIRE(ADDRESS_CHARACTERS == rn.size());
 }
 
 TEST_CASE("Get Member Address Success") {
-    String addr = "Valid Addr";
+    std::string addr = "Valid Addr";
     Member test;
     test.setAddress(addr);
-    String rn = test.getAddress();
+    std::string rn = test.getAddress();
     REQUIRE(rn == addr);
 }
 
 TEST_CASE("Set Member ID Success") {
-    unsigned int ID = 123456;
+    unsigned int ID = 123456000;
     Member test;
     test.setID(ID);
     REQUIRE(ID == test.getID());
 }
 
 TEST_CASE("Set Member ID Bounds Enforcing Success") {
-    unsigned int ID = 12345678910;
+    unsigned int ID = 1000000000;
     Member test;
     test.setID(ID);
-    REQUIRE(ID == test.id);
     REQUIRE(sizeof(ID_DIGITS) == sizeof(test.getID()));
 }
 
 TEST_CASE("Get Member ID Success") {
-    unsigned int ID = 123456;
+    unsigned int ID = 123456000;
     Member test;
     test.setID(ID);
-    String rn = test.getID();
+    unsigned int rn = test.getID();
     REQUIRE(rn == ID);
 }
 
 TEST_CASE("Set Member City Success") {
-    String city = "Valid Length";
+    std::string city = "Valid Length";
     Member test;
     test.setCity(city);
     REQUIRE(city == test.getCity());
 }
 
 TEST_CASE("Set Member City Bounds Enforcing Success") {
-    String city = "Valid Length";
+    std::string city = "Valid Length";
     Member test;
     test.setCity(city);
-    REQUIRE(CITY_CHARACTERS == (test.getCity()).size());
+    std::string rn = test.getCity();
+    REQUIRE(CITY_CHARACTERS >= rn.size());
 }
 
 TEST_CASE("Get Member City Success") {
-    String city = "Valid Length";
+    std::string city = "Valid Length";
     Member test;
     test.setCity(city);
-    String rn = test.getCity();
+    std::string rn = test.getCity();
     REQUIRE(rn == city);
 }
 
 TEST_CASE("Set Member State Success") {
-    String state = "OR";
+    std::string state = "OR";
     Member test;
     test.setState(state);
     REQUIRE(state == test.getState());
 }
 
 TEST_CASE("Set Member State Bounds Enforcing Success") {
-    String city = "OR but too long";
+    std::string state = "OR but too long";
     Member test;
     test.setState(state);
-    REQUIRE(STATE_CHARACTERS == (test.getCity()).size());
+    std::string rn = test.getState();
+    REQUIRE(STATE_CHARACTERS == rn.size());
 }
 
 TEST_CASE("Get Member State Success") {
-    String state = "OR";
+    std::string state = "OR";
     Member test;
     test.setState(state);
-    String rn = test.getState();
+    std::string rn = test.getState();
     REQUIRE(rn == state);
 }
