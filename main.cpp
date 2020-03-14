@@ -262,7 +262,7 @@ int main(void)
 	// Load in provider data from the data directory
 	for (auto file: fs::directory_iterator(PROVIDER_DATA_DIR)) {
 		// Each providers data is in a file called info.csv in the directory named after its id
-		if (file.is_directory()) {
+		if (file.status().type() == fs::file_type::directory) {
 			Provider newProvider;
 			if(newProvider.loadInformation(static_cast<std::string>(file.path()) + "/info.csv"))
 				providers.insert(newProvider);
@@ -272,7 +272,7 @@ int main(void)
 	// Load in member data from the data directory
 	for (auto file: fs::directory_iterator(MEMBER_DATA_DIR)) {
 		// Each members data is in a file called info.csv in the directory named after its id
-		if (file.is_directory()) {
+		if (file.status().type() == fs::file_type::directory) {
 			Member newMember;
 			if (newMember.loadInformation(static_cast<std::string>(file.path()) + "/info.csv"))
 				members.insert(newMember);
