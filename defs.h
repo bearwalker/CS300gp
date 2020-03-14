@@ -89,7 +89,7 @@ public:
 	/*
 	  Try to construct the class with data from a csv file, otherwise use empty values.
 	  A provider csv file should be formatted as id,name,address,city,state,zip;
-	  
+
 	  @param informationFile - path to a csv file containing provider info
 	*/
 	Provider(std::string informationFile);
@@ -109,8 +109,8 @@ public:
 
 	  @param serviceID - the service ID to search by
 	  @param service - a reference to the found service, filled in when its found
-	  
-	  @return true if service was found, false if not, 
+
+	  @return true if service was found, false if not,
 	  a reference to the service is returned via the service parameter
 	*/
 	bool findService(unsigned int serviceID, Service& service);
@@ -133,7 +133,7 @@ public:
 
 	/*
 	  Create a record of a service provided to a member
-	  
+
 	  @param member - the member the service was provided to
 	  @param service - the service that was provided
 	  @param dateProvided - the date the service was provided on
@@ -162,7 +162,7 @@ public:
 	  - Provider city 14 characters
 	  - Provider state 2 letters
 	  - Providr zip 5 digits
-	  - Data for each service provided: 
+	  - Data for each service provided:
 	  	- Date of service MM-DD-YYYY
 		- Date and time data was received by computer MM-DD-YYYY HH:MM:SS
 		- Member name 25 characters
@@ -177,9 +177,9 @@ public:
 	/*
 	  Checks if any services were provided by the provided during the last 7 days
 
-	  @return true if services were provided in the last 7 days
+	  @return # of services provided if services were provided in the last 7 days
 	*/
-	bool providedServices() const;
+	int providedServices() const;
 
 	/*
 	  Gives a total of the fees for the last 7 days of services provided
@@ -275,7 +275,7 @@ public:
 	unsigned int getZip() const;
 
 	/*
-	  Compares two providers based on who was the numerically lower ID number, 
+	  Compares two providers based on who was the numerically lower ID number,
 	  for storing providers in std::set
 
 	  @param leftSide - Provider on the left of the <
@@ -286,7 +286,7 @@ public:
 	friend bool operator<(const Provider& leftSide, const Provider& rightSide);
 
 	/*
-	  Compares a Provider to an unsigned int based on the Providers ID number, 
+	  Compares a Provider to an unsigned int based on the Providers ID number,
 	  for searching for Providers in std::set
 
 	  @param leftSide - ID number to compare to Provider
@@ -297,7 +297,7 @@ public:
 	friend bool operator<(const unsigned int& leftSide, const Provider& rightSide);
 
 	/*
-	  Compares a Provider to an unsigned int based on the Providers ID number, 
+	  Compares a Provider to an unsigned int based on the Providers ID number,
 	  for searching for Providers in std::set
 
 	  @param leftSide - Provider to compare to ID number
@@ -339,7 +339,7 @@ unsigned int numDigits(unsigned int number);
 unsigned int numDigits(int number);
 
 /*
-  Resizes a number to the desired number of digits by 
+  Resizes a number to the desired number of digits by
   - cutting off digits starting in the ones place and increasing if there are too many digits
   - padding number with 0s starting in the ones place if there aren't enough digits
   - doing nothing if there are enough digits
