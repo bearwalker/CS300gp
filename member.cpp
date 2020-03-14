@@ -57,7 +57,7 @@ bool Member::loadInformation(std::string informationFile)
 	setStatus(std::get<6>(information.at(0)));
 
 	// Load session records
-	for (auto file: std::filesystem::directory_iterator("MEMBER_DATA_DIR" + std::to_string(id) + SESSION_DATA_SUBDIR)) {
+	for (auto file: std::filesystem::directory_iterator(MEMBER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR)) {
 		Session newSession;
 		if (newSession.loadInformation(file.path()))
 			sessions.push_back(newSession);
@@ -78,7 +78,7 @@ void Member::saveSession(Session session)
 	session.saveRecord(sessionPath);
 }
 
-void Member::weekReport(std::ostream& out)
+void Member::weekReport(std::ostream& out) const
 {
 	out << "Weekly Member Report" << std::endl;
 	out << "Member name: " << name << std::endl;
@@ -107,12 +107,12 @@ void Member::weekReport(std::ostream& out)
 	}
 }
 
-void Member::printWeekReport()
+void Member::printWeekReport() const
 {
 	weekReport(std::cout);
 }
 
-bool Member::saveWeekReport(std::string filePath)
+bool Member::saveWeekReport(std::string filePath) const
 {
 	std::ofstream file(filePath);
 

@@ -53,12 +53,12 @@ public:
 
 	  @param out - the ostream to output he report to
 	*/
-	void weekReport(std::ostream& out);
+	void weekReport(std::ostream& out) const;
 
 	/*
 	  Prints weekReport to std::cout
 	*/
-	void printWeekReport();
+	void printWeekReport() const;
 
 	/*
 	  Prints weekReport to the given file
@@ -67,7 +67,7 @@ public:
 
 	  @return true if file was opened, false if it couldn't be
 	*/
-	bool saveWeekReport(std::string filePath);
+	bool saveWeekReport(std::string filePath) const;
 
 	/*
 	  Sets id to the given unsigned int, cutting it down to the first ID_DIGITS digits if too large

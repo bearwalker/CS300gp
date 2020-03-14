@@ -116,12 +116,12 @@ note that this string is modified to remove the element from the string to allow
 
 @return false on failure and true on success, data is returned via reference in element
 */
-bool getElement(std::string& element, std::string& line, char seperator, char terminator);
-bool getElement(int& element, std::string& line, char seperator, char terminator);
-bool getElement(unsigned int& element, std::string& line, char seperator, char terminator);
-bool getElement(float& element, std::string& line, char seperator, char terminator);
-bool getElement(double& element, std::string& line, char seperator, char terminator);
-bool getElement(bool& element, std::string& line, char seperator, char terminator);
+inline bool getElement(std::string& element, std::string& line, char seperator, char terminator);
+inline bool getElement(int& element, std::string& line, char seperator, char terminator);
+inline bool getElement(unsigned int& element, std::string& line, char seperator, char terminator);
+inline bool getElement(float& element, std::string& line, char seperator, char terminator);
+inline bool getElement(double& element, std::string& line, char seperator, char terminator);
+inline bool getElement(bool& element, std::string& line, char seperator, char terminator);
 
 // ----Function implementations----
 template <typename... Types>
@@ -192,7 +192,7 @@ bool parseLine(std::ifstream& file, char seperator, char terminator, char commen
 	return returnValue;
 }
 
-bool getElement(std::string& element, std::string& line, char seperator, char terminator)
+inline bool getElement(std::string& element, std::string& line, char seperator, char terminator)
 {
 	std::string::size_type seperatorPosition = line.find(seperator);
 	std::string::size_type terminatorPosition = line.find(terminator);
@@ -214,7 +214,7 @@ bool getElement(std::string& element, std::string& line, char seperator, char te
 	return true;
 }
 
-bool getElement(int& element, std::string& line, char seperator, char terminator)
+inline bool getElement(int& element, std::string& line, char seperator, char terminator)
 {
 	std::string buffer;
 
@@ -232,7 +232,7 @@ bool getElement(int& element, std::string& line, char seperator, char terminator
 	return true;
 }
 
-bool getElement(unsigned int& element, std::string& line, char seperator, char terminator)
+inline bool getElement(unsigned int& element, std::string& line, char seperator, char terminator)
 {
 	std::string buffer;
 
@@ -250,7 +250,7 @@ bool getElement(unsigned int& element, std::string& line, char seperator, char t
 	return true;
 }
 
-bool getElement(float& element, std::string& line, char seperator, char terminator)
+inline bool getElement(float& element, std::string& line, char seperator, char terminator)
 {
 	std::string buffer;
 
@@ -268,7 +268,7 @@ bool getElement(float& element, std::string& line, char seperator, char terminat
 	return true;
 }
 
-bool getElement(double& element, std::string& line, char seperator, char terminator)
+inline bool getElement(double& element, std::string& line, char seperator, char terminator)
 {
 	std::string buffer;
 
@@ -286,7 +286,7 @@ bool getElement(double& element, std::string& line, char seperator, char termina
 	return true;
 }
 
-bool getElement(bool& element, std::string& line, char seperator, char terminator)
+inline bool getElement(bool& element, std::string& line, char seperator, char terminator)
 {
 	std::string buffer;
 
