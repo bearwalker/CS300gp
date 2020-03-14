@@ -1,6 +1,10 @@
 //Implementation of the login,Provider, and man terminals
 
-#include "defs.h"  //combined definitions list
+#include <iostream>
+#include <set>
+#include <string>
+
+#include "defs.h" 
 
 //Manager terminal
 void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std::less<>> ptree)
@@ -154,63 +158,71 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
 }
 
 //Provider terminal
-void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mtree)
+void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> members)
 {
 
     char response;
-    int numres;
-    bool svalid;
 
-    do{
+    do {
         std::cout << '\n' << "Enter A to check Member ID status"
-        << '\n' << "Enter B to add a new service"
         << '\n' << "Enter C to check service ID"
-        << '\n' << "Enter D to view services list"
+        << '\n' << "Enter D to view the service directory"
         << '\n' << "Enter E to provide service"
-        << '\n' << "Enter F to print Provider report"
+        << '\n' << "Enter F to print a provider report for the week"
         << '\n' << "Enter Q to exit terminal"
         << '\n' << "Input: ";
         std::cin >> response;
         std::cin.ignore(MAX,'\n');
         response = toupper(response);
-        switch (response)
-        {
-            case 'A':{
-                std::cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
-                std::cin >> numres;
+
+        switch (response) {
+            case 'A': {
+				// check member status
+				unsigned int memberID;
+				
+                std::cout << "Enter Member ID: ";
+                std::cin >> memberID;
                 std::cin.ignore(MAX,'\n');
-                auto mvalid = mtree.find(numres);
-                if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
-                Member to_check = *mvalid;
-                if(to_check.getMemStatus() == false)
+				
+                auto member = members.find(memberID);
+                if (member == mtree.end())
+					std::cout << "Member ID is invalid.\n";
+				else if (!(*member).getStatus())
                     std::cout << "Membership has been suspended.\n";
                 else
                     std::cout << "Member ID is valid.\n";
                 break;
-                }
-            case 'B':{
-                this_Provider->addService();
-                break;
-                }
-            case 'C':{
-                std::cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
-                std::cin >> numres;
+			}
+            case 'C': {
+				// check if service id is valid
+				unsigned int serviceID;
+				
+                std::cout << "Enter Service ID: ";
+                std::cin >> serviceID;
                 std::cin.ignore(MAX,'\n');
-                svalid = this_Provider->checkServiceID(numres);
-                if (svalid == false) std::cout << "Service ID is not valid.\n";
-                else std::cout << "Service ID " << numres << " is valid.\n";
+				
+                bool serviceCheck = currentProvider->checkServiceID(serviceID);
+                if (serviceCheck)
+					std::cout << "Service ID " << serviceID << " is valid.\n";
+                else
+					std::cout << "Service ID " << serviceID << " is not valid.\n";
                 break;
-                }
+			}
             case 'D':{
-                this_Provider->printServiceDirectory();
+				// print the providers service directory
+                currentProvider->printServiceDirectory();
                 break;
-                }
-            case 'E':{
-                std::cout << "Enter Member ID: "; //implement functionality to check list of valid and suspended ID's
-                std::cin >> numres;
+			}
+            case 'E': {
+				// record a service provided to a member
+				unsigned int memberID;
+				
+                std::cout << "Enter Member ID: ";
+                std::cin >> memberID;
                 std::cin.ignore(MAX,'\n');
-                auto mvalid = mtree.find(numres);
-                if (mvalid == mtree.end())
+
+                auto member = members.find(memberID);
+                if (member == mtree.end())
                     std::cout << "Member ID is invalid.\n";
                 Member to_check = *mvalid;
                 if (to_check.getMemStatus() == false)
@@ -230,62 +242,82 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                         this_Provider.findService(numres,toProvide);
 
                         to_check.saveSession(this_Provider.saveSessionReport(to_check,toProvide,std::chrono::system_clock::now(), );
-                        ++toProvide.times_used;
-                        this_Provider.createSessionReport(to_check,toProvide);
-                    }
+											 ++toProvide.times_used;
+											 this_Provider.createSessionReport(to_check,toProvide);
+											 }
+					}
+					break;
                 }
-                break;
+				case 'F':{
+					this_Provider->weekReport(std::cout);
+					break;
                 }
-            case 'F':{
-                this_Provider->weekReport(std::cout);
-                break;
-                }
-            case 'Q':
-                return;
-                break;
-            default:
-                std::cout << "Unknown command.";
-        }
-    }while(response != 'Q');
-    return;
+					case 'Q':
+						return;
+						break;
+						default:
+							std::cout << "Unknown command.";
+			}
+		} while(response != 'Q');
 }
 
 //login terminal that branches to Provider or manager
 int main(void)
 {
-    char response;
-    int check_id;
-    int manID = 123456;
-    std::set<Provider, std::less<>> ptree;
-    std::set<Member, std::less<>> mtree;
-    //read in Provider tree
-    //read in Member tree
+    std::set<Provider, std::less<>> providers;
+    std::set<Member, std::less<>> members;
 
+	// Load in provider data from the data directory
+	for (auto file: std::filesystem::directory_iterator(PROVIDER_DATA_DIR)) {
+		// Each providers data is in a file called info.csv in the directory named after its id
+		if (file.is_directory()) {
+			Provider newProvider;
+			if(newProvider.loadInformation(file.path() + "/info.csv"))
+				providers.insert(newProvider);
+		}
+	}
+
+	// Load in member data from the data directory
+	for (auto file: std::filesystem::directory_iterator(MEMBER_DATA_DIR)) {
+		// Each members data is in a file called info.csv in the directory named after its id
+		if (file.is_directory()) {
+			Member newMember;
+			if (newMember.loadInformation(file.path() + "/info.csv"))
+				members.insert(newMember);
+		}
+	}
+
+	// Ask which terminal they want
+	char response;
+	unsigned int id;
+	
     std::cout << "Enter 'P' for Provider or 'M' for manager : ";
     std::cin >> response;
     response = toupper(response);
-    if(response == 'M')
-    {
-        std::cout << '\n' << "Enter manager ID: ";
-        std::cin >> check_id;
+
+	// Make them login
+    if(response == 'M') {
+        std::cout << '\n' << "Enter manager ID (Default for testing is " << MANAGER_LOGIN << ") : ";
+        std::cin >> id;
         std::cin.ignore(MAX,'\n');
-        if(check_id == manID)
-            managerTerminal(mtree,ptree);
-    }
-    else if(response == 'P')
-    {
+		
+        if(id == MANAGER_LOGIN)
+            managerTerminal(members, providers);
+    } else if(response == 'P') {
         std::cout << '\n' << "Enter Provider ID: ";
-        std::cin >> check_id;
+        std::cin >> id;
         std::cin.ignore(MAX,'\n');
-        auto provider = ptree.find(check_id);
+		
+        auto provider = providers.find<unsigned int>(id);
         if(provider != ptree.end()){
-            //find Provider in Provider tree
+            // found provider in providers
             Provider found = *provider;
-            providerTerminal(&found,mtree);
+            providerTerminal(&found, members);
         }
-    }
-    else
-        std::cout << "Invalid command.\n";
+    } else {
+        std::cout << "Invalid command, please restart program and try again.\n";
+		return -1;
+	}
 
     return 0;
 }

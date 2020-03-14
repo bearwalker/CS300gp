@@ -54,14 +54,14 @@ bool Provider::loadInformation(std::string informationFile)
 	setZip(std::get<5>(information.at(0)));
 
 	// Load the services
-	for (auto file: std::filesystem::directory_iterator("SERVICE_DATA_DIR")) {
+	for (auto file: std::filesystem::directory_iterator(SERVICE_DATA_DIR)) {
 		Service newService;
 		if (newService.loadInformation(file.path()))
 			serviceDirectory.insert(newService);
 	}
 
 	// Load session records
-	for (auto file: std::filesystem::directory_iterator("PROVIDER_DATA_DIR" + std::to_string(id) + SESSION_DATA_SUBDIR)) {
+	for (auto file: std::filesystem::directory_iterator(PROVIDER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR)) {
 		Session newSession;
 		if (newSession.loadInformation(file.path()))
 			sessionRecords.push_back(newSession);

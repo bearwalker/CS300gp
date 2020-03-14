@@ -1,0 +1,3 @@
+# Providers infomration should be formatted like this
+# unsigned int,std::string,std::string,std::string,std::string,unsigned int;
+id,name,address,city,state,zip;

@@ -1,0 +1,3 @@
+# Members information should be formatted like this
+# unsigned int,std::string,std::string,std::string,std::string,unsigned int,bool;
+id,name,address,city,state,zip,status;

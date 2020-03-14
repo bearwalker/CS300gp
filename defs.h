@@ -3,9 +3,10 @@
 
 #include <string>
 
-//constants for cin
-const int CHARMAX = 20; //max for any std::string readin?
-const int INTMAX = 6; //max for num read in such as ids
+// Logon for manager terminal
+const unsigned int MANAGER_LOGIN = 123456789; // very secure
+
+// Constants for cin
 const int MAX = 256; //for ignores
 
 // Private data length constraints
