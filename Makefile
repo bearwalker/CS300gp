@@ -1,5 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall
+LINKFLAGS = 
 CXXVERSION = $(shell $(CXX) -dumpversion | sed 's/\..*//g')
 # Header files go here
 HEADERS = csvParser.h defs.h digits.h member.h provider.h service.h session.h
@@ -13,7 +14,7 @@ TESTOBJECTS := $(addprefix tests/,$(TESTOBJECTS))
 # Add flags based on g++ version
 ifeq ($(shell echo ${CXXVERSION}\<8 | bc), 1)
 	CXXFLAGS += -lstdc++fs -DGCC_OLD
-	LDLIBS = -lstdc++fs
+	LINKFLAGS += -lstdc++fs
 endif
 
 .PHONY: all run clean
@@ -21,7 +22,7 @@ endif
 all: tests chocan
 
 chocan: main.cpp $(OBJECTS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $< $(OBJECTS) -o $@
+	$(CXX) $(CXXFLAGS) $< $(OBJECTS) -o $@ $(LINKFLAGS)
 
 $(OBJECTS): $(HEADERS)
 
