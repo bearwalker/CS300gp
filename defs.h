@@ -35,6 +35,6 @@ const std::string EFT_DATA_DIR = "data/eft/";
 const std::string REPORT_DATA_DIR = "data/reports/";
 const std::string PROVIDER_DATA_DIR = "data/providers/";
 const std::string MEMBER_DATA_DIR = "data/members/";
-const std::string SERVICE_DATA_SUBDIR = "services/";
+const std::string SERVICE_DATA_DIR = "data/services/";
 // each PROVIDER_DATA_DIR will contain a SESSION_DATA_DIR
 const std::string SESSION_DATA_SUBDIR = "/sessions/";

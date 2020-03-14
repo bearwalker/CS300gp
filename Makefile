@@ -12,7 +12,7 @@ TESTOBJECTS := $(addprefix tests/,$(TESTOBJECTS))
 
 # Add flags based on g++ version
 ifeq ($(shell echo ${CXXVERSION}\<8 | bc), 1)
-	CXXFLAGS += lstdc++fs -DGCC_OLD
+	CXXFLAGS += -lstdc++fs -DGCC_OLD
 endif
 
 .PHONY: all run clean
