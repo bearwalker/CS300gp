@@ -2,12 +2,17 @@
 
 #include <chrono>
 #include <ctime>
-#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <set>
 #include <sstream>
 #include <string>
+
+#ifdef GCC_OLD
+#include <experimental/filesystem>
+#else
+#include <filesystem>
+#endif
 
 #include "defs.h"
 #include "member.h"
@@ -255,7 +260,7 @@ int main(void)
     std::set<Member, std::less<>> members;
 
 	// Load in provider data from the data directory
-	for (auto file: std::filesystem::directory_iterator(PROVIDER_DATA_DIR)) {
+	for (auto file: fs::directory_iterator(PROVIDER_DATA_DIR)) {
 		// Each providers data is in a file called info.csv in the directory named after its id
 		if (file.is_directory()) {
 			Provider newProvider;
@@ -265,7 +270,7 @@ int main(void)
 	}
 
 	// Load in member data from the data directory
-	for (auto file: std::filesystem::directory_iterator(MEMBER_DATA_DIR)) {
+	for (auto file: fs::directory_iterator(MEMBER_DATA_DIR)) {
 		// Each members data is in a file called info.csv in the directory named after its id
 		if (file.is_directory()) {
 			Member newMember;

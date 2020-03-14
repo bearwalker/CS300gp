@@ -2,11 +2,16 @@
 
 #include <chrono>
 #include <ctime>
-#include <filesystem>
 #include <string>
 #include <tuple>
 #include <vector>
 #include <iostream>
+
+#ifdef GCC_OLD
+#include <experimental/filesystem>
+#else
+#include <filesystem>
+#endif
 
 #include "member.h"
 #include "defs.h"
@@ -57,7 +62,7 @@ bool Member::loadInformation(std::string informationFile)
 	setStatus(std::get<6>(information.at(0)));
 
 	// Load session records
-	for (auto file: std::filesystem::directory_iterator(MEMBER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR)) {
+	for (auto file: fs::directory_iterator(MEMBER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR)) {
 		Session newSession;
 		if (newSession.loadInformation(file.path()))
 			sessions.push_back(newSession);

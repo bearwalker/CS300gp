@@ -3,6 +3,13 @@
 
 #include <string>
 
+// PDX CS server is running an older compiler
+#ifdef GCC_OLD
+#define fs std::experimental::filesystem
+#else
+#define fs std::filesystem
+#endif
+
 // Logon for manager terminal
 const unsigned int MANAGER_LOGIN = 123456789; // very secure
 

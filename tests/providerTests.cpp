@@ -1,6 +1,7 @@
 #include "catch.hpp"
 
 #include "../provider.h"
+#include "../defs.h"
 #include <string>
 
 TEST_CASE("Set Provider Name Success") {

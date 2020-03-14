@@ -1,5 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall
+CXXVERSION = $(shell $(CXX) -dumpversion | sed 's/\..*//g')
 # Header files go here
 HEADERS = csvParser.h defs.h digits.h member.h provider.h service.h session.h
 # Add your implementation files here, replacing .cpp with .o
@@ -8,6 +9,11 @@ OBJECTS = member.o provider.o service.o digits.o session.o
 TESTOBJECTS = csvTests.o digitsTests.o serviceTests.o providerTests.o 
 # Don't modify this line, it adds the directory to the test objects
 TESTOBJECTS := $(addprefix tests/,$(TESTOBJECTS))
+
+# Add flags based on g++ version
+ifeq ($(shell echo ${CXXVERSION}\<8 | bc; echo $$?),1)
+	CXXFLAGS += lstdc++fs -DGCC_OLD
+endif
 
 .PHONY: all run clean
 
