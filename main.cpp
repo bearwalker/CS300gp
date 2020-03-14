@@ -159,6 +159,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				std::string dateString;
 				std::cout << "Please enter the date the service was provided (MM-DD-YYYY): ";
 				std::cin >> dateString;
+				std::cin.ignore(MAX,'\n');
 
 				// convert to time_point
 				std::tm dateTm;
@@ -203,6 +204,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				char verifyServiceChoice;
 				std::cout << "Is this the correct service? Y/N: ";
 				std::cin >> verifyServiceChoice;
+				std::cin.ignore(MAX,'\n');
 
 				if (toupper(verifyServiceChoice == 'N')) {
 					std::cout << "Please start again\n";
@@ -214,10 +216,12 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
 				char commentChoice;
 				std::cout << "Would you like to add additional comments? Y/N: ";
 				std::cin >> commentChoice;
+				std::cin.ignore(MAX,'\n');
+				
 
 				if (toupper(commentChoice) == 'Y') {
 					std::cout << "Comments (100 characters max): ";
-					std::cin >> comments;
+					std::getline(std::cin, comments);
 				}
 
 				// Record the session
@@ -285,6 +289,7 @@ int main(void)
 	
     std::cout << "Enter 'P' for Provider or 'M' for manager : ";
     std::cin >> response;
+	std::cin.ignore(MAX,'\n');
     response = toupper(response);
 
 	// Make them login

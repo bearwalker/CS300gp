@@ -113,12 +113,13 @@ bool Provider::checkServiceID(unsigned int serviceID) const
 
 void Provider::printServiceDirectory() const
 {
-	// TODO make this account for spacing better
 	std::cout << "Service Directory" << std::endl;
-	std::cout << "ID    " << "Name                " << "Fee    " << std::endl;
+	std::cout << std::setw(SERVICE_ID_DIGITS + 1) << "ID" << std::setw(SERVICE_NAME_CHARACTERS + 1) << "Name" << std::setw(SERVICE_PRICE_WIDTH) << "Fee" << std::endl;
 
 	for (auto service = serviceDirectory.begin(); service != serviceDirectory.end(); service++)
-		std::cout << (*service).getID() << (*service).getName() << (*service).getPrice() << std::endl;
+		std::cout << std::setw(SERVICE_ID_DIGITS + 1) << (*service).getID()
+				  << std::setw(SERVICE_NAME_CHARACTERS + 1) << (*service).getName()
+				  << std::setw(SERVICE_PRICE_WIDTH) << "$" << std::setprecision(SERVICE_PRICE_WIDTH - 1) << (*service).getPrice() << std::endl;
 }
 
 

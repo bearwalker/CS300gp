@@ -29,6 +29,7 @@ const unsigned int COMMENT_CHARACTERS = 100;
 const unsigned int SERVICE_ID_DIGITS = 6;
 const unsigned int SERVICE_NAME_CHARACTERS = 20;
 const double SERVICE_PRICE_MAX = 999.99;
+const unsigned int SERVICE_PRICE_WIDTH = 7;
 
 // Data directories
 const std::string EFT_DATA_DIR = "data/eft/";
