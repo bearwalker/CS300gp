@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS = -std=c++17 -Wall -lstdc++fs
 # Header files go here
 HEADERS = csvParser.h defs.h digits.h member.h provider.h service.h session.h
 # Add your implementation files here, replacing .cpp with .o
