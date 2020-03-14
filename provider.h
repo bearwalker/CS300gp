@@ -119,9 +119,9 @@ public:
 	/*
 	  Checks if any services were provided by the provided during the last 7 days
 
-	  @return true if services were provided in the last 7 days
+	  @return the number of services provided in the last 7 days
 	*/
-	bool providedServices() const;
+	int providedServices() const;
 
 	/*
 	  Gives a total of the fees for the last 7 days of services provided

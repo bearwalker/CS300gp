@@ -215,7 +215,7 @@ int Provider::providedServices() const
 	auto session = sessionRecords.cbegin();
 	while (session != sessionRecords.cend()) {
 		// if we find a session whos date is within 7 days ago we're done
-		if ((*session).dateProvided == dateAWeekAgo || (*session).dateProvided > dateAWeekAgo)
+		if ((*session).getDateProvided() == dateAWeekAgo || (*session).getDateProvided() > dateAWeekAgo)
 			++servicesProvided;
 
 		session++;

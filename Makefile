@@ -29,6 +29,6 @@ run:
 	./chocan
 
 clean:
-	-rm $(TESTOBJECTS) $(OBJECTS) tests/testMain.o chocan
+	-rm $(TESTOBJECTS) $(OBJECTS) test tests/testMain.o chocan
 
 
