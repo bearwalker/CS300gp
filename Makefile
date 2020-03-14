@@ -24,10 +24,10 @@ all: test chocan
 chocan: main.cpp $(OBJECTS) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $< $(OBJECTS) -o $@ $(LINKFLAGS)
 
-$(OBJECTS): $(HEADERS)
+$(OBJECTS): $(HEADERS) 
 
 test: tests/testMain.o $(TESTOBJECTS) $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LINKFLAGS)
 	./test
 
 $(TESTOBJECTS): tests/catch.hpp $(OBJECTS) $(HEADERS)
