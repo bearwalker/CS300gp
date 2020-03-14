@@ -99,18 +99,15 @@ void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std
                 int total_Providers =0;
                 for(auto prov_ptr = ptree.begin(); prov_ptr != ptree.end(); prov_ptr++)
                 {
-             //total_Providers += prov_ptr->didProvide()
-             //prov_service_total += prov_ptr->gettotal()
-             //prov_ptr->printManReport();
+                    int servicesProvided = 0;
                     Provider to_print = *prov_ptr;
-                    /*TODO implement check for services provided
-                    if(to_print.numServicesProvided > 0){
+                    servicesProvided = to_print.providedServices();
+                    if(servicesProvided > 0){
                         ++total_Providers;
-                        //get the fee total
-                        prov_service_total += to_print.feeTotal;
-                        to_print.printWeekReport();
+                        prov_service_total += to_print.weekFeeTotal();
+                        std::cout << '\n' << "Provider: " << to_print.getName() << " provided " << servicesProvided << " this week" << '\n';
+
                     }
-                    */
                 }
                 std::cout << '\n' << "Total Providers for week: " << total_Providers;
                 std::cout << '\n' << "Overall Fee Total: " << prov_service_total;
@@ -213,7 +210,8 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 std::cin >> numres;
                 std::cin.ignore(MAX,'\n');
                 auto mvalid = mtree.find(numres);
-                if (mvalid == mtree.end()) std::cout << "Member ID is invalid.\n";
+                if (mvalid == mtree.end())
+                    std::cout << "Member ID is invalid.\n";
                 Member to_check = *mvalid;
                 if (to_check.getMemStatus() == false)
                     std::cout << "Membership has been suspended.\n";
@@ -222,15 +220,24 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                     std::cout << "Enter Service ID: ";  //implement functionality to check list of valid ID's
                     std::cin >> numres;
                     std::cin.ignore(MAX,'\n');
-                    svalid = this_Provider->checkServiceID(numres);
-                    if (svalid == false) std::cout << "Service ID is not valid.\n";
-                    else std::cout << "ERROR: SERVICE PROVISION FUNCTIONALITY NOT IMPLEMENTED.\n";
-                    //TODO
+                    bool svalid = this_Provider->checkServiceID(numres);
+                    if (svalid == false)
+                        std::cout << "Service ID is not valid.\n";
+                    else
+                    {
+                        //provide service to member
+                        Service toProvide;
+                        this_Provider.findService(numres,toProvide);
+
+                        to_check.saveSession(this_Provider.saveSessionReport(to_check,toProvide,std::chrono::system_clock::now(), );
+                        ++toProvide.times_used;
+                        this_Provider.createSessionReport(to_check,toProvide);
+                    }
                 }
                 break;
                 }
             case 'F':{
-                this_Provider->summaryReport();
+                this_Provider->weekReport(std::cout);
                 break;
                 }
             case 'Q':

@@ -94,7 +94,7 @@ bool Provider::findService(unsigned int serviceID, Service& service)
 
 	return true;
 }
-		
+
 bool Provider::checkServiceID(unsigned int serviceID) const
 {
 	auto serviceIterator = serviceDirectory.find<unsigned int>(serviceID);
@@ -111,7 +111,7 @@ void Provider::printServiceDirectory() const
 	// TODO make this account for spacing better
 	std::cout << "Service Directory" << std::endl;
 	std::cout << "ID    " << "Name                " << "Fee    " << std::endl;
-	
+
 	for (auto service = serviceDirectory.begin(); service != serviceDirectory.end(); service++)
 		std::cout << (*service).getID() << (*service).getName() << (*service).getPrice() << std::endl;
 }
@@ -131,7 +131,7 @@ Session Provider::saveSessionReport(Member member, Service service, std::chrono:
 
 	// Save session in sessionRecords
 	sessionRecords.push_back(newSession);
-	
+
 	// write session record to disk
 	std::time_t dateTimeT = std::chrono::system_clock::to_time_t(dateProvided);
 	std::stringstream dateString;
@@ -188,7 +188,7 @@ void Provider::weekReport(std::ostream& out)
 			// Convert time_points to time_t for printing
 			std::time_t dateProvided = std::chrono::system_clock::to_time_t((*session).getDateProvided());
 			std::time_t timeRecorded = std::chrono::system_clock::to_time_t((*session).getTimeRecorded());
-			
+
 			out << "Date of service: " << std::put_time(std::localtime(&dateProvided), "$m-%d-%Y") << std::endl;
 			out << "Date and time service was saved to system: "
 					  << std::put_time(std::localtime(&timeRecorded), "%m-%d-%Y %H:%M:%S") << std::endl;
@@ -206,30 +206,31 @@ void Provider::weekReport(std::ostream& out)
 	out << "Total fee for the week: $" << totalFee << std::endl;
 }
 
-bool Provider::providedServices() const
+int Provider::providedServices() const
 {
+    int servicesProvided = 0;
 	// Date of 7 days ago
 	std::chrono::system_clock::time_point dateAWeekAgo(std::chrono::floor<std::chrono::duration<int, std::ratio<86400>>>(std::chrono::system_clock::now() - (std::chrono::hours(24) * 7)));
-	
+
 	auto session = sessionRecords.cbegin();
 	while (session != sessionRecords.cend()) {
 		// if we find a session whos date is within 7 days ago we're done
-		if ((*session).getDateProvided() == dateAWeekAgo || (*session).getDateProvided() > dateAWeekAgo)
-			return true;
+		if ((*session).dateProvided == dateAWeekAgo || (*session).dateProvided > dateAWeekAgo)
+			++servicesProvided;
 
 		session++;
 	}
 
-	return false;
+	return servicesProvided;
 }
 
 double Provider::weekFeeTotal() const
 {
 	double feeTotal = 0;
-	
+
 	// Date of 7 days ago
 	std::chrono::system_clock::time_point dateAWeekAgo(std::chrono::floor<std::chrono::duration<int, std::ratio<86400>>>(std::chrono::system_clock::now() - (std::chrono::hours(24) * 7)));
-	
+
 	auto session = sessionRecords.cbegin();
 	while (session != sessionRecords.cend()) {
 		// if we find a session whos date is within 7 days ago add it to the toal
