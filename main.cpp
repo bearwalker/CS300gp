@@ -4,7 +4,7 @@
 #include <set>
 #include <string>
 
-#include "defs.h" 
+#include "defs.h"
 
 //Manager terminal
 void managerTerminal(std::set<Member, std::less<>> mtree, std::set<Provider, std::less<>> ptree)
@@ -179,11 +179,11 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
             case 'A': {
 				// check member status
 				unsigned int memberID;
-				
+
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberID;
                 std::cin.ignore(MAX,'\n');
-				
+
                 auto member = members.find(memberID);
                 if (member == mtree.end())
 					std::cout << "Member ID is invalid.\n";
@@ -196,11 +196,11 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
             case 'C': {
 				// check if service id is valid
 				unsigned int serviceID;
-				
+
                 std::cout << "Enter Service ID: ";
                 std::cin >> serviceID;
                 std::cin.ignore(MAX,'\n');
-				
+
                 bool serviceCheck = currentProvider->checkServiceID(serviceID);
                 if (serviceCheck)
 					std::cout << "Service ID " << serviceID << " is valid.\n";
@@ -216,7 +216,7 @@ void providerTerminal(Provider * currentProvider, std::set<Member, std::less<>> 
             case 'E': {
 				// record a service provided to a member
 				unsigned int memberID;
-				
+
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberID;
                 std::cin.ignore(MAX,'\n');
@@ -290,7 +290,7 @@ int main(void)
 	// Ask which terminal they want
 	char response;
 	unsigned int id;
-	
+
     std::cout << "Enter 'P' for Provider or 'M' for manager : ";
     std::cin >> response;
     response = toupper(response);
@@ -300,14 +300,14 @@ int main(void)
         std::cout << '\n' << "Enter manager ID (Default for testing is " << MANAGER_LOGIN << ") : ";
         std::cin >> id;
         std::cin.ignore(MAX,'\n');
-		
+
         if(id == MANAGER_LOGIN)
             managerTerminal(members, providers);
     } else if(response == 'P') {
         std::cout << '\n' << "Enter Provider ID: ";
         std::cin >> id;
         std::cin.ignore(MAX,'\n');
-		
+
         auto provider = providers.find<unsigned int>(id);
         if(provider != ptree.end()){
             // found provider in providers

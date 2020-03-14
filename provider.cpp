@@ -54,7 +54,7 @@ bool Provider::loadInformation(std::string informationFile)
 	setZip(std::get<5>(information.at(0)));
 
 	// Load the services
-	for (auto file: std::experimental::filesystem::directory_iterator(SERVICE_DATA_DIR)) {
+	for (auto file: std::experimental::filesystem::directory_iterator(SERVICE_DATA_DIR + std::to_string(id) + SERVICE_DATA_SUBDIR)) {
 		Service newService;
 		if (newService.loadInformation(file.path()))
 			serviceDirectory.insert(newService);
