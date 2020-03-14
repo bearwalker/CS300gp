@@ -8,7 +8,12 @@
 #include <vector>
 #include <iostream>
 
+#include "member.h"
 #include "defs.h"
+#include "digits.h"
+#include "csvParser.h"
+#include "session.h"
+
 
 Member::Member()
 {
@@ -70,7 +75,7 @@ void Member::saveSession(Session session)
 	std::stringstream dateString;
 	dateString << std::put_time(std::localtime(&dateTimeT), "%Y-%m-%d");
 	std::string sessionPath = MEMBER_DATA_DIR + std::to_string(id) + SESSION_DATA_SUBDIR + dateString.str() + "_" + name + ".csv";
-	newSession.saveRecord(sessionPath);
+	session.saveRecord(sessionPath);
 }
 
 void Member::weekReport(std::ostream& out)

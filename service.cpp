@@ -1,6 +1,11 @@
 //Service class functions implementation
 
+#include <iostream>
+#include <string>
+
+#include "service.h"
 #include "defs.h"
+#include "digits.h"
 #include "csvParser.h"
 
 Service::Service()
@@ -34,12 +39,12 @@ bool Service::loadInformation(std::string informationFile)
 	return true;
 }
 
-void setID(unsigned int newID)
+void Service::setID(unsigned int newID)
 {
 	id = resizeNumber(newID, SERVICE_ID_DIGITS);
 }
 
-void setName(std::string newName)
+void Service::setName(std::string newName)
 {
 	if (newName.size() > SERVICE_NAME_CHARACTERS)
 		newName.resize(SERVICE_NAME_CHARACTERS);
@@ -47,7 +52,7 @@ void setName(std::string newName)
 	name = newName;
 }
 
-void setPrice(double newPrice)
+void Service::setPrice(double newPrice)
 {
 	if (newPrice > SERVICE_PRICE_MAX)
 		price = SERVICE_PRICE_MAX;
@@ -59,34 +64,34 @@ void setPrice(double newPrice)
 void Service::displayInfo()
 {
     std::cout << '\n' << "Service Name: " << name;
-    std::cout << '\n' << "Service ID: " << ID;
+    std::cout << '\n' << "Service ID: " << id;
     std::cout << '\n' << "Service Price: " << price;
 }
 
-unsigned int getID() const
+unsigned int Service::getID() const
 {
 	return id;
 }
 
-std::string getName() const
+std::string Service::getName() const
 {
 	return name;
 }
 
-double getPrice() const
+double Service::getPrice() const
 {
 	return price;
 }
 
 bool operator<(const Service& leftSide, const Service& rightSide) {
-	return leftSide.ID < rightSide.ID;
+	return leftSide.id < rightSide.id;
 }
 
 bool operator<(const unsigned int& leftSide, const Service& rightSide) {
-	return leftSide < rightSide.ID;
+	return leftSide < rightSide.id;
 }
 
 bool operator<(const Service& leftSide, const unsigned int& rightSide) {
-	return leftSide.ID < rightSide;
+	return leftSide.id < rightSide;
 }
 

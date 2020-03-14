@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "defs.h"
+#include "digits.h"
 
 unsigned int numDigits(unsigned int number)
 {
