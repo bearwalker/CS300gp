@@ -228,7 +228,8 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                         //provide service to member
                         Service toProvide;
                         this_Provider.findService(numres,toProvide);
-                        to_check.addService(toProvide);
+
+                        to_check.saveSession(this_Provider.saveSessionReport(to_check,toProvide,std::chrono::system_clock::now(), );
                         ++toProvide.times_used;
                         this_Provider.createSessionReport(to_check,toProvide);
                     }
@@ -236,7 +237,7 @@ void providerTerminal(Provider * this_Provider, std::set<Member, std::less<>> mt
                 break;
                 }
             case 'F':{
-                this_Provider->summaryReport();
+                this_Provider->weekReport(std::cout);
                 break;
                 }
             case 'Q':
