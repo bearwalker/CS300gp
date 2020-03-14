@@ -11,7 +11,7 @@ TESTOBJECTS = csvTests.o digitsTests.o serviceTests.o providerTests.o
 TESTOBJECTS := $(addprefix tests/,$(TESTOBJECTS))
 
 # Add flags based on g++ version
-ifeq ($(shell echo ${CXXVERSION}\<8 | bc; echo $$?),1)
+ifeq ($(shell echo ${CXXVERSION}\<8 | bc), 1)
 	CXXFLAGS += lstdc++fs -DGCC_OLD
 endif
 
